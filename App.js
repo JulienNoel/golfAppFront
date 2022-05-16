@@ -1,6 +1,6 @@
-// LogBox.ignoreAllLogs();
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 
 // Initialisation du store
 import template from './reducers/template.reducer';
@@ -29,6 +29,7 @@ function BottomNavigator() {
 
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarIcon: ({ color }) => {
           let iconName;
 
