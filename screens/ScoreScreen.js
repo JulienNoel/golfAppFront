@@ -81,97 +81,93 @@ export default function HomeScreen() {
                                     </View>
                                 </TouchableOpacity>
                                 <View style={styles.main}>
-
-                                    <View style={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        alignItems: 'flex-end',
-                                        justifyContent: 'space-between',
-                                        width: '90%'
-                                    }}>
-
+                                    <View style={{ flex: 1, marginTop: 100, flexDirection: "row" }}>
                                         <Badge
-                                            badgeStyle={{ backgroundColor: "#3AB795", height: 20 }}
+                                            badgeStyle={{ backgroundColor: "#3AB795", height: 20, margin: 5 }}
                                             textStyle={{ fontWeight: "bold" }}
-                                            value="Note Privée"
+                                            value="0 note Privée"
                                             onPress={() => console.log("hello")}
                                         />
                                         <Badge
-                                            badgeStyle={{ backgroundColor: "#3AB795", height: 20 }}
+                                            badgeStyle={{ backgroundColor: "#3AB795", height: 20, margin: 5 }}
                                             textStyle={{ fontWeight: "bold" }}
-                                            value="Note Publique"
+                                            value="13 notes Publique"
                                             onPress={() => console.log("hello")}
                                         />
-
+                                    </View>
+                                    <View style={{ flex: 1, flexDirection: "row" }}>
                                         <Badge
-                                            badgeStyle={{ backgroundColor: "#f1c40f", height: 20 }}
+                                            badgeStyle={{ backgroundColor: "#f1c40f", height: 20, margin: 5 }}
                                             textStyle={{ fontWeight: "bold" }}
-                                            value="Creer une note"
+                                            value="Créer une note"
                                             onPress={() => console.log("hello")}
                                         />
-
                                     </View>
 
 
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                        <View>
+
+                                        <View style={{ flex: 1, alignItems: 'center', marginTop: 20 }}>
                                             <Text style={{ fontWeight: 'bold' }}>SCORE</Text>
-                                        </View>
-
-                                        <View style={styles.score}>
-                                            <Icon
-                                                raised
-                                                name="minus-circle"
-                                                size={50}
-                                                type="font-awesome"
-                                                color="#3AB795"
-                                                onPress={() => setCountScore(countScore - 1)}
-                                            />
-
-                                            <View style={styles.middleScore}>
-                                                <Text>{countScore}</Text>
+                                            <View style={styles.score}>
+                                                <Icon
+                                                    raised
+                                                    name="minus-circle"
+                                                    size={50}
+                                                    type="font-awesome"
+                                                    color="#3AB795"
+                                                    onPress={() => setCountScore(countScore - 1)}
+                                                />
+                                                <View style={styles.middleScore}>
+                                                    <Text>{countScore}</Text>
+                                                </View>
+                                                <Icon
+                                                    raised
+                                                    name="plus-circle"
+                                                    size={50}
+                                                    type="font-awesome"
+                                                    color="#3AB795"
+                                                    onPress={() => setCountScore(countScore + 1)}
+                                                />
                                             </View>
-
-                                            <Icon
-                                                raised
-                                                name="plus-circle"
-                                                size={50}
-                                                type="font-awesome"
-                                                color="#3AB795"
-                                                onPress={() => setCountScore(countScore + 1)}
-                                            />
                                         </View>
 
-                                        <View>
+                                        <View style={{ flex: 1, alignItems: 'center', marginTop: 20 }}>
                                             <Text style={{ fontWeight: 'bold' }}>PUTTS</Text>
-                                        </View>
-
-                                        <View style={styles.score}>
-                                            <Icon
-                                                raised
-                                                name="minus-circle"
-                                                size={50}
-                                                type="font-awesome"
-                                                color="#3AB795"
-                                                onPress={() => setCountPutt(countPutt - 1)}
-                                            />
-
-                                            <View style={styles.middleScore}>
-                                                <Text>{countPutt}</Text>
+                                            <View style={styles.score}>
+                                                <Icon
+                                                    raised
+                                                    name="minus-circle"
+                                                    size={50}
+                                                    type="font-awesome"
+                                                    color="#3AB795"
+                                                    onPress={() => setCountPutt(countPutt - 1)}
+                                                />
+                                                <View style={styles.middleScore}>
+                                                    <Text>{countPutt}</Text>
+                                                </View>
+                                                <Icon
+                                                    raised
+                                                    name="plus-circle"
+                                                    size={50}
+                                                    type="font-awesome"
+                                                    color="#3AB795"
+                                                    onPress={() => setCountPutt(countPutt + 1)}
+                                                />
                                             </View>
-
-                                            <Icon
-                                                raised
-                                                name="plus-circle"
-                                                size={50}
-                                                type="font-awesome"
-                                                color="#3AB795"
-                                                onPress={() => setCountPutt(countPutt + 1)}
-                                            />
                                         </View>
-
                                     </View>
-
+                                    <View style={styles.navigationIcon}>
+                                        <Image
+                                            style={{ width: 50, height: 50 }}
+                                            source={require('../assets/previous.png')}
+                                        />
+                                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Trou n°1</Text>
+                                        <Image
+                                            style={{ width: 50, height: 50 }}
+                                            source={require('../assets/next.png')}
+                                        />
+                                    </View>
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
@@ -210,12 +206,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        marginBottom: 40,
+        marginBottom: '20%',
     },
     main: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        justifyContent:'space-between',
     },
     note: {
         flex: 1,
@@ -224,6 +219,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red'
     },
     score: {
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
@@ -233,7 +229,8 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderRadius: 20,
-        margin: 20,
+        marginLeft: 20,
+        marginRight: 20,
         alignItems: "center",
         justifyContent: "center",
         borderColor: '#86BAA1',
