@@ -8,7 +8,7 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.container}>
-            <Text>Map</Text>
+            <Text>Home</Text>
         </View>
     );
 }
