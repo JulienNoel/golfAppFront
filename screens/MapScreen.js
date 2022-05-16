@@ -8,24 +8,35 @@ import {
 } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+
+import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export default function MapScreen() {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
 
   const [pseudo, setPseudo] = useState("");
+  const [color, setColor] = useState("#3AB795");
+  const [newLocation, setNewLocation] = useState(null);
 
   useEffect(() => {
     async function askPermissions() {
       var { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === "granted") {
         var locationTemp = await Location.getCurrentPositionAsync();
-        console.log("INIT", locationTemp);
+        // console.log("INIT", locationTemp);
         setLocationInit({
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
@@ -116,26 +127,62 @@ export default function MapScreen() {
   console.log(location);
   if (locationInit.latitude) {
     return (
-      <MapView
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
-        initialRegion={{
-          latitude: locationInit.latitude,
-          longitude: locationInit.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
       >
-        <Marker
-          image={require("../assets/UserMarker.png")}
-          coordinate={{
-            latitude: location.latitude,
-            longitude: location.longitude,
+        <MapView
+          onRegionChange={() => setColor("white")}
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: locationInit.latitude,
+            longitude: locationInit.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
           }}
-          style={{ width: 26, height: 28 }}
-          resizeMode="contain"
-        />
-        {markerDisplayGolf}
-      </MapView>
+          region={{
+            latitude: locationInit.latitude,
+            longitude: locationInit.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+          <Marker
+            image={require("../assets/UserMarker.png")}
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            style={{ width: 26, height: 28 }}
+            resizeMode="contain"
+          />
+          {markerDisplayGolf}
+        </MapView>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            position: "absolute",
+            left: 380,
+            top: 100,
+            backgroundColor: "grey",
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            borderRadius: 10,
+          }}
+        >
+          <FontAwesome
+            name="location-arrow"
+            size={24}
+            color={color}
+            style={{ paddingBottom: 15 }}
+            onPress={() => {
+              setColor("#3AB795");
+              setLocationInit(location);
+            }}
+          />
+          <Entypo name="map" size={24} color="#3AB795" />
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     );
   } else {
     return <Text>Charg</Text>;
