@@ -8,17 +8,23 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   ScrollView,
+  Button,
+  TextInput,
+ 
 } from "react-native";
 import ScoreTab from "./ScoreTab"
 import SwipeUpDown from "react-native-swipe-up-down";
 
 import { Badge, Overlay } from "react-native-elements";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function HomeScreen() {
+
   const swipeUpDownRef = useRef();
   const [countScore, setCountScore] = useState(0);
   const [countPutt, setCountPutt] = useState(0);
+  const [note, onChangeNote] = useState("");
 
   if (countScore < 0) {
     setCountScore(0);
@@ -52,6 +58,7 @@ export default function HomeScreen() {
 
   const toggleOverlay = () => {
     setVisible(!visible);
+    
   };
 
   
@@ -149,9 +156,23 @@ export default function HomeScreen() {
                 </TouchableOpacity>
                 <View style={styles.main}>
                 
-                <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overLayStyle={styles.overlay}>
-                    <Text>Hello from Overlay!</Text>
+                
+                <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
+                
+                    <View style={{flex: 1, justifyContent: 'space-between'}}>
+                        <TextInput  onChangeText={onChangeNote}
+                                    value={note}
+                                    multiline={true}
+                                    placeholder="Prenez une Note"
+                                    maxLength={120}
+                                />
+                        <Button 
+                                title="OK"
+                                onPress={toggleOverlay}
+                                color='#3AB795'/>
+                    </View>
                 </Overlay>
+                
 
                     <ScoreTab/>
                   <View style={{ flex: 1, marginTop: 10, flexDirection: "row"}}>
@@ -331,7 +352,8 @@ const styles = StyleSheet.create({
     borderColor: "#86BAA1",
   },
   overlay: {
-      width: '50%',
-      height: '50%',
+    
+    width: '80%',
+    height: '50%',
   }
 });
