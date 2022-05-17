@@ -13,6 +13,7 @@ import {
   Image,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import MapView, { Marker } from "react-native-maps";
@@ -35,21 +36,30 @@ export default function MapScreen() {
       var { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === "granted") {
         var locationTemp = await Location.getCurrentPositionAsync();
-        // console.log("INIT", locationTemp);
         setLocationInit({
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
         });
-        Location.watchPositionAsync({ distanceInterval: 2 }, (location) => {
-          setLocation({
-            longitude: location.coords.longitude,
-            latitude: location.coords.latitude,
-          });
+        setLocation({
+          longitude: locationTemp.coords.longitude,
+          latitude: locationTemp.coords.latitude,
         });
       }
     }
     askPermissions();
   }, []);
+
+  //   useEffect(() => {
+  //     async function askPermissions() {
+  //       Location.watchPositionAsync({ distanceInterval: 1000 }, (location) => {
+  //         setLocation({
+  //           longitude: location.coords.longitude,
+  //           latitude: location.coords.latitude,
+  //         });
+  //       });
+  //     }
+  //     askPermissions();
+  //   }, []);
 
   console.log("locationInit", locationInit);
 
@@ -160,10 +170,14 @@ export default function MapScreen() {
         >
           <Marker
             image={require("../assets/UserMarker.png")}
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
+            coordinate={
+              location
+                ? {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                  }
+                : undefined
+            }
             style={{ width: 26, height: 28 }}
             resizeMode="contain"
           />
@@ -189,6 +203,12 @@ export default function MapScreen() {
             onPress={() => {
               setColor("#3AB795");
               setNewCurrentLocation(currentLocation);
+
+              {
+                newCurrentLocation
+                  ? setLocation(newCurrentLocation)
+                  : undefined;
+              }
             }}
           />
           <Entypo name="map" size={24} color="#3AB795" />
