@@ -5,36 +5,86 @@ import {
   Text,
   ListItem,
   Avatar,
+  Icon
 } from "react-native-elements";
-import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, View, Image, ScrollView } from "react-native";
-import SwipeUpDown from 'react-native-swipe-up-down';
-
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
-import Icon from "react-native-vector-icons/FontAwesome";
+import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export default function MapScreen() {
   const [location, setLocation] = useState({});
-  const swipeUpDownRef = useRef();
-  const [research, setResearch] = useState("");
+  const [locationInit, setLocationInit] = useState({});
+
+  const [pseudo, setPseudo] = useState("");
+  const [color, setColor] = useState("#3AB795");
+  const [colorMap, setColorMap] = useState("white");
+  const [newCurrentLocation, setNewCurrentLocation] = useState(null);
+  const [mapType, setMapType] = useState("standard");
+
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
 
   useEffect(() => {
     async function askPermissions() {
       var { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === "granted") {
-        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-          setLocation({
-            longitude: location.coords.longitude,
-            latitude: location.coords.latitude,
-          });
+        var locationTemp = await Location.getCurrentPositionAsync();
+        setLocationInit({
+          longitude: locationTemp.coords.longitude,
+          latitude: locationTemp.coords.latitude,
+        });
+        setLocation({
+          longitude: locationTemp.coords.longitude,
+          latitude: locationTemp.coords.latitude,
         });
       }
     }
     askPermissions();
-  }, [location]);
+  }, []);
+
+  //   useEffect(() => {
+  //     async function askPermissions() {
+  //       Location.watchPositionAsync({ distanceInterval: 1000 }, (location) => {
+  //         setLocation({
+  //           longitude: location.coords.longitude,
+  //           latitude: location.coords.latitude,
+  //         });
+  //       });
+  //     }
+  //     askPermissions();
+  //   }, []);
+
+  console.log("locationInit", locationInit);
+
+  var currentLocation = async () => {
+    var currentPosition = await Location.getCurrentPositionAsync();
+    setNewCurrentLocation({
+      latitude: currentPosition.coords.latitude,
+      longitude: currentPosition.coords.longitude,
+    });
+  };
+
+  var mapTypeChange = () => {
+    if (mapType === "standard") {
+      setMapType("satellite");
+      setColorMap("#3AB795");
+    } else {
+      setMapType("standard");
+      setColorMap("white");
+    }
+  };
 
   let listGolf = [
     {
@@ -62,23 +112,11 @@ export default function MapScreen() {
   var golf = [
     {
       name: "golf1",
-      coordinate: { latitude: 48.86777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 48.86777683776753, longitude: 2.303689483736294 },
     },
     {
       name: "golf2",
-      coordinate: { latitude: 48.84777683776753, latitude: 2.303689483736294 },
-    },
-    {
-      name: "golf3",
-      coordinate: { latitude: 48.83777683776753, latitude: 2.303689483736294 },
-    },
-    {
-      name: "golf4",
-      coordinate: { latitude: 48.82777683776753, latitude: 2.303689483736294 },
-    },
-    {
-      name: "golf5",
-      coordinate: { latitude: 48.88777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 40, longitude: 4 },
     },
   ];
 
@@ -95,7 +133,7 @@ export default function MapScreen() {
   var golfCards = listGolf.map((l, i) => {
     return (
       <ListItem key={i}>
-        <Avatar source={require("../assets/golf-icon.jpg")} />
+        <Avatar source={require("../assets/golf-icon.jpg")} size={10} />
         <ListItem.Content>
           <ListItem.Title>{l.name}</ListItem.Title>
           <ListItem.Subtitle>
@@ -108,32 +146,111 @@ export default function MapScreen() {
   var markerDisplayGolf = golf.map((point, i) => (
     <Marker
       key={i}
-      coordinate={point.coordinate}
+      coordinate={{
+        latitude: point.coordinate.latitude,
+        longitude: point.coordinate.longitude,
+      }}
       title={point.name}
-      image={require("../assets/GolfMarker.jpg")}
-    />
+    >
+      <Image source={require("../assets/GolfMarker.png")} />
+    </Marker>
   ));
 
-  return (
-    <MapView
-      style={{ flex: 1 }}
-      region={{
-        latitude: location.latitude,
-        longitude: location.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-    >
-      <Marker
-        image={require("../assets/UserMarker.jpg")}
-        coordinate={{
-          latitude: location.latitude,
-          longitude: location.longitude,
+  console.log("locationinit", locationInit);
+  if (locationInit.latitude) {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <MapView
+          onRegionChange={() => setColor("white")}
+          mapType={mapType}
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: locationInit.latitude,
+            longitude: locationInit.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          region={
+            newCurrentLocation
+              ? {
+                  latitude: newCurrentLocation.latitude,
+                  longitude: newCurrentLocation.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }
+              : undefined
+          }
+        >
+          <Marker
+            image={require("../assets/UserMarker.png")}
+            coordinate={
+              location
+                ? {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                  }
+                : undefined
+            }
+            style={{ width: 26, height: 28 }}
+            resizeMode="contain"
+          />
+          {markerDisplayGolf}
+        </MapView>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            position: "absolute",
+            left: windowWidth - windowWidth / 6,
+            top: windowHeight - windowHeight / 1.09,
+            backgroundColor: "grey",
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            borderRadius: 10,
+          }}
+        >
+          <FontAwesome
+            name="location-arrow"
+            size={24}
+            color={color}
+            style={{ paddingBottom: 15 }}
+            onPress={() => {
+              setColor("#3AB795");
+              setNewCurrentLocation(currentLocation);
+
+              {
+                newCurrentLocation
+                  ? setLocation(newCurrentLocation)
+                  : undefined;
+              }
+            }}
+          />
+          <Entypo
+            name="map"
+            size={24}
+            color={colorMap}
+            onPress={() => {
+              setMapType(mapTypeChange);
+            }}
+          />
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    );
+  } else {
+    return (
+      <Text
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
         }}
-      />
-      {markerDisplayGolf}
-    </MapView>
-  );
+      >
+        Chargement
+      </Text>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
