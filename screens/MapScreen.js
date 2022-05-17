@@ -203,8 +203,8 @@ export default function MapScreen() {
           activeOpacity={1}
           style={{
             position: "absolute",
-            left: windowWidth - 60,
-            top: windowHeight - 850,
+            left: windowWidth - windowWidth / 6,
+            top: windowHeight - windowHeight / 1.09,
             backgroundColor: "grey",
             paddingHorizontal: 10,
             paddingVertical: 10,
@@ -245,8 +245,6 @@ export default function MapScreen() {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          width: 100,
-          height: 100,
         }}
       >
         Chargement
