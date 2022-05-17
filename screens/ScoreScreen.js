@@ -124,12 +124,13 @@ export default function HomeScreen() {
             <TouchableWithoutFeedback>
               <View>
                 <TouchableOpacity onPress={close}>
-                  <View style={{ alignItems: "center", height: 30 }}>
+                  <View style={{ alignItems: "center", height: 40}}>
                     <Text
                       style={{
                         fontWeight: "bold",
                         color: "#3AB795",
                         fontSize: 20,
+                        margin:10
                       }}
                     >
                       Score
@@ -138,9 +139,7 @@ export default function HomeScreen() {
                 </TouchableOpacity>
                 <View style={styles.main}>
                     <ScoreTab/>
-                  <View
-                    style={{ flex: 1, marginTop: 100, flexDirection: "row" }}
-                  >
+                  <View style={{ flex: 1, marginTop: 10, flexDirection: "row"}}>
                     <Badge
                       badgeStyle={{
                         backgroundColor: "#3AB795",
