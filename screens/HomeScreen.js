@@ -142,13 +142,7 @@ return (
               <Text style ={{fontSize: 20}}>Favoris</Text>
             </View>
             <View style = {{flex: 1, alignItems: 'center' }}>
-            <ScrollView horizontal={true} style={{ width: '90%',
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: 'grey',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      backgroundColor: 'white'}}>
+            <ScrollView horizontal={true}>
               {favoriteGolfs}
               </ScrollView>
             </View>
