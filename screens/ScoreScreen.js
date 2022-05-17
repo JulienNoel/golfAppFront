@@ -8,17 +8,23 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   ScrollView,
+  Button,
+  TextInput,
+ 
 } from "react-native";
 import ScoreTab from "./ScoreTab"
 import SwipeUpDown from "react-native-swipe-up-down";
 
-import { Badge } from "react-native-elements";
+import { Badge, Overlay } from "react-native-elements";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function HomeScreen() {
+
   const swipeUpDownRef = useRef();
   const [countScore, setCountScore] = useState(0);
   const [countPutt, setCountPutt] = useState(0);
+  const [note, onChangeNote] = useState("");
 
   if (countScore < 0) {
     setCountScore(0);
@@ -38,6 +44,7 @@ export default function HomeScreen() {
   };
 
   const majScoreMoins = () => {
+      if (countPutt > 0)
     setCountScore(countScore - 1);
     setCountPutt(countPutt - 1);
   };
@@ -46,6 +53,16 @@ export default function HomeScreen() {
     setCountScore(0);
     setCountPutt(0);
   };
+
+  const [visible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+    
+  };
+
+  
+
 
   return (
     <ImageBackground source={require("../assets/map.png")} style={styles.div}>
@@ -138,6 +155,25 @@ export default function HomeScreen() {
                   </View>
                 </TouchableOpacity>
                 <View style={styles.main}>
+                
+                
+                <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
+                
+                    <View style={{flex: 1, justifyContent: 'space-between'}}>
+                        <TextInput  onChangeText={onChangeNote}
+                                    value={note}
+                                    multiline={true}
+                                    placeholder="Prenez une Note"
+                                    maxLength={120}
+                                />
+                        <Button 
+                                title="OK"
+                                onPress={toggleOverlay}
+                                color='#3AB795'/>
+                    </View>
+                </Overlay>
+                
+
                     <ScoreTab/>
                   <View style={{ flex: 1, marginTop: 10, flexDirection: "row"}}>
                     <Badge
@@ -148,7 +184,7 @@ export default function HomeScreen() {
                       }}
                       textStyle={{ fontWeight: "bold" }}
                       value="0 note Privée"
-                      onPress={() => console.log("hello")}
+                      onPress={toggleOverlay}
                     />
                     <Badge
                       badgeStyle={{
@@ -315,4 +351,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: "#86BAA1",
   },
+  overlay: {
+    
+    width: '80%',
+    height: '50%',
+  }
 });

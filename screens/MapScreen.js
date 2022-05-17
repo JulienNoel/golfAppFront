@@ -5,6 +5,7 @@ import {
   Text,
   ListItem,
   Avatar,
+  Icon
 } from "react-native-elements";
 import React, { useState, useEffect } from "react";
 import {
@@ -15,7 +16,6 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { Icon } from "react-native-elements";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -126,7 +126,7 @@ export default function MapScreen() {
       inputStyle={{ marginLeft: 10 }}
       placeholder="Recherche de golf"
       leftIcon={<Icon name="search" size={24} color="#3AB795" />}
-      onChangeText={(val) => setPseudo(val)}
+      onChangeText={(val) => setResearch(val)}
     />
   );
 
