@@ -29,7 +29,7 @@ export default function MapScreen() {
 
   const [pseudo, setPseudo] = useState("");
   const [color, setColor] = useState("#3AB795");
-  const [newLocation, setNewLocation] = useState(null);
+  const [newCurrentLocation, setNewCurrentLocation] = useState(null);
 
   useEffect(() => {
     async function askPermissions() {
@@ -41,6 +41,7 @@ export default function MapScreen() {
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
         });
+        setNewCurrentLocation(locationInit);
         Location.watchPositionAsync({ distanceInterval: 2 }, (location) => {
           setLocation({
             longitude: location.coords.longitude,
@@ -52,7 +53,15 @@ export default function MapScreen() {
     askPermissions();
   }, []);
 
-  console.log("okok", locationInit);
+  console.log("locationInit", locationInit);
+
+  var currentLocation = async () => {
+    var currentPosition = await Location.getCurrentPositionAsync();
+    setNewCurrentLocation({
+      latitude: currentPosition.coords.latitude,
+      longitude: currentPosition.coords.longitude,
+    });
+  };
 
   let listGolf = [
     {
@@ -124,7 +133,7 @@ export default function MapScreen() {
     </Marker>
   ));
 
-  console.log(location);
+  console.log("locationinit", locationInit);
   if (locationInit.latitude) {
     return (
       <KeyboardAvoidingView
@@ -140,12 +149,16 @@ export default function MapScreen() {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          region={{
-            latitude: locationInit.latitude,
-            longitude: locationInit.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+          region={
+            newCurrentLocation
+              ? {
+                  latitude: newCurrentLocation.latitude,
+                  longitude: newCurrentLocation.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }
+              : undefined
+          }
         >
           <Marker
             image={require("../assets/UserMarker.png")}
@@ -177,7 +190,7 @@ export default function MapScreen() {
             style={{ paddingBottom: 15 }}
             onPress={() => {
               setColor("#3AB795");
-              setLocationInit(location);
+              setNewCurrentLocation(currentLocation);
             }}
           />
           <Entypo name="map" size={24} color="#3AB795" />
