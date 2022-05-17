@@ -3,11 +3,11 @@ import {
     Badge,
     Text,
     ListItem,
-    Avatar,
   } from "react-native-elements";
   import React, { useState, useRef } from "react";
-  import { StyleSheet, View, ScrollView, Button } from "react-native";
+  import { StyleSheet, View, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Image} from "react-native";
   import SwipeUpDown from 'react-native-swipe-up-down';
+  import { AntDesign } from "@expo/vector-icons";
 
   
   import Icon from "react-native-vector-icons/FontAwesome";
@@ -57,21 +57,30 @@ export default function HomeScreen() {
       let favoriteGolfsTime = [
         {time: 36},
         {time: 46},
+        {time: 66},
+        {time: 36},
+        {time: 46},
+        {time: 66},
+        {time: 36},
+        {time: 46},
         {time: 66}
       ]
 
       var favoriteGolfs = favoriteGolfsTime.map((l,i) => {
         return (
-          <View>
-            <Avatar key = {i} source={require("../assets/golf-icon.jpg")} />
-            <Text>{l.time} min</Text>
-          </View>
+            <TouchableWithoutFeedback>
+              <View>
+                <Image source={require("../assets/golf-icon.jpg")} style={{borderRadius: 100, width: '120%', height: '26%'}} />
+                <Text>{l.time} min</Text>
+              </View>
+            </TouchableWithoutFeedback>
         )
       })
 
       var inputSearchGolf = (
         <Input
-          containerStyle={{ marginTop: 30, marginBottom: 5, width: "70%" }}
+          containerStyle={{ marginTop: 30, width: "90%", backgroundColor: "white", borderRadius: 10, height: 50}}
+          inputContainerStyle={{borderBottomWidth: 0}}
           inputStyle={{ marginLeft: 10 }}
           placeholder="Recherche de golf"
           leftIcon={<Icon name="search" size={24} color="#3AB795" />}
@@ -81,25 +90,25 @@ export default function HomeScreen() {
     
       var golfList = listGolf.map((l, i) => {
         return (
+          <TouchableWithoutFeedback>
+            <TouchableOpacity>
           <ListItem key={i}>
-            <Avatar source={require("../assets/golf-icon.jpg")} />
+            <Image source={require("../assets/golf-icon.jpg")} style={{borderRadius: 100, width: '10%', height: '90%'}} />
             <ListItem.Content>
-              <ListItem.Title>{l.name} <Button
-          // onPress={'Plop'}
-          title="+"
-          color="#3AB795"
-          /></ListItem.Title>
+              <ListItem.Title>{l.name}</ListItem.Title>
               <ListItem.Subtitle>
                 {l.distance} km - {l.address}
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
+          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         );
       });
 
 return (
         <View style={styles.container}>
-            <SwipeUpDown
+            <SwipeUpDown style={{marginVertical: 0}}
                 ref={swipeUpDownRef}
                 itemMini={(show) => (
                     <View
@@ -107,7 +116,9 @@ return (
                             alignItems: "center",
                         }}
                     >
-                        <Text onPress={show} style={{ fontWeight: 'bold', color: "#3AB795", fontSize: 20 }}>Voir la liste des golfs</Text>
+                        <AntDesign name='minus' size={24} color='grey' />
+                        {/* <Text onPress={show} style={{ fontWeight: 'bold', color: "#3AB795", fontSize: 20 }}>-----</Text> */}
+                        {inputSearchGolf}
                     </View>
                 )}
                 itemFull={(close) => (
@@ -117,32 +128,41 @@ return (
                             alignItems: "center",
                         }}
                     >
-                        <Text onPress={close} style={{ fontWeight: 'bold', color: "#3AB795", fontSize: 20 }}>Voir la liste des golfs</Text>
+                        <Text onPress={close} style={{ fontWeight: 'bold', color: "#3AB795", fontSize: 20 }}>-----</Text>
                     </View>
             <View style={{display: 'flex', alignItems: 'center'}}>
             {inputSearchGolf}
             </View>
             <View style={styles.filters}>
-                <Badge status="success" value='filter 1'/>
-                <Badge status="success" value='filter 2'/>
-                <Badge status="success" value='filter 3'/>
+                <Badge status="success" value='filter 1' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
+                <Badge status="success" value='filter 2' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
+                <Badge status="success" value='filter 3' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
             </View>
-            <View style ={{marginTop: 25}}>
+            <View style ={{backgroundColor: 'red'}}>
               <Text style ={{fontSize: 20}}>Favoris</Text>
             </View>
-            <View style={styles.favoriteGolfs}>
+            <View style = {{flex: 1, alignItems: 'center' }}>
+            <ScrollView horizontal={true} style={{ width: '90%',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: 'grey',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      backgroundColor: 'white'}}>
               {favoriteGolfs}
+              </ScrollView>
             </View>
-            <ScrollView style ={{flex: 1, marginTop: 50}}>
+            <ScrollView style ={{marginTop: 10, marginBottom: 90}}>
             {golfList}
             </ScrollView>
         </View>
                 )}
-                extraMarginTop={10}
-                disableSwipeIcon
+                extraMarginTop={50}
+                disableSwipeIcon={true}
                 disablePressToShow={true} // Press item mini to show full
-                style={{ backgroundColor: "white" }} // style for swipe
-                swipeHeight={80}
+                style={{ backgroundColor: "#A0E8AF" }} // style for swipe
+                swipeHeight={160}
+                animation="spring"
             />
         </View>
     );
@@ -156,11 +176,17 @@ const styles = StyleSheet.create({
     filters: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding: 10
     },
-    favoriteGolfs: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-    }
+    // favoriteGolfs: {
+    //   width: '90%',
+    //   alignItems: 'center',
+    //   borderWidth: 1,
+    //   borderColor: 'grey',
+    //   flexDirection: 'row',
+    //   justifyContent: 'space-around',
+    //   backgroundColor: 'white',
+    // }
 });
