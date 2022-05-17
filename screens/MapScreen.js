@@ -14,7 +14,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
-
+import { Icon } from "react-native-elements";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -40,7 +40,6 @@ export default function MapScreen() {
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
         });
-        setNewCurrentLocation(locationInit);
         Location.watchPositionAsync({ distanceInterval: 2 }, (location) => {
           setLocation({
             longitude: location.coords.longitude,
@@ -197,7 +196,11 @@ export default function MapScreen() {
       </KeyboardAvoidingView>
     );
   } else {
-    return <Text>Charg</Text>;
+    return (
+      <Text style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        Chargement
+      </Text>
+    );
   }
 }
 
