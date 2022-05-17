@@ -7,25 +7,40 @@ import {
   Avatar,
 } from "react-native-elements";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
-
+import {
+  StyleSheet,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from "react-native";
+import { Icon } from "react-native-elements";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
-import Icon from "react-native-vector-icons/FontAwesome";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export default function MapScreen() {
-  const [location, setLocation] = useState({latitude: 0, longitude:0});
+  const [location, setLocation] = useState({});
+  const [locationInit, setLocationInit] = useState({});
 
   const [pseudo, setPseudo] = useState("");
+  const [color, setColor] = useState("#3AB795");
+  const [newCurrentLocation, setNewCurrentLocation] = useState(null);
 
   useEffect(() => {
     async function askPermissions() {
       var { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === "granted") {
-        Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+        var locationTemp = await Location.getCurrentPositionAsync();
+        // console.log("INIT", locationTemp);
+        setLocationInit({
+          longitude: locationTemp.coords.longitude,
+          latitude: locationTemp.coords.latitude,
+        });
+        Location.watchPositionAsync({ distanceInterval: 2 }, (location) => {
           setLocation({
             longitude: location.coords.longitude,
             latitude: location.coords.latitude,
@@ -35,6 +50,16 @@ export default function MapScreen() {
     }
     askPermissions();
   }, []);
+
+  console.log("locationInit", locationInit);
+
+  var currentLocation = async () => {
+    var currentPosition = await Location.getCurrentPositionAsync();
+    setNewCurrentLocation({
+      latitude: currentPosition.coords.latitude,
+      longitude: currentPosition.coords.longitude,
+    });
+  };
 
   let listGolf = [
     {
@@ -66,19 +91,7 @@ export default function MapScreen() {
     },
     {
       name: "golf2",
-      coordinate: { latitude: 48.84777683776753, longitude: 2.303689483736294 },
-    },
-    {
-      name: "golf3",
-      coordinate: { latitude: 48.83777683776753, longitude: 2.303689483736294 },
-    },
-    {
-      name: "golf4",
-      coordinate: { latitude: 48.82777683776753, longitude: 2.303689483736294 },
-    },
-    {
-      name: "golf5",
-      coordinate: { latitude: 48.88777683776753, longitude: 2.303689483736294 },
+      coordinate: { latitude: 40, longitude: 4 },
     },
   ];
 
@@ -109,32 +122,87 @@ export default function MapScreen() {
   var markerDisplayGolf = golf.map((point, i) => (
     <Marker
       key={i}
-      coordinate={point.coordinate}
-      title={point.name}      
-      size={10}
-    ><FontAwesome5 name="golf-ball" size={24} color="#3AB795" /></Marker>
+      coordinate={{
+        latitude: point.coordinate.latitude,
+        longitude: point.coordinate.longitude,
+      }}
+      title={point.name}
+    >
+      <Image source={require("../assets/GolfMarker.png")} />
+    </Marker>
   ));
 
-  return (
-    <MapView
-      style={{ flex: 1 }}
-      region={{
-        latitude: location.latitude,
-        longitude: location.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-    >
-      <Marker
-        image={require("../assets/UserMarker.jpg")}
-        coordinate={{
-          latitude: location.latitude,
-          longitude: location.longitude,
-        }}
-      />
-      {markerDisplayGolf}
-    </MapView>
-  );
+  console.log("locationinit", locationInit);
+  if (locationInit.latitude) {
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <MapView
+          onRegionChange={() => setColor("white")}
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: locationInit.latitude,
+            longitude: locationInit.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          region={
+            newCurrentLocation
+              ? {
+                  latitude: newCurrentLocation.latitude,
+                  longitude: newCurrentLocation.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }
+              : undefined
+          }
+        >
+          <Marker
+            image={require("../assets/UserMarker.png")}
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            style={{ width: 26, height: 28 }}
+            resizeMode="contain"
+          />
+          {markerDisplayGolf}
+        </MapView>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            position: "absolute",
+            left: 380,
+            top: 100,
+            backgroundColor: "grey",
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            borderRadius: 10,
+          }}
+        >
+          <FontAwesome
+            name="location-arrow"
+            size={24}
+            color={color}
+            style={{ paddingBottom: 15 }}
+            onPress={() => {
+              setColor("#3AB795");
+              setNewCurrentLocation(currentLocation);
+            }}
+          />
+          <Entypo name="map" size={24} color="#3AB795" />
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    );
+  } else {
+    return (
+      <Text style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        Chargement
+      </Text>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
