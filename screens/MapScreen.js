@@ -14,9 +14,10 @@ import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function MapScreen() {
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState({latitude: 0, longitude:0});
 
   const [pseudo, setPseudo] = useState("");
 
@@ -33,7 +34,7 @@ export default function MapScreen() {
       }
     }
     askPermissions();
-  }, [location]);
+  }, []);
 
   let listGolf = [
     {
@@ -61,23 +62,23 @@ export default function MapScreen() {
   var golf = [
     {
       name: "golf1",
-      coordinate: { latitude: 48.86777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 48.86777683776753, longitude: 2.303689483736294 },
     },
     {
       name: "golf2",
-      coordinate: { latitude: 48.84777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 48.84777683776753, longitude: 2.303689483736294 },
     },
     {
       name: "golf3",
-      coordinate: { latitude: 48.83777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 48.83777683776753, longitude: 2.303689483736294 },
     },
     {
       name: "golf4",
-      coordinate: { latitude: 48.82777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 48.82777683776753, longitude: 2.303689483736294 },
     },
     {
       name: "golf5",
-      coordinate: { latitude: 48.88777683776753, latitude: 2.303689483736294 },
+      coordinate: { latitude: 48.88777683776753, longitude: 2.303689483736294 },
     },
   ];
 
@@ -94,7 +95,8 @@ export default function MapScreen() {
   var golfCards = listGolf.map((l, i) => {
     return (
       <ListItem key={i}>
-        <Avatar source={require("../assets/golf-icon.jpg")} />
+        <Avatar source={require("../assets/golf-icon.jpg")}
+                size={10} />
         <ListItem.Content>
           <ListItem.Title>{l.name}</ListItem.Title>
           <ListItem.Subtitle>
@@ -108,9 +110,9 @@ export default function MapScreen() {
     <Marker
       key={i}
       coordinate={point.coordinate}
-      title={point.name}
-      image={require("../assets/GolfMarker.jpg")}
-    />
+      title={point.name}      
+      size={10}
+    ><FontAwesome5 name="golf-ball" size={24} color="#3AB795" /></Marker>
   ));
 
   return (
