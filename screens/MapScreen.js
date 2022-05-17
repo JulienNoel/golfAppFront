@@ -29,7 +29,12 @@ export default function MapScreen() {
 
   const [pseudo, setPseudo] = useState("");
   const [color, setColor] = useState("#3AB795");
+  const [colorMap, setColorMap] = useState("white");
   const [newCurrentLocation, setNewCurrentLocation] = useState(null);
+  const [mapType, setMapType] = useState("standard");
+
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
 
   useEffect(() => {
     async function askPermissions() {
@@ -69,6 +74,16 @@ export default function MapScreen() {
       latitude: currentPosition.coords.latitude,
       longitude: currentPosition.coords.longitude,
     });
+  };
+
+  var mapTypeChange = () => {
+    if (mapType === "standard") {
+      setMapType("satellite");
+      setColorMap("#3AB795");
+    } else {
+      setMapType("standard");
+      setColorMap("white");
+    }
   };
 
   let listGolf = [
@@ -118,8 +133,7 @@ export default function MapScreen() {
   var golfCards = listGolf.map((l, i) => {
     return (
       <ListItem key={i}>
-        <Avatar source={require("../assets/golf-icon.jpg")}
-                size={10} />
+        <Avatar source={require("../assets/golf-icon.jpg")} size={10} />
         <ListItem.Content>
           <ListItem.Title>{l.name}</ListItem.Title>
           <ListItem.Subtitle>
@@ -151,6 +165,7 @@ export default function MapScreen() {
       >
         <MapView
           onRegionChange={() => setColor("white")}
+          mapType={mapType}
           style={{ flex: 1 }}
           initialRegion={{
             latitude: locationInit.latitude,
@@ -188,8 +203,8 @@ export default function MapScreen() {
           activeOpacity={1}
           style={{
             position: "absolute",
-            left: 380,
-            top: 100,
+            left: windowWidth - 60,
+            top: windowHeight - 850,
             backgroundColor: "grey",
             paddingHorizontal: 10,
             paddingVertical: 10,
@@ -212,13 +227,28 @@ export default function MapScreen() {
               }
             }}
           />
-          <Entypo name="map" size={24} color="#3AB795" />
+          <Entypo
+            name="map"
+            size={24}
+            color={colorMap}
+            onPress={() => {
+              setMapType(mapTypeChange);
+            }}
+          />
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
   } else {
     return (
-      <Text style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          width: 100,
+          height: 100,
+        }}
+      >
         Chargement
       </Text>
     );
