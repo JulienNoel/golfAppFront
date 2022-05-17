@@ -6,8 +6,9 @@ import {
   ListItem,
   Avatar,
 } from "react-native-elements";
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, View, Image, ScrollView } from "react-native";
+import SwipeUpDown from 'react-native-swipe-up-down';
 
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -17,8 +18,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function MapScreen() {
   const [location, setLocation] = useState({});
-
-  const [pseudo, setPseudo] = useState("");
+  const swipeUpDownRef = useRef();
+  const [research, setResearch] = useState("");
 
   useEffect(() => {
     async function askPermissions() {
@@ -87,7 +88,7 @@ export default function MapScreen() {
       inputStyle={{ marginLeft: 10 }}
       placeholder="Recherche de golf"
       leftIcon={<Icon name="search" size={24} color="#3AB795" />}
-      onChangeText={(val) => setPseudo(val)}
+      onChangeText={(val) => setResearch(val)}
     />
   );
 
