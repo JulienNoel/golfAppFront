@@ -63,13 +63,16 @@ export default function HomeScreen() {
         {time: 66},
         {time: 36},
         {time: 46},
+        {time: 66},
+        {time: 36},
+        {time: 46},
         {time: 66}
       ]
 
       var favoriteGolfs = favoriteGolfsTime.map((l,i) => {
         return (
             <TouchableWithoutFeedback>
-              <View>
+              <View style={{borderWidth: 2, borderColor: 'red', height: 100}}>
                 <Image source={require("../assets/golf-icon.jpg")} style={{borderRadius: 100, width: '120%', height: '26%'}} />
                 <Text>{l.time} min</Text>
               </View>
@@ -79,7 +82,7 @@ export default function HomeScreen() {
 
       var inputSearchGolf = (
         <Input
-          containerStyle={{ marginTop: 30, width: "90%", backgroundColor: "white", borderRadius: 10, height: 50}}
+          containerStyle={{ marginTop: 10, width: "90%", backgroundColor: "white", borderRadius: 10, height: 50}}
           inputContainerStyle={{borderBottomWidth: 0}}
           inputStyle={{ marginLeft: 10 }}
           placeholder="Recherche de golf"
@@ -107,65 +110,46 @@ export default function HomeScreen() {
       });
 
 return (
-        <View style={styles.container}>
-            <SwipeUpDown style={{marginVertical: 0}}
-                ref={swipeUpDownRef}
-                itemMini={(show) => (
-                    <View
-                        style={{
-                            alignItems: "center",
-                        }}
-                    >
-                        <AntDesign name='minus' size={24} color='grey' />
-                        {/* <Text onPress={show} style={{ fontWeight: 'bold', color: "#3AB795", fontSize: 20 }}>-----</Text> */}
-                        {inputSearchGolf}
-                    </View>
-                )}
-                itemFull={(close) => (
-                    <View style={styles.container}>
-                      <View
-                        style={{
-                            alignItems: "center",
-                        }}
-                    >
-                        <Text onPress={close} style={{ fontWeight: 'bold', color: "#3AB795", fontSize: 20 }}>-----</Text>
-                    </View>
-            <View style={{display: 'flex', alignItems: 'center'}}>
-            {inputSearchGolf}
-            </View>
-            <View style={styles.filters}>
-                <Badge status="success" value='filter 1' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
-                <Badge status="success" value='filter 2' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
-                <Badge status="success" value='filter 3' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
-            </View>
-            <View style ={{backgroundColor: 'red'}}>
-              <Text style ={{fontSize: 20}}>Favoris</Text>
-            </View>
-            <View style = {{flex: 1, alignItems: 'center' }}>
-            <ScrollView horizontal={true} style={{ width: '90%',
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: 'grey',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      backgroundColor: 'white'}}>
-              {favoriteGolfs}
-              </ScrollView>
-            </View>
-            <ScrollView style ={{marginTop: 10, marginBottom: 90}}>
-            {golfList}
-            </ScrollView>
+  <View style={styles.container}>
+    <SwipeUpDown
+      ref={swipeUpDownRef}
+      itemMini={() => (
+        <View style={{alignItems: "center"}}>
+          <AntDesign name='up' size={24} color='white'/>
+          {inputSearchGolf}
         </View>
-                )}
-                extraMarginTop={50}
-                disableSwipeIcon={true}
-                disablePressToShow={true} // Press item mini to show full
-                style={{ backgroundColor: "#A0E8AF" }} // style for swipe
-                swipeHeight={160}
-                animation="spring"
-            />
+      )}
+      itemFull={() => (
+      <View style={styles.container}>
+        <View
+          style={{alignItems: "center"}}>
         </View>
-    );
+        <View style={{display: 'flex', alignItems: 'center'}}>
+          {inputSearchGolf}
+        </View>
+      <View style={styles.filters}>
+        <Badge status="success" value='filter 1' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
+        <Badge status="success" value='filter 2' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
+        <Badge status="success" value='filter 3' badgeStyle={{height: 25, width: 50, backgroundColor: '#3AB795'}}/>
+      </View>
+      <View style ={{backgroundColor: 'red'}}>
+        <Text style ={{fontSize: 20}}>Favoris</Text>
+      </View>
+        <ScrollView horizontal={true}>
+          {favoriteGolfs}
+        </ScrollView>
+        <ScrollView style ={{marginBottom: 90}}>
+          {golfList}
+        </ScrollView>
+        </View>
+          )}
+          extraMarginTop={50}                
+          style={{ backgroundColor: "#A0E8AF" }} // style for swipe
+          swipeHeight={160}
+          animation="spring"
+    />
+  </View>
+);
 }
 
 
