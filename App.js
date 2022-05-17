@@ -12,6 +12,7 @@ const store = createStore(combineReducers({ template }));
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
 import ScoreScreen from "./screens/ScoreScreen";
+import ScoreTable from './screens/scoreTable';
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";

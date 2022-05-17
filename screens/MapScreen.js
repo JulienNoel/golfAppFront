@@ -118,7 +118,8 @@ export default function MapScreen() {
   var golfCards = listGolf.map((l, i) => {
     return (
       <ListItem key={i}>
-        <Avatar source={require("../assets/golf-icon.jpg")} />
+        <Avatar source={require("../assets/golf-icon.jpg")}
+                size={10} />
         <ListItem.Content>
           <ListItem.Title>{l.name}</ListItem.Title>
           <ListItem.Subtitle>
