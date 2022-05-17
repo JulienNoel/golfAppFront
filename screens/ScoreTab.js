@@ -26,7 +26,8 @@ export default function ScoreTable() {
             <Text>E</Text>
           </Row>
           <Row style={styles.cell}>
-            <Text>F</Text>
+            <Text style={{fontSize: 16 , backgroundColor:"yellow",alignSelf:"flex-end"}}>F<Text style={{fontSize: 10,  backgroundColor:"green"}}>am</Text></Text>
+        
           </Row>
           
           
@@ -88,18 +89,17 @@ export default function ScoreTable() {
 
 const styles = StyleSheet.create({
   containerTable: {
-    width: 600,
-    height: 300,
-    padding: 16,
-    paddingTop: 100,
+    marginTop:20,
+    width: 400,
+    padding:0,
     backgroundColor: '#fff',
   },
-
   cell: {
+    flex:1,
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#ddd',
-    flex: 1, 
+    padding:5,
     justifyContent: 'center',
-    alignItems: 'center'
   },
 });
