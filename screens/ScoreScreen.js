@@ -9,12 +9,11 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
+import ScoreTab from "./ScoreTab"
 import SwipeUpDown from "react-native-swipe-up-down";
 
 import { Badge } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-
-import { Col, Row, Grid } from "react-native-easy-grid";
 
 export default function HomeScreen() {
   const swipeUpDownRef = useRef();
@@ -138,74 +137,7 @@ export default function HomeScreen() {
                   </View>
                 </TouchableOpacity>
                 <View style={styles.main}>
-                  <ScrollView horizontal={true}>
-                    <View style={styles.containerTable}>
-                      <Grid>
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>A</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>B</Text>
-                          </Row>
-                        </Col>
-
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>E</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>F</Text>
-                          </Row>
-                        </Col>
-
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>1</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>2</Text>
-                          </Row>
-                        </Col>
-
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>3</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>4</Text>
-                          </Row>
-                        </Col>
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>5</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>6</Text>
-                          </Row>
-                        </Col>
-
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>7</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>8</Text>
-                          </Row>
-                        </Col>
-
-                        <Col size={50}>
-                          <Row style={styles.cell}>
-                            <Text>7</Text>
-                          </Row>
-                          <Row style={styles.cell}>
-                            <Text>8</Text>
-                          </Row>
-                        </Col>
-                      </Grid>
-                    </View>
-                  </ScrollView>
-
+                    <ScoreTab/>
                   <View
                     style={{ flex: 1, marginTop: 100, flexDirection: "row" }}
                   >
@@ -383,19 +315,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#86BAA1",
-  },
-  containerTable: {
-    width: 600,
-    height: 300,
-    padding: 16,
-    paddingTop: 100,
-    backgroundColor: '#fff',
-  },
-  cell: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    flex: 1, 
-    justifyContent: 'center',
-    alignItems: 'center'
   },
 });
