@@ -260,29 +260,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-//     return (
-//         <View style={styles.container}>
-//             <View style={{display: 'flex', alignItems: 'center'}}>
-//             {inputSearchGolf}
-//             </View>
-//             <View style={styles.filters}>
-//                 <Badge status="success" value='filter 1'/>
-//                 <Badge status="success" value='filter 2'/>
-//                 <Badge status="success" value='filter 3'/>
-//             </View>
-//             <ScrollView style ={{flex: 1, marginTop: 50}}>
-//             {golfCards}
-//             </ScrollView>
-//         </View>
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1
-//     },
-//     filters: {
-//         display: 'flex',
-//         flexDirection: 'row',
-//         justifyContent: 'space-around'
-//     }
