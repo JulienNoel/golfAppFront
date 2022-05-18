@@ -13,6 +13,7 @@ import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
 import ScoreScreen from "./screens/ScoreScreen";
 import LogScreen from './screens/LogScreen';
+import RegisterScreen from "./screens/registerScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -50,7 +51,7 @@ function BottomNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={LogScreen} />
       <Tab.Screen name="Map" component={MapScreen} />
       <Tab.Screen name="Score" component={ScoreScreen} />
     </Tab.Navigator>
@@ -63,6 +64,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
