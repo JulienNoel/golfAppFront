@@ -14,7 +14,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import SwipeUpDownGolf from "./SwipeUpDown";
 
-export default function MapScreen(props) {
+import { connect } from "react-redux";
+
+function MapScreen(props) {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
 
@@ -192,3 +194,9 @@ export default function MapScreen(props) {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { golf: state.golf };
+}
+
+export default connect(mapStateToProps, null)(MapScreen);

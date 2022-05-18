@@ -7,7 +7,9 @@ LogBox.ignoreAllLogs();
 import template from "./reducers/template.reducer";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ template }));
+import golf from "./reducers/golf";
+
+const store = createStore(combineReducers({ golf }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
