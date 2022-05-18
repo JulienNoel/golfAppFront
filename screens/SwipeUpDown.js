@@ -1,4 +1,4 @@
-import { Input, Badge, Text, ListItem } from "react-native-elements";
+import { Input, Badge, Text, ListItem, Slider } from "react-native-elements";
 import React, { useState, useRef } from "react";
 import {
   StyleSheet,
@@ -13,11 +13,16 @@ import SwipeUpDown from "react-native-swipe-up-down";
 import { Entypo } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function SwipeUpDownGolf() {
+export default function SwipeUpDownGolf(props) {
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
+  const [bgColorFilter1, setBgColorFilter1] = useState('#b3edbf')
+  const [bgColorFilter2, setBgColorFilter2] = useState('#b3edbf')
+  const [bgColorFilter3, setBgColorFilter3] = useState('#b3edbf')
+  const [bgColorFilter4, setBgColorFilter4] = useState('#b3edbf')
+  const [valueKm, setValueKm] = useState(0)
 
   let listGolf = [
     {
@@ -57,27 +62,27 @@ export default function SwipeUpDownGolf() {
     },
   ];
 
-  let favoriteGolfsTime = [
-    { time: 36 },
-    { time: 46 },
-    { time: 66 },
-    { time: 36 },
-    { time: 46 },
-    { time: 66 },
-    { time: 36 },
-    { time: 46 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
-    { time: 66 },
+  let favoriteGolfsdistance = [
+    { distance: 36 },
+    { distance: 46 },
+    { distance: 66 },
+    { distance: 36 },
+    { distance: 46 },
+    { distance: 66 },
+    { distance: 36 },
+    { distance: 46 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
+    { distance: 66 },
   ];
 
-  var favoriteGolfs = favoriteGolfsTime.map((l, i) => {
+  var favoriteGolfs = favoriteGolfsdistance.map((l, i) => {
     return (
       <TouchableWithoutFeedback key={Math.random()}>
         <View style={{ marginHorizontal: 20 }}>
@@ -89,7 +94,7 @@ export default function SwipeUpDownGolf() {
               height: windowHeight / 22,
             }}
           />
-          <Text>{l.time} min</Text>
+          <Text>{l.distance} km</Text>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -118,8 +123,14 @@ export default function SwipeUpDownGolf() {
   var golfList = listGolf.map((l, i) => {
     return (
       <TouchableWithoutFeedback>
-        <TouchableOpacity>
-          <ListItem key={Math.random()}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("GolfInfo")}>
+          <ListItem
+            key={Math.random()}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: "#3AB795",
+            }}
+          >
             <Image
               source={require("../assets/golf-icon.jpg")}
               style={{
@@ -139,6 +150,38 @@ export default function SwipeUpDownGolf() {
       </TouchableWithoutFeedback>
     );
   });
+
+  var changeColor1 = () => {
+    if (bgColorFilter1 == '#b3edbf'){
+      setBgColorFilter1('#3AB795')
+    } else {
+      setBgColorFilter1('#b3edbf')
+    }
+  }
+
+  var changeColor2 = () => {
+    if (bgColorFilter2 == '#b3edbf'){
+      setBgColorFilter2('#3AB795')
+    } else {
+      setBgColorFilter2('#b3edbf')
+    }
+  }
+
+  var changeColor3 = () => {
+    if (bgColorFilter3 == '#b3edbf'){
+      setBgColorFilter3('#3AB795')
+    } else {
+      setBgColorFilter3('#b3edbf')
+    }
+  }
+
+  var changeColor4 = () => {
+    if (bgColorFilter4 == '#b3edbf'){
+      setBgColorFilter4('#3AB795')
+    } else {
+      setBgColorFilter4('#b3edbf')
+    }
+  }
 
   return (
     <SwipeUpDown
@@ -178,33 +221,76 @@ export default function SwipeUpDownGolf() {
           </View>
           <View style={styles.filters}>
             <Badge
+              onPress={() => changeColor1()}
               status="success"
-              value="filter 1"
+              value="9 trous"
               badgeStyle={{
                 height: 25,
-                width: 50,
-                backgroundColor: "#3AB795",
+                width: 80,
+                backgroundColor: bgColorFilter1
               }}
             />
             <Badge
+              onPress={() => changeColor2()}
               status="success"
-              value="filter 2"
+              value="18 trous"
               badgeStyle={{
                 height: 25,
-                width: 50,
-                backgroundColor: "#3AB795",
+                width: 80,
+                backgroundColor: bgColorFilter2
               }}
             />
             <Badge
+              onPress={() => changeColor3()}
               status="success"
-              value="filter 3"
+              value="Practice"
               badgeStyle={{
                 height: 25,
-                width: 50,
-                backgroundColor: "#3AB795",
+                width: 80,
+                backgroundColor: bgColorFilter3
+              }}
+            />
+            <Badge
+              onPress={() => changeColor4()}
+              status="success"
+              value="Restauration"
+              badgeStyle={{
+                height: 25,
+                width: 80,
+                backgroundColor: bgColorFilter4
               }}
             />
           </View>
+
+        <Slider
+        value={valueKm}
+        onValueChange={setValueKm}
+        maximumValue={200}
+        minimumValue={0}
+        step={20}
+        allowTouchTrack
+        trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+        minimumTrackTintColor = '#3AB795'
+        maximumTrackTintColor = '#b3edbf'
+        thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
+        thumbProps={{
+          children: (
+            <Icon
+              name="circle"
+              type="font-awesome"
+              size={20}
+              reverse
+              containerStyle={{ bottom: 20, right: 20 }}
+              color='#3AB795'
+            />
+          ),
+        }}
+      />
+
+    <Text style={{ marginBottom: windowHeight - windowHeight / 1.01, color: 'white' }}>Distance: {valueKm} km</Text>
+
+
+
           <View
             style={{
               marginLeft: windowWidth / 17,
@@ -245,7 +331,7 @@ export default function SwipeUpDownGolf() {
           </ScrollView>
         </View>
       )}
-      extraMarginTop={50}
+      extraMarginTop={windowHeight - windowHeight / 1.09}
       disableSwipeIcon={true}
       disablePressToShow={true} // Press item mini to show full
       swipeHeight={160}

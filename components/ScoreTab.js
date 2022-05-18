@@ -32,7 +32,7 @@ console.log(props.score)
             <Text style={styles.SubCell}>{element.putts}</Text>
           </Row>
         </Col>
-      </TouchableWithoutFeedback >
+      </TouchableWithoutFeedback>
     )
   })
 
