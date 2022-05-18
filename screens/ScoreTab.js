@@ -5,10 +5,37 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ScoreTable() {
+  var nombreTrou = 9;
+  var nombreJoueur = 1;
+  var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
 
+  var ParcoursData = generateParcours(nombreTrou).map((element, index) => {
+    return (
+      <TouchableWithoutFeedback>
+        <Col style={{ width: 50 }}>
+          <Row style={styles.cell}>
+            <Text style={styles.black}>{element.hole}</Text>
+            <Text style={styles.grey}>{element.par}</Text>
+          </Row>
+        </Col>
+      </TouchableWithoutFeedback>
+    )
+  })
+
+  var ScoreTab = generateScore(nombreTrou, nombreJoueur).map((element, index) => {
+    return (
+      <TouchableWithoutFeedback>
+        <Col style={{ width: 50 }}>
+          <Row style={styles.cellResult}>
+            <Text style={styles.black}>{element.score}</Text>
+            <Text style={styles.SubCell}>{element.putts}</Text>
+          </Row>
+        </Col>
+      </TouchableWithoutFeedback >
+    )
+  })
 
   return (
-
 
     <View style={styles.containerTable}>
       <Grid>
@@ -21,60 +48,12 @@ export default function ScoreTable() {
             <Badge badgeStyle={{ backgroundColor: "#f1c40f", height: 20, width: 8, marginRight: 5 }} />
             <Text style={styles.NameCell}>Alexis</Text>
           </Row>
-          <Row style={styles.SecondCell}>
-            <Badge badgeStyle={{ backgroundColor: "#FF5E57", height: 20, width: 8, marginRight: 5 }} />
-            <Text style={styles.NameCell}>Edouard</Text>
-          </Row>
-          <Row style={styles.SecondCell}>
-            <Badge badgeStyle={{ backgroundColor: "#DDA0DD", height: 20, width: 8, marginRight: 5 }} />
-            <Text style={styles.NameCell}>Cyprien</Text>
-          </Row>
-
         </Col>
+
         <ScrollView horizontal={true}>
-          <Col style={{ width: 50 }}>
-            <Row style={styles.cell}>
-              <Text style={styles.black}>1</Text>
-              <Text style={styles.grey}>3</Text>
-            </Row>
-
-            <Row style={styles.cellResult}>
-              <Text style={styles.black}>3</Text>
-              <Text style={styles.SubCell}>2</Text>
-            </Row>
-
-            <Row style={styles.cellResult}>
-              <Text style={styles.black}>2</Text>
-              <Text style={styles.SubCell}>1</Text>
-            </Row>
-
-            <Row style={styles.cellResult}>
-              <Text style={styles.black}>4</Text>
-              <Text style={styles.SubCell}>2</Text>
-            </Row>
-
-          </Col>
-          <Col style={{ width: 50 }}>
-            <Row style={styles.cell}>
-              <Text style={styles.black}>1</Text>
-              <Text style={styles.grey}>3</Text>
-            </Row>
-
-            <Row style={styles.cellResult}>
-              <Text style={styles.black}>3</Text>
-              <Text style={styles.SubCell}>2</Text>
-            </Row>
-
-            <Row style={styles.cellResult}>
-              <Text style={styles.black}>2</Text>
-              <Text style={styles.SubCell}>1</Text>
-            </Row>
-
-            <Row style={styles.cellResult}>
-              <Text style={styles.black}>4</Text>
-              <Text style={styles.SubCell}>2</Text>
-            </Row>
-
+          <Col>
+            <Row>{ParcoursData}</Row>
+            <Row>{ScoreTab}</Row>
           </Col>
         </ScrollView>
 
@@ -86,19 +65,33 @@ export default function ScoreTable() {
           <Row style={styles.SecondCellLast}>
             <Text style={styles.ScoreCell}>4</Text>
           </Row>
-          <Row style={styles.SecondCellLast}>
-            <Text style={styles.ScoreCell}>5</Text>
-          </Row>
-          <Row style={styles.SecondCellLast}>
-            <Text style={styles.ScoreCell}>2</Text>
-          </Row>
+
         </Col>
-
       </Grid>
-
     </View>
 
   );
+}
+
+function generateScore(LongueurTrou, NombreJoueur) {
+  var tableauScore = []
+  for (var i = 1; i <= LongueurTrou; i++) {
+    var score = {};
+    score.score = Math.floor(Math.random() * (0 + 7));
+    score.putts = Math.floor(Math.random() * (0 + 7));
+    tableauScore.push(score)
+  }
+  return tableauScore
+}
+function generateParcours(LongueurTrou) {
+  var tableauScore = []
+  for (var i = 1; i <= LongueurTrou; i++) {
+    var score = {};
+    score.hole = i;
+    score.par = Math.floor(Math.random() * (0 + 7));
+    tableauScore.push(score)
+  }
+  return tableauScore
 }
 
 const styles = StyleSheet.create({
@@ -191,8 +184,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     width: 25,
     textAlign: 'right',
-    position: "absolute",
-    top: 22,
-    left: 13,
+    position: "relative",
+    top: -5,
+    left: 5,
   }
 });
