@@ -22,6 +22,7 @@ import * as Permissions from "expo-permissions";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import SwipeUpDownGolf from "./SwipeUpDown";
 
 export default function MapScreen() {
   const [location, setLocation] = useState({});
@@ -199,6 +200,7 @@ export default function MapScreen() {
           />
           {markerDisplayGolf}
         </MapView>
+        <SwipeUpDownGolf />
         <TouchableOpacity
           activeOpacity={1}
           style={{

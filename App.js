@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View, LogBox } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, LogBox } from "react-native";
 
 LogBox.ignoreAllLogs();
 
