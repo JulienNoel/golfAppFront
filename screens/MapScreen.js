@@ -1,16 +1,6 @@
-import {
-  Input,
-  Badge,
-  Card,
-  Text,
-  ListItem,
-  Avatar,
-  Icon,
-} from "react-native-elements";
+import { Text } from "react-native-elements";
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
-  View,
   Image,
   KeyboardAvoidingView,
   TouchableOpacity,
@@ -24,7 +14,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import SwipeUpDownGolf from "./SwipeUpDown";
 
-export default function MapScreen() {
+import { connect } from "react-redux";
+
+function MapScreen(props) {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
 
@@ -73,29 +65,6 @@ export default function MapScreen() {
     }
   };
 
-  let listGolf = [
-    {
-      name: "Mon beau golf",
-      distance: 41,
-      address: "Sur le parking des anges",
-    },
-    {
-      name: "Mon magnifique golf",
-      distance: 56,
-      address: "En haut de la tour Eiffel",
-    },
-    {
-      name: "Le golf de l'extrême",
-      distance: 26,
-      address: "Pas loin de chez mon pote Louis",
-    },
-    {
-      name: "Mon très beau golf",
-      distance: 78,
-      address: "Dans les nuages",
-    },
-  ];
-
   var golf = [
     {
       name: "golf1",
@@ -107,32 +76,9 @@ export default function MapScreen() {
     },
   ];
 
-  var inputSearchGolf = (
-    <Input
-      containerStyle={{ marginTop: 30, marginBottom: 5, width: "70%" }}
-      inputStyle={{ marginLeft: 10 }}
-      placeholder="Recherche de golf"
-      leftIcon={<Icon name="search" size={24} color="#3AB795" />}
-      onChangeText={(val) => setResearch(val)}
-    />
-  );
-
-  var golfCards = listGolf.map((l, i) => {
-    return (
-      <ListItem key={Math.random()}>
-        <Avatar source={require("../assets/golf-icon.jpg")} size={10} />
-        <ListItem.Content>
-          <ListItem.Title>{l.name}</ListItem.Title>
-          <ListItem.Subtitle>
-            {l.distance} km - {l.address}
-          </ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
-    );
-  });
   var markerDisplayGolf = golf.map((point, i) => (
     <Marker
-      key={i}
+      key={Math.random()}
       coordinate={{
         latitude: point.coordinate.latitude,
         longitude: point.coordinate.longitude,
@@ -158,6 +104,7 @@ export default function MapScreen() {
             longitude: locationInit.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
+            zIndex: 0,
           }}
           region={
             newCurrentLocation
@@ -178,24 +125,32 @@ export default function MapScreen() {
                     latitude: location.latitude,
                     longitude: location.longitude,
                   }
-                : undefined
+                : {
+                    latitude: 0,
+                    longitude: 0,
+                  }
             }
             style={{ width: 26, height: 28 }}
             resizeMode="contain"
           />
           {markerDisplayGolf}
         </MapView>
-        <SwipeUpDownGolf />
+        {/*If you are using navigation in child component don't forget to send navigation in props to child*/}
+        <SwipeUpDownGolf
+          navigation={props.navigation}
+          style={{ position: "absolute", zIndex: 1 }}
+        ></SwipeUpDownGolf>
         <TouchableOpacity
           activeOpacity={1}
           style={{
             position: "absolute",
             left: windowWidth - windowWidth / 6,
             top: windowHeight - windowHeight / 1.09,
-            backgroundColor: "grey",
+            backgroundColor: "#A0E8AF",
             paddingHorizontal: 10,
             paddingVertical: 10,
             borderRadius: 10,
+            zIndex: 1,
           }}
         >
           <FontAwesome
@@ -240,10 +195,8 @@ export default function MapScreen() {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+function mapStateToProps(state) {
+  return { golf: state.golf };
+}
+
+export default connect(mapStateToProps, null)(MapScreen);

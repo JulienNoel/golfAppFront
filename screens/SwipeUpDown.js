@@ -13,7 +13,7 @@ import SwipeUpDown from "react-native-swipe-up-down";
 import { Entypo } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function SwipeUpDownGolf() {
+export default function SwipeUpDownGolf(props) {
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
@@ -123,8 +123,14 @@ export default function SwipeUpDownGolf() {
   var golfList = listGolf.map((l, i) => {
     return (
       <TouchableWithoutFeedback>
-        <TouchableOpacity>
-          <ListItem key={Math.random()}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("GolfInfo")}>
+          <ListItem
+            key={Math.random()}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: "#3AB795",
+            }}
+          >
             <Image
               source={require("../assets/golf-icon.jpg")}
               style={{
@@ -325,7 +331,7 @@ export default function SwipeUpDownGolf() {
           </ScrollView>
         </View>
       )}
-      extraMarginTop={50}
+      extraMarginTop={windowHeight - windowHeight / 1.09}
       disableSwipeIcon={true}
       disablePressToShow={true} // Press item mini to show full
       swipeHeight={160}
