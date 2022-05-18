@@ -24,7 +24,7 @@ export default function RegisterScreen() {
 
   var handleSubmitRegister = async () => {
     
-    const data = await fetch('http://192.168.10.122:3000/signup', {
+    const data = await fetch('http://192.168.0.12:3000/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
@@ -32,8 +32,17 @@ export default function RegisterScreen() {
 
     const body = await data.json()
     
+    if (body.result) {
+
     setEmailRegister('')
     setPasswordRegister('')
+    setName('')
+    setPrenom('')
+    setBirthDate('')
+
+    }
+    
+
 
   }
 
@@ -49,7 +58,6 @@ export default function RegisterScreen() {
           style={styles.TextInput}
           placeholder="Nom"
           placeholderTextColor="#003f5c"
-          secureTextEntry={true}
           onChangeText={(val) => setName(val)}
           value={name}
         />
@@ -60,7 +68,6 @@ export default function RegisterScreen() {
           style={styles.TextInput}
           placeholder="Prenom"
           placeholderTextColor="#003f5c"
-          secureTextEntry={true}
           onChangeText={(val) => setPrenom(val)}
           value={prenom}
         />
@@ -93,8 +100,7 @@ export default function RegisterScreen() {
         <TextInput
           style={styles.TextInput}
           placeholder="Date de Naissance"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
+          placeholderTextColor="#003f5c"          
           onChangeText={(val) => setBirthDate(val)}
           value={birthDate}
           autoComplete='birthdate-full'

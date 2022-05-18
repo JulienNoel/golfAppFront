@@ -1,6 +1,7 @@
 import { Text } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
 import React, { useEffect } from "react";
+import {connect} from 'react-redux';
 
 function HomeScreen(props) {
   useEffect(() => {

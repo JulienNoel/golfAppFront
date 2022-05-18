@@ -31,7 +31,7 @@ export default function ScoreTable() {
             <Text style={styles.SubCell}>{element.putts}</Text>
           </Row>
         </Col>
-      </TouchableWithoutFeedback >
+      </TouchableWithoutFeedback>
     )
   })
 
