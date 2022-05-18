@@ -14,13 +14,12 @@ import {
 } from "react-native";
 import ScoreTab from "./ScoreTab"
 import SwipeUpDown from "react-native-swipe-up-down";
-import {connect} from 'react-redux';
 import { Badge, Overlay, Button } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import { normalizeText } from "react-native-elements/dist/helpers";
 
-function ScorePageModel(props) {
+export default function ScorePageModel(props) {
 
   const swipeUpDownRef = useRef();
   const [countScore, setCountScore] = useState(0);
@@ -43,7 +42,6 @@ function ScorePageModel(props) {
       score[numeroPage].score = countScore;
       score[numeroPage].putts = countPutt;
       setNumeroPage(numeroPage - 1)
-      props.onSubmitScore(score)
     } 
   }
 
@@ -52,7 +50,6 @@ function ScorePageModel(props) {
       score[numeroPage].score = countScore;
       score[numeroPage].putts = countPutt;
       setNumeroPage(numeroPage + 1)
-      props.onSubmitScore(score)
     } 
   }
 
@@ -240,8 +237,6 @@ function ScorePageModel(props) {
                       </View>
                     </View>
                   </Overlay>
-
-
                   <ScoreTab/>
                   <View style={{ flex: 1, marginTop: 10, flexDirection: "row" }}>
                     <Badge
@@ -478,16 +473,3 @@ const styles = StyleSheet.create({
   }
 
 });
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onSubmitScore: function(score) { 
-      dispatch( {type: 'onSubmitScore', score : score}) 
-    }
-  }
-}
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(ScorePageModel);

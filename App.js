@@ -5,11 +5,10 @@ LogBox.ignoreAllLogs();
 
 // Initialisation du store
 import template from "./reducers/template.reducer";
-import score from "./reducers/score.reducer";
 import golf from "./reducers/golf";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ template,score,golf }));
+const store = createStore(combineReducers({ template,golf }));
 
 
 
