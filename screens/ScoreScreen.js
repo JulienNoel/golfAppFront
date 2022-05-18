@@ -8,15 +8,14 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   ScrollView,
-  Button,
   TextInput,
   Switch,
- 
+
 } from "react-native";
 import ScoreTab from "./ScoreTab"
 import SwipeUpDown from "react-native-swipe-up-down";
 
-import { Badge, Overlay } from "react-native-elements";
+import { Badge, Overlay, Button } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -45,21 +44,21 @@ export default function HomeScreen() {
   };
 
   const majScoreMoins = () => {
-      if (countPutt > 0)
-    setCountScore(countScore - 1);
+    if (countPutt > 0)
+      setCountScore(countScore - 1);
     setCountPutt(countPutt - 1);
   };
 
-  const resetScore = () => {
-    setCountScore(0);
-    setCountPutt(0);
-  };
+  // const resetScore = () => {
+  //   setCountScore(0);
+  //   setCountPutt(0);
+  // };
 
   const [visible, setVisible] = useState(false); //state overlay
 
   const toggleOverlay = () => {
     setVisible(!visible);
-    
+
   };
 
   const [isEnabled, setIsEnabled] = useState(false); //state switch
@@ -67,26 +66,26 @@ export default function HomeScreen() {
 
   var notePP = ''
 
-  if (isEnabled) {    
-    notePP = <Text><Switch
-                          trackColor={{ false: "#767577", true: "#81b0ff" }}
-                          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                          ios_backgroundColor="#3e3e3e"
-                          onValueChange={toggleSwitch}
-                          value={isEnabled}
-                      />Note Publique</Text>
+  if (isEnabled) {
+    notePP = <View style={{ justifyContent: "center", flexDirection: "row", alignItems: "center" }}><Switch
+      trackColor={{ false: "#767577", true: "#81b0ff" }}
+      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+      ios_backgroundColor="#3e3e3e"
+      onValueChange={toggleSwitch}
+      value={isEnabled}
+    /><Text style={{ margin: 5 }}>Note Privée</Text></View>
 
-  }else{
-    notePP = <Text><Switch
-                          trackColor={{ false: "#767577", true: "#767577" }}
-                          thumbColor={isEnabled ? "#3AB795" : "#3AB795"}
-                          ios_backgroundColor="#3e3e3e"
-                          onValueChange={toggleSwitch}
-                          value={isEnabled}
-                      />Note privée</Text>
+  } else {
+    notePP = <View style={{ justifyContent: "center", flexDirection: "row", alignItems: "center" }}><Switch
+      trackColor={{ false: "#767577", true: "#81b0ff" }}
+      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+      ios_backgroundColor="#3e3e3e"
+      onValueChange={toggleSwitch}
+      value={isEnabled}
+    /><Text style={{ margin: 5 }}>Note Publique</Text></View>
   }
 
-  
+
 
 
   return (
@@ -166,13 +165,13 @@ export default function HomeScreen() {
             <TouchableWithoutFeedback>
               <View>
                 <TouchableOpacity onPress={close}>
-                  <View style={{ alignItems: "center", height: 40}}>
+                  <View style={{ alignItems: "center", height: 40 }}>
                     <Text
                       style={{
                         fontWeight: "bold",
                         color: "#3AB795",
                         fontSize: 20,
-                        margin:10
+                        margin: 10
                       }}
                     >
                       Score
@@ -180,33 +179,39 @@ export default function HomeScreen() {
                   </View>
                 </TouchableOpacity>
                 <View style={styles.main}>
-                
-                
-                <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
-                
-                    <View style={{flex: 1, justifyContent: 'space-between'}}>                                                
-                            <View>         
-                            {notePP}
-                            </View>                                 
 
-                        <TextInput  onChangeText={onChangeNote}
-                                    value={note}
-                                    multiline={true}
-                                    placeholder="Prenez une Note"
-                                    maxLength={120}
-                                />                              
-                        
-                                                        
-                        <Button     title="OK"
-                                    onPress={toggleOverlay}
-                                    color='#3AB795'/>
-                        
+
+                  <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
+                    <View style={{ flex: 1, justifyContent: 'space-between', width: "80%", flexDirection: "columns" }}>
+                      <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                        <Text style={{ fontWeight: "bold", fontSize: 20, margin: 10 }}>Note publique</Text>
+                      </View>
+
+                      <TextInput onChangeText={onChangeNote}
+                        value={note}
+                        multiline={true}
+                        placeholder="Titre"
+                        style={styles.inputTitreOverlay}
+                      />
+                      <TextInput onChangeText={onChangeNote}
+                        value={note}
+                        multiline={true}
+                        placeholder="Note"
+                        style={styles.inputTextOverlay}
+                      />
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        {notePP}
+                        <Button title="Valider"
+                          onPress={toggleOverlay}
+                          buttonStyle={{ backgroundColor: '#3AB795' }}
+                        />
+                      </View>
                     </View>
-                </Overlay>
-                
+                  </Overlay>
 
-                    <ScoreTab/>
-                  <View style={{ flex: 1, marginTop: 10, flexDirection: "row"}}>
+
+                  <ScoreTab />
+                  <View style={{ flex: 1, marginTop: 10, flexDirection: "row" }}>
                     <Badge
                       badgeStyle={{
                         backgroundColor: "#3AB795",
@@ -383,8 +388,33 @@ const styles = StyleSheet.create({
     borderColor: "#86BAA1",
   },
   overlay: {
-    
+    alignItems: "center",
     width: '80%',
-    height: '50%',
+    height: "40%",
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowColor: "#000",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+  },
+  inputTitreOverlay: {
+    padding: 5,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: "grey",
+  },
+  inputTextOverlay: {
+    padding: 5,
+    height: "50%",
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: "grey",
   }
+
 });
