@@ -55,20 +55,6 @@ export default function MapScreen() {
     askPermissions();
   }, []);
 
-  //   useEffect(() => {
-  //     async function askPermissions() {
-  //       Location.watchPositionAsync({ distanceInterval: 1000 }, (location) => {
-  //         setLocation({
-  //           longitude: location.coords.longitude,
-  //           latitude: location.coords.latitude,
-  //         });
-  //       });
-  //     }
-  //     askPermissions();
-  //   }, []);
-
-  console.log("locationInit", locationInit);
-
   var currentLocation = async () => {
     var currentPosition = await Location.getCurrentPositionAsync();
     setNewCurrentLocation({
@@ -157,7 +143,6 @@ export default function MapScreen() {
     </Marker>
   ));
 
-  console.log("locationinit", locationInit);
   if (locationInit.latitude) {
     return (
       <KeyboardAvoidingView
