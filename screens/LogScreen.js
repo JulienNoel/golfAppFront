@@ -13,8 +13,10 @@ import {
  
 export default function LogScreen() {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailSignIn, setEmailSignIn] = useState("");
+  const [passwordSignIn, setPasswordSignIn] = useState("");
+  const [emailSignUp, setEmailSignUp] = useState("");
+  const [passwordSignUp, setPasswordSignUp] = useState("");
  
   return (
     
@@ -29,7 +31,7 @@ export default function LogScreen() {
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(email) => setEmailSignUp(email)}
         />
       </View>
  
@@ -39,7 +41,7 @@ export default function LogScreen() {
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(password) => setPasswordSignUp(password)}
         />
       </View>
  
@@ -50,7 +52,7 @@ export default function LogScreen() {
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(email) => setEmailSignIn(email)}
         />
       </View>
  
@@ -60,7 +62,7 @@ export default function LogScreen() {
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(password) => setPasswordSignIn(password)}
         />
       </View>
  
