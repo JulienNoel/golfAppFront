@@ -5,7 +5,7 @@ import {
   Text,
   ListItem,
   Avatar,
-  Icon
+  Icon,
 } from "react-native-elements";
 import React, { useState, useEffect } from "react";
 import {
@@ -22,6 +22,7 @@ import * as Permissions from "expo-permissions";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import SwipeUpDownGolf from "./SwipeUpDown";
 
 export default function MapScreen() {
   const [location, setLocation] = useState({});
@@ -132,7 +133,7 @@ export default function MapScreen() {
 
   var golfCards = listGolf.map((l, i) => {
     return (
-      <ListItem key={i}>
+      <ListItem key={Math.random()}>
         <Avatar source={require("../assets/golf-icon.jpg")} size={10} />
         <ListItem.Content>
           <ListItem.Title>{l.name}</ListItem.Title>
@@ -199,6 +200,7 @@ export default function MapScreen() {
           />
           {markerDisplayGolf}
         </MapView>
+        <SwipeUpDownGolf />
         <TouchableOpacity
           activeOpacity={1}
           style={{
@@ -260,29 +262,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-//     return (
-//         <View style={styles.container}>
-//             <View style={{display: 'flex', alignItems: 'center'}}>
-//             {inputSearchGolf}
-//             </View>
-//             <View style={styles.filters}>
-//                 <Badge status="success" value='filter 1'/>
-//                 <Badge status="success" value='filter 2'/>
-//                 <Badge status="success" value='filter 3'/>
-//             </View>
-//             <ScrollView style ={{flex: 1, marginTop: 50}}>
-//             {golfCards}
-//             </ScrollView>
-//         </View>
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1
-//     },
-//     filters: {
-//         display: 'flex',
-//         flexDirection: 'row',
-//         justifyContent: 'space-around'
-//     }
