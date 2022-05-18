@@ -3,15 +3,16 @@ import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { Badge } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { ScrollView } from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 
-export default function ScoreTable() {
-  var nombreTrou = 9;
+function ScoreTable(props) {
+  var nombreTrou = 18;
   var nombreJoueur = 1;
   var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
 
   var ParcoursData = generateParcours(nombreTrou).map((element, index) => {
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback key={index}>
         <Col style={{ width: 50 }}>
           <Row style={styles.cell}>
             <Text style={styles.black}>{element.hole}</Text>
@@ -21,10 +22,10 @@ export default function ScoreTable() {
       </TouchableWithoutFeedback>
     )
   })
-
-  var ScoreTab = generateScore(nombreTrou, nombreJoueur).map((element, index) => {
+console.log(props.score)
+  var ScoreTab = props.score.map((element, index) => {
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback key={index}>
         <Col style={{ width: 50 }}>
           <Row style={styles.cellResult}>
             <Text style={styles.black}>{element.score}</Text>
@@ -71,17 +72,6 @@ export default function ScoreTable() {
     </View>
 
   );
-}
-
-function generateScore(LongueurTrou, NombreJoueur) {
-  var tableauScore = []
-  for (var i = 1; i <= LongueurTrou; i++) {
-    var score = {};
-    score.score = Math.floor(Math.random() * (0 + 7));
-    score.putts = Math.floor(Math.random() * (0 + 7));
-    tableauScore.push(score)
-  }
-  return tableauScore
 }
 function generateParcours(LongueurTrou) {
   var tableauScore = []
@@ -189,3 +179,12 @@ const styles = StyleSheet.create({
     left: 5,
   }
 });
+
+function mapStateToProps(state){
+  return {score: state.score}
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(ScoreTable);

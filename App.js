@@ -5,9 +5,10 @@ LogBox.ignoreAllLogs();
 
 // Initialisation du store
 import template from "./reducers/template.reducer";
+import score from "./reducers/score.reducer";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ template }));
+const store = createStore(combineReducers({ template,score }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
