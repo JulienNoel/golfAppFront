@@ -10,6 +10,7 @@ import {
   ScrollView,
   Button,
   TextInput,
+  Switch,
  
 } from "react-native";
 import ScoreTab from "./ScoreTab"
@@ -54,12 +55,36 @@ export default function HomeScreen() {
     setCountPutt(0);
   };
 
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false); //state overlay
 
   const toggleOverlay = () => {
     setVisible(!visible);
     
   };
+
+  const [isEnabled, setIsEnabled] = useState(false); //state switch
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  var notePP = ''
+
+  if (isEnabled) {    
+    notePP = <Text><Switch
+                          trackColor={{ false: "#767577", true: "#81b0ff" }}
+                          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                          ios_backgroundColor="#3e3e3e"
+                          onValueChange={toggleSwitch}
+                          value={isEnabled}
+                      />Note Publique</Text>
+
+  }else{
+    notePP = <Text><Switch
+                          trackColor={{ false: "#767577", true: "#767577" }}
+                          thumbColor={isEnabled ? "#3AB795" : "#3AB795"}
+                          ios_backgroundColor="#3e3e3e"
+                          onValueChange={toggleSwitch}
+                          value={isEnabled}
+                      />Note privée</Text>
+  }
 
   
 
@@ -159,17 +184,23 @@ export default function HomeScreen() {
                 
                 <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
                 
-                    <View style={{flex: 1, justifyContent: 'space-between'}}>
+                    <View style={{flex: 1, justifyContent: 'space-between'}}>                                                
+                            <View>         
+                            {notePP}
+                            </View>                                 
+
                         <TextInput  onChangeText={onChangeNote}
                                     value={note}
                                     multiline={true}
                                     placeholder="Prenez une Note"
                                     maxLength={120}
-                                />
-                        <Button 
-                                title="OK"
-                                onPress={toggleOverlay}
-                                color='#3AB795'/>
+                                />                              
+                        
+                                                        
+                        <Button     title="OK"
+                                    onPress={toggleOverlay}
+                                    color='#3AB795'/>
+                        
                     </View>
                 </Overlay>
                 
@@ -184,7 +215,7 @@ export default function HomeScreen() {
                       }}
                       textStyle={{ fontWeight: "bold" }}
                       value="0 note Privée"
-                      onPress={toggleOverlay}
+                      onPress={() => console.log('note publique')}
                     />
                     <Badge
                       badgeStyle={{
@@ -194,7 +225,7 @@ export default function HomeScreen() {
                       }}
                       textStyle={{ fontWeight: "bold" }}
                       value="13 notes Publique"
-                      onPress={() => console.log("hello")}
+                      onPress={() => console.log('note privée')}
                     />
                   </View>
                   <View style={{ flex: 1, flexDirection: "row" }}>
@@ -206,7 +237,7 @@ export default function HomeScreen() {
                       }}
                       textStyle={{ fontWeight: "bold" }}
                       value="Créer une note"
-                      onPress={() => console.log("hello")}
+                      onPress={toggleOverlay}
                     />
                   </View>
 
