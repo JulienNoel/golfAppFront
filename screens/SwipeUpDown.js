@@ -12,8 +12,9 @@ import {
 import SwipeUpDown from "react-native-swipe-up-down";
 import { Entypo } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { connect } from "react-redux";
 
-export default function SwipeUpDownGolf(props) {
+function SwipeUpDownGolf(props) {
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
@@ -22,45 +23,11 @@ export default function SwipeUpDownGolf(props) {
   const [bgColorFilter2, setBgColorFilter2] = useState('#b3edbf')
   const [bgColorFilter3, setBgColorFilter3] = useState('#b3edbf')
   const [bgColorFilter4, setBgColorFilter4] = useState('#b3edbf')
+  const [filter9trous, setFilter9trous] = useState(false)
+  const [filter18trous, setFilter18trous] = useState(false)
+  const [filterPractice, setFilterPractice] = useState(false)
+  const [filterRestauration, setFilterRestauration] = useState(false)
   const [valueKm, setValueKm] = useState(0)
-
-  let listGolf = [
-    {
-      name: "Mon beau golf",
-      distance: 41,
-      address: "Sur le parking des anges",
-    },
-    {
-      name: "Mon magnifique golf",
-      distance: 56,
-      address: "En haut de la tour Eiffel",
-    },
-    {
-      name: "Le golf de l'extrême",
-      distance: 26,
-      address: "Pas loin de chez mon pote Louis",
-    },
-    {
-      name: "Mon golf de beau gosse",
-      distance: 78,
-      address: "Dans les nuages",
-    },
-    {
-      name: "Le golf des plus beaux",
-      distance: 7,
-      address: "Sous terre",
-    },
-    {
-      name: "What the Golf ?",
-      distance: 780,
-      address: "On dirait le sud",
-    },
-    {
-      name: "On a highway to golf",
-      distance: 68,
-      address: "Sur une scène de concert",
-    },
-  ];
 
   let favoriteGolfsdistance = [
     { distance: 36 },
@@ -120,7 +87,17 @@ export default function SwipeUpDownGolf(props) {
     />
   );
 
-  var golfList = listGolf.map((l, i) => {
+  var filteredGolfs = props.golfInDb[0].result
+
+  if (filter9trous){
+    filteredGolfs = filteredGolfs.filter(golf => golf.parcours[0].nbreTrou == 9 || golf.parcours[1].nbreTrou == 9)
+  }
+
+  if (filter18trous){
+    filteredGolfs = filteredGolfs.filter(golf => golf.parcours[0].nbreTrou == 18 || golf.parcours[1].nbreTrou == 18)
+  }
+
+  var golfList = filteredGolfs.map((l, i) => {
     return (
       <TouchableWithoutFeedback>
         <TouchableOpacity onPress={() => props.navigation.navigate("GolfInfo")}>
@@ -140,9 +117,9 @@ export default function SwipeUpDownGolf(props) {
               }}
             />
             <ListItem.Content>
-              <ListItem.Title>{l.name}</ListItem.Title>
+              <ListItem.Title>{l.golfName}</ListItem.Title>
               <ListItem.Subtitle>
-                {l.distance} km - {l.address}
+                {l.golfAddress.golfCity}, {l.parcours.length} parcours, {l.parcours[0].nbreTrou} trous et {l.parcours[1].nbreTrou} trous
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -154,23 +131,29 @@ export default function SwipeUpDownGolf(props) {
   var changeColor1 = () => {
     if (bgColorFilter1 == '#b3edbf'){
       setBgColorFilter1('#3AB795')
+      setFilter9trous(true)
     } else {
       setBgColorFilter1('#b3edbf')
+      setFilter9trous(false)
     }
   }
 
   var changeColor2 = () => {
     if (bgColorFilter2 == '#b3edbf'){
       setBgColorFilter2('#3AB795')
+      setFilter18trous(true)
     } else {
       setBgColorFilter2('#b3edbf')
+      setFilter18trous(false)
     }
   }
 
   var changeColor3 = () => {
     if (bgColorFilter3 == '#b3edbf'){
       setBgColorFilter3('#3AB795')
+      setFilterPractice(true)
     } else {
+      setFilterPractice(false)
       setBgColorFilter3('#b3edbf')
     }
   }
@@ -178,7 +161,9 @@ export default function SwipeUpDownGolf(props) {
   var changeColor4 = () => {
     if (bgColorFilter4 == '#b3edbf'){
       setBgColorFilter4('#3AB795')
+      setFilterRestauration(true)
     } else {
+      setFilterRestauration(false)
       setBgColorFilter4('#b3edbf')
     }
   }
@@ -352,3 +337,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+function mapStateToProps(state) {
+  return { golfInDb: state.golf };
+}
+
+export default connect(mapStateToProps, null)(SwipeUpDownGolf);

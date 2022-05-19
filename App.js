@@ -8,13 +8,10 @@ import template from "./reducers/template.reducer";
 import golf from "./reducers/golf";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ template,golf }));
-
-
+const store = createStore(combineReducers({ template, golf }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
-import ScoreScreen from "./screens/ScoreScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
 import GolfInfoScreen from "./screens/GolfInfoScreen";
@@ -38,6 +35,24 @@ function StackMapScreen() {
     </Stack.Navigator>
   );
 }
+// navigation score //
+
+import ScorePageStart from "./screens/Score/ScorePageStart";
+import ScoreReservedParty from "./screens/Score/ScoreReservedParty";
+import ScoreNewParty from "./screens/Score/ScoreNewParty";
+import ScorePageScreen from "./screens/Score/ScorePageScreen";
+
+function StackScoreScreen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="ScorePageStart" component={ScorePageStart} />
+      <Stack.Screen name="ScoreReservedParty" component={ScoreReservedParty} />
+      <Stack.Screen name="ScoreNewParty" component={ScoreNewParty} />
+      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} />
+    </Stack.Navigator>
+  );
+}
+
 function BottomNavigator() {
   return (
     <Tab.Navigator
@@ -64,7 +79,7 @@ function BottomNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={LogScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="StackMap" component={StackMapScreen} />
       <Tab.Screen name="Score" component={ScoreScreen} />
     </Tab.Navigator>

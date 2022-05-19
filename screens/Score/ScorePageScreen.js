@@ -126,7 +126,7 @@ export default function ScorePageModel() {
 
 
   return (
-    <ImageBackground source={require("../assets/map.png")} style={styles.div}>
+    <ImageBackground source={require("../../assets/map.png")} style={styles.div}>
       <View style={styles.infoCard}>
         <View style={{ margin: 20 }}>
           <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 5 }}>
@@ -157,12 +157,12 @@ export default function ScorePageModel() {
         <TouchableOpacity onPress={() => minus()}>
           <Image
             style={{ width: 50, height: 50 }}
-            source={require("../assets/previous.png")}
+            source={require("../../assets/previous.png")}
           /></TouchableOpacity>
         <TouchableOpacity onPress={() => next()}>
           <Image
             style={{ width: 50, height: 50 }}
-            source={require("../assets/next.png")}
+            source={require("../../assets/next.png")}
           /></TouchableOpacity>
       </View>
       <View style={styles.badgeIcon}>
@@ -348,7 +348,7 @@ export default function ScorePageModel() {
                     <TouchableOpacity onPress={() => minus()}>
                       <Image
                         style={{ width: 50, height: 50 }}
-                        source={require("../assets/previous.png")}
+                        source={require("../../assets/previous.png")}
                       /></TouchableOpacity>
 
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
@@ -357,7 +357,7 @@ export default function ScorePageModel() {
                     <TouchableOpacity onPress={() => next()}>
                       <Image
                         style={{ width: 50, height: 50 }}
-                        source={require("../assets/next.png")}
+                        source={require("../../assets/next.png")}
                       /></TouchableOpacity>
                   </View>
                 </View>
@@ -385,7 +385,7 @@ function generateParcours(LongueurTrou) {
     score.hole = i;
     score.par = Math.floor(Math.random() * (0 + 7));
     score.distance = Math.floor(Math.random() * (0 + 200));
-    score.img = "../assets/MapType.png"
+    score.img = "../../assets/MapType.png"
     tableauScore.push(score)
   }
   return tableauScore
@@ -609,9 +609,7 @@ function ScoreTable(tableauScore) {
     )
   })
 
-
   return (
-
     <View style={styles.containerTable}>
       <Grid>
         <Col style={{ width: 90 }}>
@@ -638,12 +636,10 @@ function ScoreTable(tableauScore) {
             <Text style={styles.grey}>76</Text>
           </Row>
           <Row style={styles.SecondCellLast}>
-            <Text style={styles.ScoreCell}>4</Text>
+            <Text style={styles.ScoreCell}>{tableauScore.map(item => item.score).reduce((prev, curr) => prev + curr, 0)}</Text>
           </Row>
-
         </Col>
       </Grid>
     </View>
-
   );
 }
