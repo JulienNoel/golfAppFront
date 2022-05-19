@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Dimensions,
+  View,
 } from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
@@ -20,11 +21,13 @@ import { connect } from "react-redux";
 function MapScreen(props) {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
+  const [newCurrentLocation, setNewCurrentLocation] = useState(null);
+  const [locationGolfList, setlocationGolfList] = useState([]);
 
   const [pseudo, setPseudo] = useState("");
+
   const [color, setColor] = useState("#3AB795");
   const [colorMap, setColorMap] = useState("white");
-  const [newCurrentLocation, setNewCurrentLocation] = useState(null);
   const [mapType, setMapType] = useState("standard");
 
   const windowWidth = Dimensions.get("window").width;
@@ -43,6 +46,9 @@ function MapScreen(props) {
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
         });
+
+        // var LongEtLat = await Location.geocodeAsync(props.golf[0].golfAdress);
+        console.log("mapscreen", props.golf);
       }
     }
     askPermissions();
@@ -66,25 +72,14 @@ function MapScreen(props) {
     }
   };
 
-  var golf = [
-    {
-      name: "golf1",
-      coordinate: { latitude: 48.86777683776753, longitude: 2.303689483736294 },
-    },
-    {
-      name: "golf2",
-      coordinate: { latitude: 40, longitude: 4 },
-    },
-  ];
-
-  var markerDisplayGolf = golf.map((point, i) => (
+  var markerDisplayGolf = props.golf[0].result.map((point, i) => (
     <Marker
       key={Math.random()}
       coordinate={{
-        latitude: point.coordinate.latitude,
-        longitude: point.coordinate.longitude,
+        latitude: point.golfAddress.golfLatitude,
+        longitude: point.golfAddress.golfLongitude,
       }}
-      title={point.name}
+      title={point.golfName}
     >
       <Image source={require("../assets/GolfMarker.png")} />
     </Marker>
@@ -105,7 +100,6 @@ function MapScreen(props) {
             longitude: locationInit.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
-            zIndex: 0,
           }}
           region={
             newCurrentLocation
@@ -151,7 +145,6 @@ function MapScreen(props) {
             paddingHorizontal: 10,
             paddingVertical: 10,
             borderRadius: 10,
-            zIndex: 1,
           }}
         >
           <FontAwesome
@@ -183,15 +176,15 @@ function MapScreen(props) {
     );
   } else {
     return (
-      <Text
+      <View
         style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        Chargement
-      </Text>
+        <Text>Chargement...</Text>
+      </View>
     );
   }
 }

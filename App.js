@@ -8,9 +8,7 @@ import template from "./reducers/template.reducer";
 import golf from "./reducers/golf";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ template,golf }));
-
-
+const store = createStore(combineReducers({ template, golf }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
@@ -81,9 +79,9 @@ function BottomNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={LogScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="StackMap" component={StackMapScreen} />
-      <Tab.Screen name="Score" component={StackScoreScreen} />
+      <Tab.Screen name="Score" component={ScoreScreen} />
     </Tab.Navigator>
   );
 }
