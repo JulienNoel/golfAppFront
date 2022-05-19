@@ -19,7 +19,7 @@ export default function LogScreen(props) {
 
   var handleSubmitLogin = async () => {
     
-    const data = await fetch('http://192.168.1.157:3000/login', {
+    const data = await fetch('https://calm-bastion-61741.herokuapp.com/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailLogin}&passwordFromFront=${passwordLogin}`
@@ -56,6 +56,7 @@ export default function LogScreen(props) {
           placeholderTextColor="#003f5c"
           onChangeText={(email) => setEmailLogin(email)}
           value={emailLogin}
+          keyboardType='email-address'
         />
       </View>
  
@@ -74,10 +75,10 @@ export default function LogScreen(props) {
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>    
 
-      <Text style={styles.signinText}>Créer un compte</Text>
+      <Text style={styles.newAccountText}>Pas de Compte ?</Text>
 
       <TouchableOpacity style={styles.loginBtn} onPress={() => props.navigation.navigate('Register')}>
-        <Text style={styles.loginText}>REGISTER</Text>
+        <Text style={styles.loginText}>CREER UN COMPTE</Text>
       </TouchableOpacity>        
      
     </View>
@@ -135,9 +136,18 @@ const styles = StyleSheet.create({
   },
   signinText: {
       fontWeight: 'bold',
-      marginBottom: 15,
+      marginBottom: 10,
+      marginTop: 15,
       fontSize: 20,
       color: '#86BAA1'
   },
+  newAccountText: {
+
+      fontWeight: 'bold',      
+      marginTop: 15,
+      fontSize: 20,
+      color: '#86BAA1'
+
+  }
   
 });

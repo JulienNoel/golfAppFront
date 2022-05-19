@@ -12,7 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@expo/webpack-config": "~0.16.2",
     "@mui/material": "^5.7.0",
+    "@react-native-async-storage/async-storage": "^1.17.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/native": "^5.9.8",
@@ -37,8 +39,7 @@
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.1",
     "redux": "^4.2.0",
-    "webpack-dev-server": "~3.11.0",
-    "@expo/webpack-config": "~0.16.2"
+    "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

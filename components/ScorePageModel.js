@@ -10,16 +10,15 @@ import {
   ScrollView,
   TextInput,
   Switch,
-
 } from "react-native";
-import ScoreTab from "./ScoreTab"
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { ScrollView as ScrollViewGH } from 'react-native-gesture-handler';
 import SwipeUpDown from "react-native-swipe-up-down";
 import { Badge, Overlay, Button } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/FontAwesome";
-import { normalizeText } from "react-native-elements/dist/helpers";
 
-export default function ScorePageModel(props) {
+export default function ScorePageModel() {
 
   const swipeUpDownRef = useRef();
   const [countScore, setCountScore] = useState(0);
@@ -31,55 +30,66 @@ export default function ScorePageModel(props) {
   const [score, setScore] = useState(generateScore(18));
 
   useEffect(() => {
-    function page () {
+    function page() {
       setPage(tableauScore[numeroPage])
     }
     page()
   }, [numeroPage]);
 
-  function minus (){
-    if(numeroPage>0){
+  function minus() {
+    if (numeroPage > 0) {
       score[numeroPage].score = countScore;
       score[numeroPage].putts = countPutt;
+      setCountScore(score[numeroPage - 1].score);
+      setCountPutt(score[numeroPage - 1].putts);
       setNumeroPage(numeroPage - 1)
-    } 
+    }
   }
 
-  function next (){
-    if(numeroPage<17){
+  function next() {
+    if (numeroPage < 17) {
       score[numeroPage].score = countScore;
       score[numeroPage].putts = countPutt;
+      setCountScore(score[numeroPage+1].score);
+      setCountPutt(score[numeroPage+1].putts);
       setNumeroPage(numeroPage + 1)
-    } 
+    }
   }
-
-  if (countScore < 0) {
-    setCountScore(0);
-  }
-
-  if (countPutt < 0) {
-    setCountPutt(0);
-  }
-
-  if (countScore == countPutt && countScore != 0) {
-    setCountScore(countScore + 1);
-  }
-
-  const majScorePlus = () => {
-    setCountScore(countScore + 1);
-    setCountPutt(countPutt + 1);
+//Comptage score
+  var majScoreMoins = (typeJeux) => {
+    if (typeJeux === "putts") {
+      if (countPutt > 0 && countScore >= countPutt) {
+        setCountScore(countScore - 1);
+        setCountPutt(countPutt - 1);
+        score[numeroPage].score = countScore - 1;
+        score[numeroPage].putts = countPutt - 1;
+      }
+    }
+    else if (typeJeux === "score") {
+      if (countScore > 0 && countScore === countPutt) {
+        setCountScore(countScore - 1);
+        setCountPutt(countPutt - 1);
+        score[numeroPage].score = countScore - 1;
+        score[numeroPage].putts = countPutt - 1;
+      } else if (countScore > 0) {
+        setCountScore(countScore - 1);
+        score[numeroPage].score = countScore - 1;
+      }
+    }
   };
 
-  const majScoreMoins = () => {
-    if (countPutt > 0)
-      setCountScore(countScore - 1);
-    setCountPutt(countPutt - 1);
+  var majScorePlus = (typeJeux) => {
+    if (typeJeux === "putts") {
+      setCountScore(countScore + 1);
+      setCountPutt(countPutt + 1);
+      score[numeroPage].score = countScore + 1;
+      score[numeroPage].putts = countPutt + 1;
+    } else if (typeJeux === "score") {
+      setCountScore(countScore + 1);
+      score[numeroPage].score = countScore + 1;
+    }
   };
-
-  // const resetScore = () => {
-  //   setCountScore(0);
-  //   setCountPutt(0);
-  // };
+//
 
   const [visible, setVisible] = useState(false); //state overlay
 
@@ -237,7 +247,7 @@ export default function ScorePageModel(props) {
                       </View>
                     </View>
                   </Overlay>
-                  <ScoreTab/>
+                  {ScoreTable(score)}
                   <View style={{ flex: 1, marginTop: 10, flexDirection: "row" }}>
                     <Badge
                       badgeStyle={{
@@ -291,7 +301,7 @@ export default function ScorePageModel(props) {
                           size={50}
                           type="font-awesome"
                           color="#3AB795"
-                          onPress={() => setCountScore(countScore - 1)}
+                          onPress={() => { majScoreMoins("score") }}
                         />
                         <View style={styles.middleScore}>
                           <Text>{countScore}</Text>
@@ -302,7 +312,7 @@ export default function ScorePageModel(props) {
                           size={50}
                           type="font-awesome"
                           color="#3AB795"
-                          onPress={() => setCountScore(countScore + 1)}
+                          onPress={() => { majScorePlus("score") }}
                         />
                       </View>
                     </View>
@@ -318,7 +328,7 @@ export default function ScorePageModel(props) {
                           size={50}
                           type="font-awesome"
                           color="#3AB795"
-                          onPress={majScoreMoins}
+                          onPress={() => { majScoreMoins("putts") }}
                         />
                         <View style={styles.middleScore}>
                           <Text>{countPutt}</Text>
@@ -329,7 +339,7 @@ export default function ScorePageModel(props) {
                           size={50}
                           type="font-awesome"
                           color="#3AB795"
-                          onPress={majScorePlus}
+                          onPress={() => { majScorePlus("putts") }}
                         />
                       </View>
                     </View>
@@ -345,7 +355,7 @@ export default function ScorePageModel(props) {
                       Trou n° {page.hole}
                     </Text>
                     <TouchableOpacity onPress={() => next()}>
-                      <Image 
+                      <Image
                         style={{ width: 50, height: 50 }}
                         source={require("../assets/next.png")}
                       /></TouchableOpacity>
@@ -470,6 +480,166 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     borderColor: "grey",
+  },
+  containerTable: {
+    marginTop: 5,
+    height: 220,
+  },
+  FirstCell: {
+    flex: 1,
+    height: "20%",
+    flexDirection: "column",
+    justifyContent: "center",
+    borderRightWidth: 5,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 5,
+  },
+  FirstCellLast: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    height: "20%",
+    borderWidth: 1,
+    borderLeftWidth: 5,
+    borderColor: '#ddd',
+    padding: 5,
+    alignItems: 'flex-end',
+  },
+  SecondCell: {
+    flex: 1,
+    borderWidth: 1,
+    height: "20%",
+    borderRightWidth: 5,
+    alignItems: "center",
+    borderColor: '#ddd',
+    padding: 5,
+    justifyContent: 'flex-start',
+  },
+  SecondCellLast: {
+    flex: 1,
+    borderWidth: 1,
+    height: "20%",
+    borderLeftWidth: 5,
+    alignItems: "center",
+    borderColor: '#ddd',
+    padding: 5,
+    justifyContent: 'flex-end',
+  },
+  cell: {
+    flex: 1,
+    height: "20%",
+    flexDirection: "column",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 5,
+    justifyContent: 'center',
+  },
+  cellResult: {
+    flex: 1,
+    height: "20%",
+    flexDirection: "column",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 5,
+    justifyContent: 'center',
+  },
+  black: {
+    fontSize: 16,
+    color: "black",
+    fontWeight: "bold",
+  },
+  grey: {
+    fontSize: 14,
+    color: "grey",
+    fontWeight: "400",
+  },
+  NameCell: {
+    fontSize: 16,
+    color: "black",
+    fontWeight: "400",
+  },
+  ScoreCell: {
+    fontSize: 16,
+    color: "black",
+    fontWeight: "600",
+  },
+  SubCell: {
+    fontSize: 12,
+    width: 25,
+    textAlign: 'right',
+    position: "relative",
+    top: -5,
+    left: 5,
   }
 
 });
+
+
+function ScoreTable(tableauScore) {
+  var nombreTrou = 18;
+  var nombreJoueur = 1;
+  var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
+
+  var ParcoursData = generateParcours(nombreTrou).map((element, index) => {
+    return (
+      <TouchableWithoutFeedback key={index}>
+        <Col style={{ width: 50 }}>
+          <Row style={styles.cell}>
+            <Text style={styles.black}>{element.hole}</Text>
+            <Text style={styles.grey}>{element.par}</Text>
+          </Row>
+        </Col>
+      </TouchableWithoutFeedback>
+    )
+  })
+
+  var ScoreTab = tableauScore.map((element, index) => {
+    return (
+      <TouchableWithoutFeedback key={index}>
+        <Col style={{ width: 50 }}>
+          <Row style={styles.cellResult}>
+            <Text style={styles.black}>{element.score}</Text>
+            <Text style={styles.SubCell}>{element.putts}</Text>
+          </Row>
+        </Col>
+      </TouchableWithoutFeedback>
+    )
+  })
+
+  return (
+    <View style={styles.containerTable}>
+      <Grid>
+        <Col style={{ width: 90 }}>
+          <Row style={styles.FirstCell}>
+            <Text style={styles.black}>Hole</Text>
+            <Text style={styles.grey}>Par</Text>
+          </Row>
+          <Row style={styles.SecondCell}>
+            <Badge badgeStyle={{ backgroundColor: "#f1c40f", height: 20, width: 8, marginRight: 5 }} />
+            <Text style={styles.NameCell}>Alexis</Text>
+          </Row>
+        </Col>
+
+        <ScrollViewGH horizontal={true}>
+          <Col>
+            <Row>{ParcoursData}</Row>
+            <Row>{ScoreTab}</Row>
+          </Col>
+        </ScrollViewGH>
+
+        <Col style={{ width: 60 }}>
+          <Row style={styles.FirstCellLast}>
+            <Text style={styles.black}>Total</Text>
+            <Text style={styles.grey}>76</Text>
+          </Row>
+          <Row style={styles.SecondCellLast}>
+            <Text style={styles.ScoreCell}>{tableauScore.map(item => item.score).reduce((prev, curr) => prev + curr, 0)}</Text>
+          </Row>
+        </Col>
+      </Grid>
+    </View>
+  );
+}
