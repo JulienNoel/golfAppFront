@@ -11,68 +11,74 @@ import {
   ImageBackground
 } from "react-native";
  
-export default function LogScreen() {
+export default function LogScreen(props) {
 
-  const [emailSignIn, setEmailSignIn] = useState("");
-  const [passwordSignIn, setPasswordSignIn] = useState("");
-  const [emailSignUp, setEmailSignUp] = useState("");
-  const [passwordSignUp, setPasswordSignUp] = useState("");
+  const [emailLogin, setEmailLogin] = useState("");
+  const [passwordLogin, setPasswordLogin] = useState("");
+  const [error, setError] = useState([])
+
+  var handleSubmitLogin = async () => {
+    
+    const data = await fetch('http://192.168.0.12:3000/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `emailFromFront=${emailLogin}&passwordFromFront=${passwordLogin}`
+    })
+
+    const body = await data.json()
+    console.log(body.result)
+
+    if (body.result) {
+
+      setEmailLogin('')
+      setPasswordLogin('')
+
+    }
+
+        
+
+  } 
+
+
  
   return (
     
     <View style={styles.container}>
     
       <Image style={styles.image} source={require('../assets/pro-golf-logo-maker-1558a.png')} />
+ 
+      <Text style={styles.signinText}>LOG IN</Text>
+      <View style={styles.inputView}>
+        
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Email"
+          placeholderTextColor="#003f5c"
+          onChangeText={(email) => setEmailLogin(email)}
+          value={emailLogin}
+        />
+      </View>
+ 
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Password"
+          placeholderTextColor="#003f5c"
+          secureTextEntry={true}
+          onChangeText={(password) => setPasswordLogin(password)}
+          value={passwordLogin}
+        />
+      </View>
 
-      <Text style={styles.signinText}>Sign Up</Text>
-      <View style={styles.inputView}>
-        
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmailSignUp(email)}
-        />
-      </View>
- 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPasswordSignUp(password)}
-        />
-      </View>
- 
-      <Text style={styles.signinText}>Sign In</Text>
-      <View style={styles.inputView}>
-        
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmailSignIn(email)}
-        />
-      </View>
- 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPasswordSignIn(password)}
-        />
-      </View>
- 
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-      </TouchableOpacity>
- 
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitLogin()}>
         <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
+      </TouchableOpacity>    
+
+      <Text style={styles.signinText}>Créer un compte</Text>
+
+      <TouchableOpacity style={styles.loginBtn} onPress={() => props.navigation.navigate('Register')}>
+        <Text style={styles.loginText}>REGISTER</Text>
+      </TouchableOpacity>        
      
     </View>
     
@@ -95,27 +101,21 @@ const styles = StyleSheet.create({
  
   inputView: {
     backgroundColor: "white",
-    borderRadius: 30,
+    borderRadius: 5,
     width: "70%",
     height: 45,
-    marginBottom: 20,
+    marginBottom: 20,    
     borderWidth: 1,
     borderColor: "#86BAA1",
-    alignItems: "center",
-    justifyContent: 'center'
+    
   },
  
   TextInput: {
     height: 50,
     flex: 1,
+    marginLeft: 5,
     justifyContent: 'center',
     alignItems: "center"
-  },
- 
-  forgot_button: {
-
-    height: 30,
-    
   },
  
   loginBtn: {

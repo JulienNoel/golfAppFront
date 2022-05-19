@@ -1,17 +1,18 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import { Badge } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView as ScrollViewGH} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 
 export default function ScoreTable() {
-  var nombreTrou = 9;
+  var nombreTrou = 18;
   var nombreJoueur = 1;
   var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
 
   var ParcoursData = generateParcours(nombreTrou).map((element, index) => {
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback key={index}>
         <Col style={{ width: 50 }}>
           <Row style={styles.cell}>
             <Text style={styles.black}>{element.hole}</Text>
@@ -22,18 +23,18 @@ export default function ScoreTable() {
     )
   })
 
-  var ScoreTab = generateScore(nombreTrou, nombreJoueur).map((element, index) => {
-    return (
-      <TouchableWithoutFeedback>
-        <Col style={{ width: 50 }}>
-          <Row style={styles.cellResult}>
-            <Text style={styles.black}>{element.score}</Text>
-            <Text style={styles.SubCell}>{element.putts}</Text>
-          </Row>
-        </Col>
-      </TouchableWithoutFeedback >
-    )
-  })
+      var ScoreTab = generateScore(nombreTrou).map((element, index) => {
+        return (
+          <TouchableWithoutFeedback key={index}>
+            <Col style={{ width: 50 }}>
+              <Row style={styles.cellResult}>
+                <Text style={styles.black}>{element.score}</Text>
+                <Text style={styles.SubCell}>{element.putts}</Text>
+              </Row>
+            </Col>
+          </TouchableWithoutFeedback>
+        )})
+
 
   return (
 
@@ -50,12 +51,12 @@ export default function ScoreTable() {
           </Row>
         </Col>
 
-        <ScrollView horizontal={true}>
+        <ScrollViewGH horizontal={true}>
           <Col>
             <Row>{ParcoursData}</Row>
             <Row>{ScoreTab}</Row>
           </Col>
-        </ScrollView>
+        </ScrollViewGH>
 
         <Col style={{ width: 60 }}>
           <Row style={styles.FirstCellLast}>
@@ -72,23 +73,23 @@ export default function ScoreTable() {
 
   );
 }
-
-function generateScore(LongueurTrou, NombreJoueur) {
-  var tableauScore = []
-  for (var i = 1; i <= LongueurTrou; i++) {
-    var score = {};
-    score.score = Math.floor(Math.random() * (0 + 7));
-    score.putts = Math.floor(Math.random() * (0 + 7));
-    tableauScore.push(score)
-  }
-  return tableauScore
-}
 function generateParcours(LongueurTrou) {
   var tableauScore = []
   for (var i = 1; i <= LongueurTrou; i++) {
     var score = {};
     score.hole = i;
     score.par = Math.floor(Math.random() * (0 + 7));
+    tableauScore.push(score)
+  }
+  return tableauScore
+}
+
+function generateScore(LongueurTrou) {
+  var tableauScore = []
+  for (var i = 1; i <= LongueurTrou; i++) {
+    var score = {};
+    score.score = Math.floor(Math.random() * (0 + 7));
+    score.putts = Math.floor(Math.random() * (1 + 7));
     tableauScore.push(score)
   }
   return tableauScore
