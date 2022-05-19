@@ -10,8 +10,11 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
+
+import {connect} from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
  
-export default function RegisterScreen() {
+export function RegisterScreen(props) {
 
   
   const [emailRegister, setEmailRegister] = useState("");
@@ -19,12 +22,13 @@ export default function RegisterScreen() {
   const [name, setName] = useState('');
   const [prenom, setPrenom] = useState('');
   const [birthDate, setBirthDate] = useState('');
+  
 
   const [error, setError] = useState([])
 
   var handleSubmitRegister = async () => {
     
-    const data = await fetch('http://192.168.0.12:3000/register', {
+    const data = await fetch('https://calm-bastion-61741.herokuapp.com/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
@@ -34,6 +38,8 @@ export default function RegisterScreen() {
     
     if (body.result) {
 
+    props.addToken(body.user.token)
+    AsyncStorage.setItem("token", body.user.token)
     setEmailRegister('')
     setPasswordRegister('')
     setName('')
@@ -41,10 +47,16 @@ export default function RegisterScreen() {
     setBirthDate('')
 
     }
-    
-
 
   }
+
+  AsyncStorage.getItem("token", function(error, data) {
+    
+    console.log(data);
+   });
+  //var tabErrorsSignin = listErrorsSignin.map((error,i) => {
+  //  return(<p>{error}</p>)
+  //})
 
  
   return (
@@ -82,6 +94,7 @@ export default function RegisterScreen() {
           placeholderTextColor="#003f5c"
           onChangeText={(val) => setEmailRegister(val)}
           value={emailRegister}
+          keyboardType='email-address'
         />
       </View>
       
@@ -99,22 +112,33 @@ export default function RegisterScreen() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Date de Naissance"
+          placeholder="Date de Naissance JJ/MM/AAAA"
           placeholderTextColor="#003f5c"          
           onChangeText={(val) => setBirthDate(val)}
           value={birthDate}
-          autoComplete='birthdate-full'
+          keyboardType='number-pad'
+          maxLength={8}
         />
       </View>
 
        
       <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitRegister()}>
-        <Text style={styles.loginText}>REGISTER</Text>
+        <Text style={styles.loginText}>CREER UN COMPTE</Text>
       </TouchableOpacity>      
      
     </View>
     
   );
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      console.log(token)
+      dispatch({type: 'addToken', token: token})      
+      
+    }
+  }
 }
  
 const styles = StyleSheet.create({
@@ -172,3 +196,8 @@ const styles = StyleSheet.create({
   },
   
 });
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(RegisterScreen)
