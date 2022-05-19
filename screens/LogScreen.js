@@ -19,7 +19,7 @@ export default function LogScreen(props) {
 
   var handleSubmitLogin = async () => {
     
-    const data = await fetch('http://192.168.0.12:3000/login', {
+    const data = await fetch('http://192.168.1.157:3000/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailLogin}&passwordFromFront=${passwordLogin}`

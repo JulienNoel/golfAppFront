@@ -64,12 +64,8 @@ function BottomNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={LogScreen} />
-<<<<<<< HEAD
-      <Tab.Screen name="Map" component={MapScreen} />
-=======
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="StackMap" component={StackMapScreen} />
->>>>>>> a67b40f42de47f7ae2fb6c3f460dde73f1949147
       <Tab.Screen name="Score" component={ScoreScreen} />
     </Tab.Navigator>
   );

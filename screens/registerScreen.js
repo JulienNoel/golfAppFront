@@ -24,7 +24,7 @@ export default function RegisterScreen() {
 
   var handleSubmitRegister = async () => {
     
-    const data = await fetch('http://192.168.0.12:3000/register', {
+    const data = await fetch('http://192.168.1.157:3000/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
