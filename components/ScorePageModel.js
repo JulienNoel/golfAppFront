@@ -609,9 +609,7 @@ function ScoreTable(tableauScore) {
     )
   })
 
-
   return (
-
     <View style={styles.containerTable}>
       <Grid>
         <Col style={{ width: 90 }}>
@@ -638,12 +636,10 @@ function ScoreTable(tableauScore) {
             <Text style={styles.grey}>76</Text>
           </Row>
           <Row style={styles.SecondCellLast}>
-            <Text style={styles.ScoreCell}>4</Text>
+            <Text style={styles.ScoreCell}>{tableauScore.map(item => item.score).reduce((prev, curr) => prev + curr, 0)}</Text>
           </Row>
-
         </Col>
       </Grid>
     </View>
-
   );
 }
