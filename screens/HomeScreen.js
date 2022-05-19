@@ -1,14 +1,14 @@
 import { Text } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
 import React, { useEffect } from "react";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
 function HomeScreen(props) {
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://192.168.10.128:3000/askgolf");
+      var rawResponse = await fetch("http://192.168.10.167:3000/askgolf");
       var response = await rawResponse.json();
-      console.log(response);
+      // console.log(response);
       props.onInitPage(response);
     }
     GolfFromBdd();

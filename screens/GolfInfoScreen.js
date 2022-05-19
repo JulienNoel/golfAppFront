@@ -1,59 +1,181 @@
 import { Text, Button } from "react-native-elements";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, Image, TouchableOpacity } from "react-native";
 import { Link } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function GolfInfoScreen() {
+export default function GolfInfoScreen(props) {
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ alignItems: "center" }}>
-        <Text>Nom du golf - Ville</Text>
-        <Button
-          title="Reserver"
-          containerStyle={{
-            width: windowWidth - windowWidth / 1.5,
-          }}
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#ededed",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Image
+        style={{
+          height: "36%",
+          width: windowWidth,
+          marginBottom: windowHeight - windowHeight / 1.02,
+        }}
+        source={require("../assets/golf.jpg")}
+      />
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={{
+          position: "absolute",
+          left: windowWidth - windowWidth / 1.01,
+          top: windowHeight - windowHeight / 1.05,
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          borderRadius: 10,
+        }}
+      >
+        <Entypo
+          name="chevron-left"
+          size={40}
+          color="white"
+          onPress={() => props.navigation.navigate("Map")}
         />
-        <Text>Détails</Text>
+      </TouchableOpacity>
+
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <View
           style={{
-            backgroundColor: "#b3edbf",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
             width: windowWidth - windowWidth / 15,
-            height: windowHeight - windowHeight / 1.5,
-            marginBottom: windowHeight - windowHeight / 1.05,
+            marginVertical: windowHeight - windowHeight / 1.01,
           }}
         >
-          <View style={{ borderBottomWidth: 1, borderBottomColor: "grey" }}>
-            <Text>Télephone</Text>
-            <Text>0651803967</Text>
-          </View>
-          <View style={{ borderBottomWidth: 1, borderBottomColor: "grey" }}>
-            <Text>Site Web</Text>
-            <Link>zebi.com</Link>
-          </View>
-          <View>
-            <Text>Adresse</Text>
-            <Text>32 avenue de Reims 60300 Senlis France</Text>
+          <Text style={{ fontSize: 20 }}>Nom du golf - Ville</Text>
+          <Button
+            buttonStyle={{
+              backgroundColor: "#3AB795",
+            }}
+            title="Reserver"
+            containerStyle={{
+              borderRadius: 10,
+              width: "30%",
+            }}
+          />
+        </View>
+        <View
+          style={{
+            width: windowWidth - windowWidth / 15,
+            height: windowHeight - windowHeight / 1.03,
+          }}
+        >
+          <Text
+            style={{
+              marginBottom: windowHeight - windowHeight / 1.01,
+            }}
+          >
+            Détails
+          </Text>
+        </View>
+        <View
+          style={{
+            backgroundColor: "white",
+            width: windowWidth - windowWidth / 15,
+            height: windowHeight - windowHeight / 1.4,
+            marginBottom: windowHeight - windowHeight / 1.05,
+            alignItems: "center",
+            borderRadius: 10,
+          }}
+        >
+          <View
+            style={{
+              width: "95%",
+              height: "95%",
+              justifyContent: "space-around",
+            }}
+          >
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: "#b3edbf",
+                height: "30%",
+              }}
+            >
+              <Text style={{ color: "#939393", marginVertical: "4%" }}>
+                Télephone
+              </Text>
+              <Text>0651803967</Text>
+            </View>
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: "#b3edbf",
+                height: "30%",
+              }}
+            >
+              <Text style={{ color: "#939393", marginVertical: "4%" }}>
+                Site Web
+              </Text>
+              <Link>zebi.com</Link>
+            </View>
+            <View
+              style={{
+                justifyContent: "space-around",
+                height: "40%",
+              }}
+            >
+              <View>
+                <Text style={{ color: "#939393" }}>Adresse</Text>
+              </View>
+              <View>
+                <Text>32 avenue de Reims</Text>
+                <Text> 60300 Senlis</Text>
+                <Text> France</Text>
+              </View>
+            </View>
           </View>
         </View>
         <View
           style={{
-            backgroundColor: "#b3edbf",
+            backgroundColor: "white",
             width: windowWidth - windowWidth / 15,
-            height: windowHeight - windowHeight / 1.5,
+            height: windowHeight - windowHeight / 1.08,
             marginBottom: windowHeight - windowHeight / 1.05,
+            borderRadius: 10,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
           }}
         >
-          <Text>Note du golf</Text>
-          <View style={{ display: "flex" }}>
-            <FontAwesome name="star" size={24} color="black" />
-            <FontAwesome name="star" size={24} color="black" />
-            <FontAwesome name="star" size={24} color="black" />
-            <FontAwesome name="star" size={24} color="black" />
-            <FontAwesome name="star-o" size={24} color="black" />
+          <Text
+            style={{
+              color: "#939393",
+            }}
+          >
+            Note du golf
+          </Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FontAwesome name="star" size={24} color="#3AB795" />
+            <FontAwesome name="star" size={24} color="#3AB795" />
+            <FontAwesome name="star" size={24} color="#3AB795" />
+            <FontAwesome name="star" size={24} color="#3AB795" />
+            <FontAwesome name="star-o" size={24} color="#3AB795" />
           </View>
         </View>
       </View>
