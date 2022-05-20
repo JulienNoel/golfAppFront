@@ -24,7 +24,13 @@ function WelcomeScreen(props) {
     }
    });
 
+   var welcome
 
+   if (isLogin) {
+       welcome = <Text style={styles.text}>{prenomUser}</Text>
+   }else {
+        welcome = <Text style={styles.text}>{props.user}</Text>
+   }
 
 
 
@@ -34,7 +40,7 @@ function WelcomeScreen(props) {
     <ImageBackground source={require('../assets/paysage1.jpeg')} style={styles.container}>
 
         <Text style={styles.text}>Welcome To GolfApp</Text>
-        <Text style={styles.text}>{props.user}</Text>
+        {welcome}
 
     </ImageBackground> 
     
