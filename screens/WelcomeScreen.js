@@ -9,8 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function WelcomeScreen(props) {
   
 
-  const [tokenLocal, setTokenLocal] = useState('')
-  const [prenomUser, setPrenomUser] = useState('')
+  
+  
   const [isLogin, setIsLogin] = useState(false)
 
   
@@ -18,8 +18,8 @@ function WelcomeScreen(props) {
     var userData = JSON.parse(data);
     
     if (userData) {
-    setTokenLocal(userData.token)
-    setPrenomUser(userData.userPrenom)
+    props.addToken(userData.token)
+    props.addUser(userData.userPrenom)
     setIsLogin(true)
     }
    });
@@ -27,9 +27,7 @@ function WelcomeScreen(props) {
    var welcome
 
    if (isLogin) {
-       welcome = <Text style={styles.text}>{prenomUser}</Text>
-   }else {
-        welcome = <Text style={styles.text}>{props.user}</Text>
+       welcome = <Text style={styles.text}>{props.user}</Text>
    }
 
 
@@ -61,9 +59,21 @@ const styles = StyleSheet.create({
 
 
 
-function mapStateToProps(state){
-  
-  return {user: state.user}
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      
+      dispatch({type: 'addToken', token: token})
+    },
+    addUser: function(user){
+      console.log(user)
+      dispatch({type: 'addUser', user: user})
+    }      
+  }
 }
 
-export default connect(mapStateToProps, null)(WelcomeScreen);
+function mapStateToProps(state) {
+  return { user: state.user };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeScreen);
