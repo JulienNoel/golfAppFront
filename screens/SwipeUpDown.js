@@ -19,15 +19,15 @@ function SwipeUpDownGolf(props) {
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
-  const [bgColorFilter1, setBgColorFilter1] = useState('#b3edbf')
-  const [bgColorFilter2, setBgColorFilter2] = useState('#b3edbf')
-  const [bgColorFilter3, setBgColorFilter3] = useState('#b3edbf')
-  const [bgColorFilter4, setBgColorFilter4] = useState('#b3edbf')
-  const [filter9trous, setFilter9trous] = useState(false)
-  const [filter18trous, setFilter18trous] = useState(false)
-  const [filterPractice, setFilterPractice] = useState(false)
-  const [filterRestauration, setFilterRestauration] = useState(false)
-  const [valueKm, setValueKm] = useState(0)
+  const [bgColorFilter1, setBgColorFilter1] = useState("#b3edbf");
+  const [bgColorFilter2, setBgColorFilter2] = useState("#b3edbf");
+  const [bgColorFilter3, setBgColorFilter3] = useState("#b3edbf");
+  const [bgColorFilter4, setBgColorFilter4] = useState("#b3edbf");
+  const [filter9trous, setFilter9trous] = useState(false);
+  const [filter18trous, setFilter18trous] = useState(false);
+  const [filterPractice, setFilterPractice] = useState(false);
+  const [filterRestauration, setFilterRestauration] = useState(false);
+  const [valueKm, setValueKm] = useState(0);
 
   let favoriteGolfsdistance = [
     { distance: 36 },
@@ -87,20 +87,31 @@ function SwipeUpDownGolf(props) {
     />
   );
 
-  var filteredGolfs = props.golfInDb[0].result
+  var filteredGolfs = props.golfInDb[0].result;
 
-  if (filter9trous){
-    filteredGolfs = filteredGolfs.filter(golf => golf.parcours[0].nbreTrou == 9 || golf.parcours[1].nbreTrou == 9)
+  if (filter9trous) {
+    filteredGolfs = filteredGolfs.filter(
+      (golf) => golf.parcours[0].nbreTrou == 9 || golf.parcours[1].nbreTrou == 9
+    );
   }
 
-  if (filter18trous){
-    filteredGolfs = filteredGolfs.filter(golf => golf.parcours[0].nbreTrou == 18 || golf.parcours[1].nbreTrou == 18)
+  if (filter18trous) {
+    filteredGolfs = filteredGolfs.filter(
+      (golf) =>
+        golf.parcours[0].nbreTrou == 18 || golf.parcours[1].nbreTrou == 18
+    );
   }
 
   var golfList = filteredGolfs.map((l, i) => {
     return (
       <TouchableWithoutFeedback>
-        <TouchableOpacity onPress={() => props.navigation.navigate("GolfInfo")}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("GolfInfo");
+            props.onPressList(l.golfName);
+            console.log("danslelistitem", l.golfName);
+          }}
+        >
           <ListItem
             key={Math.random()}
             style={{
@@ -119,7 +130,8 @@ function SwipeUpDownGolf(props) {
             <ListItem.Content>
               <ListItem.Title>{l.golfName}</ListItem.Title>
               <ListItem.Subtitle>
-                {l.golfAddress.golfCity}, {l.parcours.length} parcours, {l.parcours[0].nbreTrou} trous et {l.parcours[1].nbreTrou} trous
+                {l.golfAddress.golfCity}, {l.parcours.length} parcours,{" "}
+                {l.parcours[0].nbreTrou} trous et {l.parcours[1].nbreTrou} trous
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -129,44 +141,44 @@ function SwipeUpDownGolf(props) {
   });
 
   var changeColor1 = () => {
-    if (bgColorFilter1 == '#b3edbf'){
-      setBgColorFilter1('#3AB795')
-      setFilter9trous(true)
+    if (bgColorFilter1 == "#b3edbf") {
+      setBgColorFilter1("#3AB795");
+      setFilter9trous(true);
     } else {
-      setBgColorFilter1('#b3edbf')
-      setFilter9trous(false)
+      setBgColorFilter1("#b3edbf");
+      setFilter9trous(false);
     }
-  }
+  };
 
   var changeColor2 = () => {
-    if (bgColorFilter2 == '#b3edbf'){
-      setBgColorFilter2('#3AB795')
-      setFilter18trous(true)
+    if (bgColorFilter2 == "#b3edbf") {
+      setBgColorFilter2("#3AB795");
+      setFilter18trous(true);
     } else {
-      setBgColorFilter2('#b3edbf')
-      setFilter18trous(false)
+      setBgColorFilter2("#b3edbf");
+      setFilter18trous(false);
     }
-  }
+  };
 
   var changeColor3 = () => {
-    if (bgColorFilter3 == '#b3edbf'){
-      setBgColorFilter3('#3AB795')
-      setFilterPractice(true)
+    if (bgColorFilter3 == "#b3edbf") {
+      setBgColorFilter3("#3AB795");
+      setFilterPractice(true);
     } else {
-      setFilterPractice(false)
-      setBgColorFilter3('#b3edbf')
+      setFilterPractice(false);
+      setBgColorFilter3("#b3edbf");
     }
-  }
+  };
 
   var changeColor4 = () => {
-    if (bgColorFilter4 == '#b3edbf'){
-      setBgColorFilter4('#3AB795')
-      setFilterRestauration(true)
+    if (bgColorFilter4 == "#b3edbf") {
+      setBgColorFilter4("#3AB795");
+      setFilterRestauration(true);
     } else {
-      setFilterRestauration(false)
-      setBgColorFilter4('#b3edbf')
+      setFilterRestauration(false);
+      setBgColorFilter4("#b3edbf");
     }
-  }
+  };
 
   return (
     <SwipeUpDown
@@ -212,7 +224,7 @@ function SwipeUpDownGolf(props) {
               badgeStyle={{
                 height: 25,
                 width: 80,
-                backgroundColor: bgColorFilter1
+                backgroundColor: bgColorFilter1,
               }}
             />
             <Badge
@@ -222,7 +234,7 @@ function SwipeUpDownGolf(props) {
               badgeStyle={{
                 height: 25,
                 width: 80,
-                backgroundColor: bgColorFilter2
+                backgroundColor: bgColorFilter2,
               }}
             />
             <Badge
@@ -232,7 +244,7 @@ function SwipeUpDownGolf(props) {
               badgeStyle={{
                 height: 25,
                 width: 80,
-                backgroundColor: bgColorFilter3
+                backgroundColor: bgColorFilter3,
               }}
             />
             <Badge
@@ -242,39 +254,48 @@ function SwipeUpDownGolf(props) {
               badgeStyle={{
                 height: 25,
                 width: 80,
-                backgroundColor: bgColorFilter4
+                backgroundColor: bgColorFilter4,
               }}
             />
           </View>
 
-        <Slider
-        value={valueKm}
-        onValueChange={setValueKm}
-        maximumValue={200}
-        minimumValue={0}
-        step={20}
-        allowTouchTrack
-        trackStyle={{ height: 5, backgroundColor: 'transparent' }}
-        minimumTrackTintColor = '#3AB795'
-        maximumTrackTintColor = '#b3edbf'
-        thumbStyle={{ height: 20, width: 20, backgroundColor: 'transparent' }}
-        thumbProps={{
-          children: (
-            <Icon
-              name="circle"
-              type="font-awesome"
-              size={20}
-              reverse
-              containerStyle={{ bottom: 20, right: 20 }}
-              color='#3AB795'
-            />
-          ),
-        }}
-      />
+          <Slider
+            value={valueKm}
+            onValueChange={setValueKm}
+            maximumValue={200}
+            minimumValue={0}
+            step={20}
+            allowTouchTrack
+            trackStyle={{ height: 5, backgroundColor: "transparent" }}
+            minimumTrackTintColor="#3AB795"
+            maximumTrackTintColor="#b3edbf"
+            thumbStyle={{
+              height: 20,
+              width: 20,
+              backgroundColor: "transparent",
+            }}
+            thumbProps={{
+              children: (
+                <Icon
+                  name="circle"
+                  type="font-awesome"
+                  size={20}
+                  reverse
+                  containerStyle={{ bottom: 20, right: 20 }}
+                  color="#3AB795"
+                />
+              ),
+            }}
+          />
 
-    <Text style={{ marginBottom: windowHeight - windowHeight / 1.01, color: 'white' }}>Distance: {valueKm} km</Text>
-
-
+          <Text
+            style={{
+              marginBottom: windowHeight - windowHeight / 1.01,
+              color: "white",
+            }}
+          >
+            Distance: {valueKm} km
+          </Text>
 
           <View
             style={{
@@ -342,4 +363,12 @@ function mapStateToProps(state) {
   return { golfInDb: state.golf };
 }
 
-export default connect(mapStateToProps, null)(SwipeUpDownGolf);
+function mapDispatchToProps(dispatch) {
+  return {
+    onPressList: function (golfName) {
+      dispatch({ type: "AddGolfName", name: golfName });
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SwipeUpDownGolf);

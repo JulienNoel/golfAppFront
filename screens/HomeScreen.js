@@ -6,9 +6,11 @@ import { connect } from "react-redux";
 function HomeScreen(props) {
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://192.168.10.167:3000/askgolf");
+      var rawResponse = await fetch(
+        "https://calm-bastion-61741.herokuapp.com/askgolf"
+      );
       var response = await rawResponse.json();
-      // console.log(response);
+      console.log(response);
       props.onInitPage(response);
     }
     GolfFromBdd();
