@@ -8,10 +8,12 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  
 } from "react-native";
 
 import {connect} from 'react-redux'
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
  
 export function RegisterScreen(props) {
@@ -22,10 +24,9 @@ export function RegisterScreen(props) {
   const [name, setName] = useState('');
   const [prenom, setPrenom] = useState('');
   const [birthDate, setBirthDate] = useState('');
+  const [messageError, setMessageError] = useState([]);
   
-
-  const [error, setError] = useState([])
-
+  
   var handleSubmitRegister = async () => {
     
     const data = await fetch('https://calm-bastion-61741.herokuapp.com/register', {
@@ -35,6 +36,12 @@ export function RegisterScreen(props) {
     })
 
     const body = await data.json()
+
+    if (body.error) {
+
+      setMessageError(body.error)
+
+    }
     
     if (body.result) {
 
@@ -45,18 +52,21 @@ export function RegisterScreen(props) {
     setName('')
     setPrenom('')
     setBirthDate('')
-
+    setMessageError([])
     }
 
-  }
-
+  } 
+    
+  // verif stockage token
   AsyncStorage.getItem("token", function(error, data) {
     
     console.log(data);
    });
-  //var tabErrorsSignin = listErrorsSignin.map((error,i) => {
-  //  return(<p>{error}</p>)
-  //})
+
+   
+  var errorRegister = messageError.map((error,i) => {
+    return(<Text style={{color: 'red'}}>{error}</Text>)
+  })
 
  
   return (
@@ -64,7 +74,7 @@ export function RegisterScreen(props) {
     <View style={styles.container}>
     
       <Image style={styles.image} source={require('../assets/pro-golf-logo-maker-1558a.png')} />
-
+      {errorRegister}
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -110,18 +120,19 @@ export function RegisterScreen(props) {
       </View>
 
       <View style={styles.inputView}>
-        <TextInput
+      <TextInput
           style={styles.TextInput}
           placeholder="Date de Naissance JJ/MM/AAAA"
           placeholderTextColor="#003f5c"          
           onChangeText={(val) => setBirthDate(val)}
-          value={birthDate}
+          value={birthDate}          
           keyboardType='number-pad'
           maxLength={8}
+          
         />
+        
       </View>
-
-       
+             
       <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitRegister()}>
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
       </TouchableOpacity>      

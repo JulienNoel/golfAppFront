@@ -15,7 +15,7 @@ export default function LogScreen(props) {
 
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
-  const [error, setError] = useState([])
+  const [messageError, setMessageError] = useState([]);
 
   var handleSubmitLogin = async () => {
     
@@ -32,21 +32,23 @@ export default function LogScreen(props) {
 
       setEmailLogin('')
       setPasswordLogin('')
-
+      setMessageError([])
     }
 
         
 
   } 
 
-
+  var errorLogin = messageError.map((error,i) => {
+    return(<Text style={{color: 'red'}}>{error}</Text>)
+  })
  
   return (
     
     <View style={styles.container}>
     
       <Image style={styles.image} source={require('../assets/pro-golf-logo-maker-1558a.png')} />
- 
+      {errorLogin}
       <Text style={styles.signinText}>LOG IN</Text>
       <View style={styles.inputView}>
         
