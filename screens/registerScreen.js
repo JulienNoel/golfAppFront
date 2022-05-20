@@ -58,7 +58,7 @@ export function RegisterScreen(props) {
 
   } 
     
-  // verif stockage token
+  
   AsyncStorage.getItem("token", function(error, data) {
     
     console.log(data);
