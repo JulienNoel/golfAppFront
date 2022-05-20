@@ -8,7 +8,6 @@ function HomeScreen(props) {
     async function GolfFromBdd() {
       var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
       var response = await rawResponse.json();
-      // console.log(response);
       props.onInitPage(response);
     }
     GolfFromBdd();

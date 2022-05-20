@@ -88,7 +88,6 @@ function SwipeUpDownGolf(props) {
   );
 
   var filteredGolfs = props.golfInDb[0].result
-
   if (filter9trous){
     filteredGolfs = filteredGolfs.filter(golf => golf.parcours[0].nbreTrou == 9 || golf.parcours[1].nbreTrou == 9)
   }
