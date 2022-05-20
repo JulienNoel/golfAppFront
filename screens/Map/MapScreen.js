@@ -67,22 +67,6 @@ function MapScreen(props) {
     }
   };
 
-<<<<<<< HEAD:screens/MapScreen.js
-  // if (props.golf.length != 0) {
-  //   var markerDisplayGolf = props.golf[0].result.map((point, i) => (
-  //     <Marker
-  //       key={Math.random()}
-  //       coordinate={{
-  //         latitude: point.golfAddress.golfLatitude,
-  //         longitude: point.golfAddress.golfLongitude,
-  //       }}
-  //       title={point.golfName}
-  //     >
-  //       <Image source={require("../assets/GolfMarker.png")} />
-  //     </Marker>
-  //   ));
-  // }
-=======
   if (props.golf[0]) {
     console.log(typeof props.golf[0].result[0].golfAddress.golfLatitude);
     var markerDisplayGolf = props.golf[0].result.map((point, i) => (
@@ -98,7 +82,6 @@ function MapScreen(props) {
       </Marker>
     ));
   }
->>>>>>> 0615fba8d191af9e3c5afff7e76bcbe634446626:screens/Map/MapScreen.js
 
   if (locationInit.latitude) {
     return (
