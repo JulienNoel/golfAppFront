@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import cartouche from "./components/menuCartouche"
-
+import Icon from "react-native-vector-icons/FontAwesome";
 function HomeScreen(props) {
   useEffect(() => {
     async function GolfFromBdd() {
@@ -19,7 +19,10 @@ function HomeScreen(props) {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>HomeScreen</Text>
+      <View style={{flexDirection:"row"}}>
+        {/* <Icon name="avatar" size={30} style={{marginRight:20}} color="#3AB795" /> */}
+        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Alexis M.</Text>
+      </View>
       {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
       {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
       {cartouche(props, "Mes réservations", require("../assets/club.jpeg"), "")}
