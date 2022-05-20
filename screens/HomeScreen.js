@@ -15,7 +15,6 @@ function HomeScreen(props) {
     }
     GolfFromBdd();
   }, []);
-console.log("")
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent:"space-between", height:"12%", width:"100%", marginTop:50}}>
