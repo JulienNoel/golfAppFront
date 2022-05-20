@@ -17,20 +17,30 @@ function HomeScreen(props) {
   }, []);
 
   const [tokenLocal, setTokenLocal] = useState('')
-  
+  const [prenomUser, setPrenomUser] = useState('')
+  const [isLogin, setIsLogin] = useState(false)
 
-   AsyncStorage.getItem("token", function(error, data) {
-    
+  
+  AsyncStorage.getItem("info User", function(error, data) {
+    var userData = JSON.parse(data);
     console.log(data);
-    setTokenLocal(data)
+    if (userData) {
+    setTokenLocal(userData.token)
+    setPrenomUser(userData.userPrenom)
+    setIsLogin(true)
+    }
    });
+
+   
+
+
 
   return (
 
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 
 
-      <Text>HomeScreen</Text>
+      <Text>Welcome</Text>
 
 
     </View>
@@ -45,4 +55,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(HomeScreen);
+function mapStateToProps(state){
+  console.log(state.user)
+  return {user: state.user}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

@@ -29,7 +29,7 @@ export function RegisterScreen(props) {
   
   var handleSubmitRegister = async () => {
     
-    const data = await fetch('https://calm-bastion-61741.herokuapp.com/register', {
+    const data = await fetch('http://192.168.10.122:3000/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
@@ -38,28 +38,31 @@ export function RegisterScreen(props) {
     const body = await data.json()
 
     if (body.error) {
-
       setMessageError(body.error)
 
     }
     
+    // initialisation objet user pour local storage
+    var userData = {userPrenom: body.user.userPrenom, token: body.user.token};
+    
     if (body.result) {
-
+    console.log(body.user.userPrenom)
     props.addToken(body.user.token)
-    AsyncStorage.setItem("token", body.user.token)
+    props.addUSer(body.user.userPrenom)
+    AsyncStorage.setItem("info User", JSON.stringify(userData))
     setEmailRegister('')
     setPasswordRegister('')
     setName('')
     setPrenom('')
     setBirthDate('')
     setMessageError([])
-    props.navigation.navigate('StackMap')
+    props.navigation.navigate('Home')
     }
 
   } 
     
-  
-  AsyncStorage.getItem("token", function(error, data) {
+  AsyncStorage.clear()
+  AsyncStorage.getItem("info User", function(error, data) {
     
     console.log(data);
    });
@@ -147,11 +150,16 @@ function mapDispatchToProps(dispatch){
   return {
     addToken: function(token){
       console.log(token)
-      dispatch({type: 'addToken', token: token})      
+      dispatch({type: 'addToken', token: token})
+    },
+    addUser: function(user){
+      console.log(user)
+      dispatch({type: 'addUser', user: user})
+    }      
       
     }
   }
-}
+
  
 const styles = StyleSheet.create({
   container: {

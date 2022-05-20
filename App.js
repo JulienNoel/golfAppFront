@@ -6,10 +6,12 @@ LogBox.ignoreAllLogs();
 // Initialisation du store
 import golf from "./reducers/golf";
 import nameGolfSelect from "./reducers/nameGolfSelect";
+import user from './reducers/user.reducer'
+import token from './reducers/token'
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
-const store = createStore(combineReducers({ golf, nameGolfSelect }));
+const store = createStore(combineReducers({ golf, nameGolfSelect, user, token }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
@@ -28,6 +30,7 @@ const Tab = createBottomTabNavigator();
 
 // const StackMap = createStackNavigator();
 
+
 function StackMapScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -42,6 +45,7 @@ import ScorePageStart from "./screens/Score/ScorePageStart";
 import ScoreReservedParty from "./screens/Score/ScoreReservedParty";
 import ScoreNewParty from "./screens/Score/ScoreNewParty";
 import ScorePageScreen from "./screens/Score/ScorePageScreen";
+import registerScreen from "./screens/registerScreen";
 
 function StackScoreScreen() {
   return (
@@ -49,7 +53,7 @@ function StackScoreScreen() {
       <Stack.Screen name="ScorePageStart" component={ScorePageStart} />
       <Stack.Screen name="ScoreReservedParty" component={ScoreReservedParty} />
       <Stack.Screen name="ScoreNewParty" component={ScoreNewParty} />
-      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} />
+      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} /> 
     </Stack.Navigator>
   );
 }
@@ -81,7 +85,7 @@ function BottomNavigator() {
       }}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="StackMap" component={StackMapScreen} />
+      <Tab.Screen name="StackMap" component={LogScreen} />
       <Tab.Screen name="Score" component={StackScoreScreen} />
     </Tab.Navigator>
   );
@@ -93,7 +97,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />     
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

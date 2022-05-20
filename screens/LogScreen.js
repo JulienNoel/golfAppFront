@@ -33,12 +33,14 @@ export default function LogScreen(props) {
       setEmailLogin('')
       setPasswordLogin('')
       setMessageError([])
-      props.navigation.navigate('StackMap')
+      props.navigation.navigate('Home')
     }
 
         
 
   } 
+
+  
 
   var errorLogin = messageError.map((error,i) => {
     return(<Text style={{color: 'red'}}>{error}</Text>)
