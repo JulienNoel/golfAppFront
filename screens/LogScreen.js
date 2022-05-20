@@ -26,18 +26,21 @@ export default function LogScreen(props) {
     })
 
     const body = await data.json()
-    console.log(body.result)
+    
 
     if (body.result) {
 
       setEmailLogin('')
       setPasswordLogin('')
       setMessageError([])
+      props.navigation.navigate('Home')
     }
 
         
 
   } 
+
+  
 
   var errorLogin = messageError.map((error,i) => {
     return(<Text style={{color: 'red'}}>{error}</Text>)

@@ -27,7 +27,7 @@ function SwipeUpDownGolf(props) {
   const [filter18trous, setFilter18trous] = useState(false);
   const [filterPractice, setFilterPractice] = useState(false);
   const [filterRestauration, setFilterRestauration] = useState(false);
-  const [valueKm, setValueKm] = useState(0);
+  const [valueKm, setValueKm] = useState(40);
 
   let favoriteGolfsdistance = [
     { distance: 36 },
@@ -87,18 +87,53 @@ function SwipeUpDownGolf(props) {
     />
   );
   var filteredGolfs = props.golfInDb[0].result;
+
+  var userLongitude = props.userLocalisation.longitude;
+  var userLatitude = props.userLocalisation.latitude;
+  var p = 0.017453292519943295; // Math.PI / 180
+  var c = Math.cos;
+
+  for (var golf of filteredGolfs){
+    var golfLatitude = golf.golfAddress.golfLatitude
+    var golfLongitude = golf.golfAddress.golfLongitude
+
+    var a = 0.5 - c((userLatitude - golfLatitude) * p)/2 +
+            c(golfLatitude * p) * c(userLatitude * p) *
+            (1 - c((userLongitude - golfLongitude) *p))/2;
+
+    var distances = 12742 * Math.asin(Math.sqrt(a)) // 2 * R; R = 6371 km
+
+    golf.distance = parseInt(distances)
+  }
+  
   if (filter9trous) {
     filteredGolfs = filteredGolfs.filter(
-      (golf) => golf.parcours[0].nbreTrou == 9 || golf.parcours[1].nbreTrou == 9
+      (golf) => golf.neufTrous == true
     );
   }
 
   if (filter18trous) {
     filteredGolfs = filteredGolfs.filter(
       (golf) =>
-        golf.parcours[0].nbreTrou == 18 || golf.parcours[1].nbreTrou == 18
+        golf.dixhuitTrous == true
     );
   }
+
+  if (filterPractice) {
+    filteredGolfs = filteredGolfs.filter(
+      (golf) =>
+        golf.practice == true
+    );
+  }
+
+  if (filterRestauration) {
+    filteredGolfs = filteredGolfs.filter(
+      (golf) =>
+        golf.restauration == true
+    );
+  }
+
+  filteredGolfs = filteredGolfs.filter(golf => golf.distance <= valueKm)
 
   var golfList = filteredGolfs.map((l, i) => {
     return (
@@ -107,7 +142,6 @@ function SwipeUpDownGolf(props) {
           onPress={() => {
             props.navigation.navigate("GolfInfo");
             props.onPressList(l.golfName);
-            console.log("danslelistitem", l.golfName);
           }}
         >
           <ListItem
@@ -126,10 +160,12 @@ function SwipeUpDownGolf(props) {
               }}
             />
             <ListItem.Content>
-              <ListItem.Title>{l.golfName}</ListItem.Title>
+              <ListItem.Title>{l.golfName}, à {l.distance} km</ListItem.Title>
               <ListItem.Subtitle>
-                {l.golfAddress.golfCity}, {l.parcours.length} parcours,{" "}
-                {l.parcours[0].nbreTrou} trous et {l.parcours[1].nbreTrou} trous
+                practice: {JSON.stringify(l.practice)}, restauration: {JSON.stringify(l.restauration)}
+              </ListItem.Subtitle>
+              <ListItem.Subtitle>
+                9 trous: {JSON.stringify(l.neufTrous)}, 18 trous: {JSON.stringify(l.dixhuitTrous)}
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -358,7 +394,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { golfInDb: state.golf };
+  return { golfInDb: state.golf,
+          userLocalisation: state.localisation
+  };
 }
 
 function mapDispatchToProps(dispatch) {

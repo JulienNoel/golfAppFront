@@ -5,11 +5,16 @@ LogBox.ignoreAllLogs();
 
 // Initialisation du store
 import golf from "./reducers/golf";
+import localisation from "./reducers/localisation";
 import nameGolfSelect from "./reducers/nameGolfSelect";
+import user from "./reducers/user.reducer";
+import token from "./reducers/token";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
-const store = createStore(combineReducers({ golf, nameGolfSelect }));
+const store = createStore(
+  combineReducers({ golf, nameGolfSelect, user, token, localisation })
+);
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/Map/MapScreen";
@@ -17,7 +22,7 @@ import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
 import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
 import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
-
+import WelcomeScreen from "./screens/WelcomeScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";

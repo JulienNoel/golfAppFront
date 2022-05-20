@@ -22,13 +22,9 @@ function MapScreen(props) {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
   const [newCurrentLocation, setNewCurrentLocation] = useState(null);
-
-  const [pseudo, setPseudo] = useState("");
-
   const [color, setColor] = useState("#3AB795");
   const [colorMap, setColorMap] = useState("white");
   const [mapType, setMapType] = useState("standard");
-
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
 
@@ -45,9 +41,7 @@ function MapScreen(props) {
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
         });
-
         // var LongEtLat = await Location.geocodeAsync(props.golf[0].golfAdress);
-        console.log("mapscreen", props.golf);
       }
     }
     askPermissions();
@@ -60,6 +54,8 @@ function MapScreen(props) {
       longitude: currentPosition.coords.longitude,
     });
   };
+
+  props.localisationTransfer(location);
 
   var mapTypeChange = () => {
     if (mapType === "standard") {
@@ -195,4 +191,12 @@ function mapStateToProps(state) {
   return { golf: state.golf };
 }
 
-export default connect(mapStateToProps, null)(MapScreen);
+function mapDispatchToProps(dispatch) {
+  return {
+    localisationTransfer: function (localisation) {
+      dispatch({ type: "AddLocalisation", localisation });
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);
