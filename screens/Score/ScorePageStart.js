@@ -1,6 +1,5 @@
 import { Text } from "react-native-elements";
 import { StyleSheet, View, ImageBackground, Image, TouchableOpacity } from "react-native";
-import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
 
 export default function ScorePageStart(props) {
 

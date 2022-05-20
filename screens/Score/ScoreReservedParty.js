@@ -23,8 +23,8 @@ export default function ScoreNewParty(props) {
 function ReservedPartyTab(tableauRéservation, props) {
   var gallery = tableauRéservation.map((element, index) => {
     return (
-      <TouchableOpacity style={styles.card} onPress={() => { props.navigation.navigate('ScorePageScreen') }}>
-        <Card key={index} >
+      <TouchableOpacity key={index} style={styles.card} onPress={() => { props.navigation.navigate('ScorePageScreen') }}>
+        <Card>
           <Card.Cover source={element.url} style={{ height: 100 }} />
           <View style={styles.overlay}>
             <View style={{ flex: 1, height: "100%" }}>
