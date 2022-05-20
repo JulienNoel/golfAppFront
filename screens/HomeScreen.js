@@ -8,7 +8,9 @@ import cartouche from "./components/menuCartouche"
 function HomeScreen(props) {
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
+      var rawResponse = await fetch(
+        "https://calm-bastion-61741.herokuapp.com/askgolf"
+      );
       var response = await rawResponse.json();
       props.onInitPage(response);
     }

@@ -4,11 +4,12 @@ import { StyleSheet, Text, View, LogBox } from "react-native";
 LogBox.ignoreAllLogs();
 
 // Initialisation du store
-import template from "./reducers/template.reducer";
 import golf from "./reducers/golf";
+import nameGolfSelect from "./reducers/nameGolfSelect";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
-const store = createStore(combineReducers({ template, golf }));
+
+const store = createStore(combineReducers({ golf, nameGolfSelect }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/MapScreen";
