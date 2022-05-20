@@ -1,8 +1,7 @@
 import { Text } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -16,9 +15,6 @@ function HomeScreen(props) {
     }
     GolfFromBdd();
   }, []);
-
-
-
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent:"space-between", height:"12%", width:"100%", marginTop:50}}>
@@ -30,11 +26,11 @@ function HomeScreen(props) {
       </View>
       {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
-
+        {/* 1er dashobard vide */}
       </View>
       {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
-        
+        {/* 2er dashobard vide */}
         </View>
       {cartouche(props, "Mes réservations", require("../assets/club.jpeg"), "")}
     </View>
@@ -87,9 +83,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state){
-  console.log(state.user)
-  return {user: state.user}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(null, mapDispatchToProps)(HomeScreen);
