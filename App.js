@@ -18,6 +18,7 @@ import LogScreen from "./screens/LogScreen";
 import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
 import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
 
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -52,6 +53,17 @@ function StackScoreScreen() {
       <Stack.Screen name="ScoreReservedParty" component={ScoreReservedParty} />
       <Stack.Screen name="ScoreNewParty" component={ScoreNewParty} />
       <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} />
+    </Stack.Navigator>
+  );
+}
+
+import StatistiqueHome from "./screens/Statistique/StatHomeScreen";
+import Statistique from "./screens/Statistique/StatUserScreen";
+function StackStatistiqueScreen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="StatistiqueHome" component={StatistiqueHome} />
+      <Stack.Screen name="StatistiqueUser" component={Statistique} />
     </Stack.Navigator>
   );
 }
@@ -96,6 +108,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
