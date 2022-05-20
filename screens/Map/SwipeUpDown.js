@@ -86,7 +86,6 @@ function SwipeUpDownGolf(props) {
       onChangeText={(val) => setResearch(val)}
     />
   );
-  console.log("qwipup", props.golfInDb[0].result);
   var filteredGolfs = props.golfInDb[0].result;
 
   var userLongitude = props.userLocalisation.longitude;

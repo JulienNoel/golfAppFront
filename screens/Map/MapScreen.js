@@ -55,7 +55,7 @@ function MapScreen(props) {
     });
   };
 
-  props.localisationTransfer(location)
+  props.localisationTransfer(location);
 
   var mapTypeChange = () => {
     if (mapType === "standard") {
@@ -126,7 +126,7 @@ function MapScreen(props) {
             style={{ width: 26, height: 28 }}
             resizeMode="contain"
           />
-          {/* {markerDisplayGolf} */}
+          {markerDisplayGolf}
         </MapView>
         {/*If you are using navigation in child component don't forget to send navigation in props to child*/}
         <SwipeUpDownGolf
