@@ -12,11 +12,7 @@ import token from './reducers/token'
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
-<<<<<<< HEAD
-const store = createStore(combineReducers({ golf, nameGolfSelect, localisation }));
-=======
-const store = createStore(combineReducers({ golf, nameGolfSelect, user, token }));
->>>>>>> 0615fba8d191af9e3c5afff7e76bcbe634446626
+const store = createStore(combineReducers({ golf, nameGolfSelect, user, token, localisation }));
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/Map/MapScreen";
