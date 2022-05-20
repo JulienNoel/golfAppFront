@@ -54,7 +54,7 @@ function SwipeUpDownGolf(props) {
       <TouchableWithoutFeedback key={Math.random()}>
         <View style={{ marginHorizontal: 20 }}>
           <Image
-            source={require("../assets/golf-icon.jpg")}
+            source={require("../../assets/golf-icon.jpg")}
             style={{
               borderRadius: 100,
               width: windowWidth / 10,
@@ -86,7 +86,7 @@ function SwipeUpDownGolf(props) {
       onChangeText={(val) => setResearch(val)}
     />
   );
-
+  console.log("qwipup", props.golfInDb[0].result);
   var filteredGolfs = props.golfInDb[0].result;
 
   var userLongitude = props.userLocalisation.longitude;
@@ -153,7 +153,7 @@ function SwipeUpDownGolf(props) {
             }}
           >
             <Image
-              source={require("../assets/golf-icon.jpg")}
+              source={require("../../assets/golf-icon.jpg")}
               style={{
                 borderRadius: 100,
                 width: windowWidth / 10,

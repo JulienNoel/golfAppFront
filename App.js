@@ -7,16 +7,24 @@ LogBox.ignoreAllLogs();
 import golf from "./reducers/golf";
 import localisation from "./reducers/localisation";
 import nameGolfSelect from "./reducers/nameGolfSelect";
+import user from './reducers/user.reducer'
+import token from './reducers/token'
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
+<<<<<<< HEAD
 const store = createStore(combineReducers({ golf, nameGolfSelect, localisation }));
+=======
+const store = createStore(combineReducers({ golf, nameGolfSelect, user, token }));
+>>>>>>> 0615fba8d191af9e3c5afff7e76bcbe634446626
 
 import HomeScreen from "./screens/HomeScreen";
-import MapScreen from "./screens/MapScreen";
+import MapScreen from "./screens/Map/MapScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
-import GolfInfoScreen from "./screens/GolfInfoScreen";
+import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
+import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -29,11 +37,13 @@ const Tab = createBottomTabNavigator();
 
 // const StackMap = createStackNavigator();
 
+
 function StackMapScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="GolfInfo" component={GolfInfoScreen} />
+      <Stack.Screen name="Resarvation" component={ReservationPracticeScreen} />
     </Stack.Navigator>
   );
 }
@@ -44,13 +54,25 @@ import ScoreReservedParty from "./screens/Score/ScoreReservedParty";
 import ScoreNewParty from "./screens/Score/ScoreNewParty";
 import ScorePageScreen from "./screens/Score/ScorePageScreen";
 
+
 function StackScoreScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ScorePageStart" component={ScorePageStart} />
       <Stack.Screen name="ScoreReservedParty" component={ScoreReservedParty} />
       <Stack.Screen name="ScoreNewParty" component={ScoreNewParty} />
-      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} />
+      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} /> 
+    </Stack.Navigator>
+  );
+}
+
+import StatistiqueHome from "./screens/Statistique/StatHomeScreen";
+import Statistique from "./screens/Statistique/StatUserScreen";
+function StackStatistiqueScreen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="StatistiqueHome" component={StatistiqueHome} />
+      <Stack.Screen name="StatistiqueUser" component={Statistique} />
     </Stack.Navigator>
   );
 }
@@ -95,6 +117,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
