@@ -22,13 +22,9 @@ function MapScreen(props) {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
   const [newCurrentLocation, setNewCurrentLocation] = useState(null);
-
-  const [pseudo, setPseudo] = useState("");
-
   const [color, setColor] = useState("#3AB795");
   const [colorMap, setColorMap] = useState("white");
   const [mapType, setMapType] = useState("standard");
-
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
 
@@ -45,9 +41,7 @@ function MapScreen(props) {
           longitude: locationTemp.coords.longitude,
           latitude: locationTemp.coords.latitude,
         });
-
         // var LongEtLat = await Location.geocodeAsync(props.golf[0].golfAdress);
-        console.log("mapscreen", props.golf);
       }
     }
     askPermissions();
@@ -61,6 +55,8 @@ function MapScreen(props) {
     });
   };
 
+  props.localisationTransfer(location)
+
   var mapTypeChange = () => {
     if (mapType === "standard") {
       setMapType("satellite");
@@ -71,6 +67,22 @@ function MapScreen(props) {
     }
   };
 
+<<<<<<< HEAD:screens/MapScreen.js
+  // if (props.golf.length != 0) {
+  //   var markerDisplayGolf = props.golf[0].result.map((point, i) => (
+  //     <Marker
+  //       key={Math.random()}
+  //       coordinate={{
+  //         latitude: point.golfAddress.golfLatitude,
+  //         longitude: point.golfAddress.golfLongitude,
+  //       }}
+  //       title={point.golfName}
+  //     >
+  //       <Image source={require("../assets/GolfMarker.png")} />
+  //     </Marker>
+  //   ));
+  // }
+=======
   if (props.golf[0]) {
     console.log(typeof props.golf[0].result[0].golfAddress.golfLatitude);
     var markerDisplayGolf = props.golf[0].result.map((point, i) => (
@@ -86,6 +98,7 @@ function MapScreen(props) {
       </Marker>
     ));
   }
+>>>>>>> 0615fba8d191af9e3c5afff7e76bcbe634446626:screens/Map/MapScreen.js
 
   if (locationInit.latitude) {
     return (
@@ -130,7 +143,7 @@ function MapScreen(props) {
             style={{ width: 26, height: 28 }}
             resizeMode="contain"
           />
-          {markerDisplayGolf}
+          {/* {markerDisplayGolf} */}
         </MapView>
         {/*If you are using navigation in child component don't forget to send navigation in props to child*/}
         <SwipeUpDownGolf
@@ -195,4 +208,12 @@ function mapStateToProps(state) {
   return { golf: state.golf };
 }
 
-export default connect(mapStateToProps, null)(MapScreen);
+function mapDispatchToProps(dispatch) {
+  return {
+    localisationTransfer: function (localisation) {
+      dispatch({ type: "AddLocalisation", localisation });
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);
