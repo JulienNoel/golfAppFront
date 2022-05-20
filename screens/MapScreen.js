@@ -22,7 +22,6 @@ function MapScreen(props) {
   const [location, setLocation] = useState({});
   const [locationInit, setLocationInit] = useState({});
   const [newCurrentLocation, setNewCurrentLocation] = useState(null);
-  const [locationGolfList, setlocationGolfList] = useState([]);
 
   const [pseudo, setPseudo] = useState("");
 
@@ -72,18 +71,20 @@ function MapScreen(props) {
     }
   };
 
-  var markerDisplayGolf = props.golf[0].result.map((point, i) => (
-    <Marker
-      key={Math.random()}
-      coordinate={{
-        latitude: point.golfAddress.golfLatitude,
-        longitude: point.golfAddress.golfLongitude,
-      }}
-      title={point.golfName}
-    >
-      <Image source={require("../assets/GolfMarker.png")} />
-    </Marker>
-  ));
+  if (props.golf[0]) {
+    var markerDisplayGolf = props.golf[0].result.map((point, i) => (
+      <Marker
+        key={Math.random()}
+        coordinate={{
+          latitude: point.golfAddress.golfLatitude,
+          longitude: point.golfAddress.golfLongitude,
+        }}
+        title={point.golfName}
+      >
+        <Image source={require("../assets/GolfMarker.png")} />
+      </Marker>
+    ));
+  }
 
   if (locationInit.latitude) {
     return (
