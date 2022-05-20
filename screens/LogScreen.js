@@ -26,7 +26,7 @@ export default function LogScreen(props) {
     })
 
     const body = await data.json()
-    console.log(body.result)
+    
 
     if (body.result) {
 

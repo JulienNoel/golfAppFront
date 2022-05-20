@@ -122,9 +122,6 @@ export default function ScorePageModel() {
     /><Text style={{ margin: 5 }}>Publique</Text></View>
   }
 
-
-
-
   return (
     <ImageBackground source={require("../../assets/map.png")} style={styles.div}>
       <View style={styles.infoCard}>
@@ -193,9 +190,8 @@ export default function ScorePageModel() {
             <Text
               onPress={show}
               style={{ fontWeight: "bold", color: "#3AB795", fontSize: 20 }}
-            >
-              Score
-            </Text>
+            >Score</Text>
+          
           </View>
         )}
         itemFull={(close) => (

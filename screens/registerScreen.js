@@ -48,7 +48,7 @@ export function RegisterScreen(props) {
     if (body.result) {
     console.log(body.user.userPrenom)
     props.addToken(body.user.token)
-    props.addUSer(body.user.userPrenom)
+    props.addUser(body.user.userPrenom)
     AsyncStorage.setItem("info User", JSON.stringify(userData))
     setEmailRegister('')
     setPasswordRegister('')
@@ -64,7 +64,7 @@ export function RegisterScreen(props) {
   AsyncStorage.clear()
   AsyncStorage.getItem("info User", function(error, data) {
     
-    console.log(data);
+    ;
    });
 
    
@@ -149,14 +149,14 @@ export function RegisterScreen(props) {
 function mapDispatchToProps(dispatch){
   return {
     addToken: function(token){
-      console.log(token)
+      
       dispatch({type: 'addToken', token: token})
     },
     addUser: function(user){
       console.log(user)
       dispatch({type: 'addUser', user: user})
     }      
-      
+    
     }
   }
 

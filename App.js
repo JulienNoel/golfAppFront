@@ -14,10 +14,12 @@ import { createStore, combineReducers } from "redux";
 const store = createStore(combineReducers({ golf, nameGolfSelect, user, token }));
 
 import HomeScreen from "./screens/HomeScreen";
-import MapScreen from "./screens/MapScreen";
+import MapScreen from "./screens/Map/MapScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
-import GolfInfoScreen from "./screens/GolfInfoScreen";
+import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
+import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
+
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -36,6 +38,7 @@ function StackMapScreen() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="GolfInfo" component={GolfInfoScreen} />
+      <Stack.Screen name="Resarvation" component={ReservationPracticeScreen} />
     </Stack.Navigator>
   );
 }
@@ -45,7 +48,7 @@ import ScorePageStart from "./screens/Score/ScorePageStart";
 import ScoreReservedParty from "./screens/Score/ScoreReservedParty";
 import ScoreNewParty from "./screens/Score/ScoreNewParty";
 import ScorePageScreen from "./screens/Score/ScorePageScreen";
-import registerScreen from "./screens/registerScreen";
+
 
 function StackScoreScreen() {
   return (
@@ -54,6 +57,17 @@ function StackScoreScreen() {
       <Stack.Screen name="ScoreReservedParty" component={ScoreReservedParty} />
       <Stack.Screen name="ScoreNewParty" component={ScoreNewParty} />
       <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} /> 
+    </Stack.Navigator>
+  );
+}
+
+import StatistiqueHome from "./screens/Statistique/StatHomeScreen";
+import Statistique from "./screens/Statistique/StatUserScreen";
+function StackStatistiqueScreen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="StatistiqueHome" component={StatistiqueHome} />
+      <Stack.Screen name="StatistiqueUser" component={Statistique} />
     </Stack.Navigator>
   );
 }
@@ -97,7 +111,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
-          <Stack.Screen name="Register" component={RegisterScreen} />     
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
