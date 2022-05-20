@@ -33,6 +33,7 @@ export default function LogScreen(props) {
       setEmailLogin('')
       setPasswordLogin('')
       setMessageError([])
+      props.navigation.navigate('StackMap')
     }
 
         

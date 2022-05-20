@@ -53,6 +53,7 @@ export function RegisterScreen(props) {
     setPrenom('')
     setBirthDate('')
     setMessageError([])
+    props.navigation.navigate('StackMap')
     }
 
   } 

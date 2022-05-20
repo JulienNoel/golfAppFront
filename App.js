@@ -81,7 +81,7 @@ function BottomNavigator() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="StackMap" component={StackMapScreen} />
-      <Tab.Screen name="Score" component={ScoreScreen} />
+      <Tab.Screen name="Score" component={StackScoreScreen} />
     </Tab.Navigator>
   );
 }
