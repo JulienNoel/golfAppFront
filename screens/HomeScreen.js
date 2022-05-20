@@ -17,23 +17,6 @@ function HomeScreen(props) {
     GolfFromBdd();
   }, []);
 
-  const [tokenLocal, setTokenLocal] = useState('')
-  const [prenomUser, setPrenomUser] = useState('')
-  const [isLogin, setIsLogin] = useState(false)
-
-  
-  AsyncStorage.getItem("info User", function(error, data) {
-    var userData = JSON.parse(data);
-    
-    if (userData) {
-    setTokenLocal(userData.token)
-    setPrenomUser(userData.userPrenom)
-    setIsLogin(true)
-    }
-   });
-
-   
-
 
 
   return (

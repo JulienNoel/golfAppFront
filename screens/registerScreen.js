@@ -64,7 +64,7 @@ export function RegisterScreen(props) {
   AsyncStorage.clear()
   AsyncStorage.getItem("info User", function(error, data) {
     
-    ;
+    
    });
 
    

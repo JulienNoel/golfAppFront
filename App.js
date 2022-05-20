@@ -19,7 +19,7 @@ import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
 import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
 import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
-
+import WelcomeScreen from "./screens/WelcomeScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
