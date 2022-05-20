@@ -128,6 +128,8 @@ function SwipeUpDownGolf(props) {
     );
   });
 
+  props.onFilter(golfList)
+
   var changeColor1 = () => {
     if (bgColorFilter1 == '#b3edbf'){
       setBgColorFilter1('#3AB795')
@@ -338,8 +340,16 @@ const styles = StyleSheet.create({
   },
 });
 
+function mapDispatchToProps(dispatch) {
+  return {
+    onFilter: function (golf) {
+      dispatch({ type: "FilterGolf", golf });
+    },
+  };
+}
+
 function mapStateToProps(state) {
   return { golfInDb: state.golf };
 }
 
-export default connect(mapStateToProps, null)(SwipeUpDownGolf);
+export default connect(mapStateToProps, mapDispatchToProps)(SwipeUpDownGolf);
