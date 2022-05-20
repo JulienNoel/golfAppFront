@@ -1,8 +1,7 @@
 import { Text } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -16,11 +15,8 @@ function HomeScreen(props) {
     }
     GolfFromBdd();
   }, []);
-
-
-
+console.log("")
   return (
-<<<<<<< HEAD
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent:"space-between", height:"12%", width:"100%", marginTop:50}}>
         <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: "grey", borderRadius: 100, alignItems: 'center', justifyContent: "center", backgroundColor: "grey", marginRight: 10, margin:'10%' }}>
@@ -29,18 +25,13 @@ function HomeScreen(props) {
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center' }}>Alexis M.</Text>
         <Icon name="bell-o" size={30} color="black" style={{  height:"100%", margin:'10%'  }} />
       </View>
-=======
-
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Welcome {props.user}</Text>
->>>>>>> 7da33f599d10b3e2f5e13c20e7e0e48221794839
       {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
-
+        {/* 1er dashobard vide */}
       </View>
       {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
-        
+        {/* 2er dashobard vide */}
         </View>
       {cartouche(props, "Mes réservations", require("../assets/club.jpeg"), "")}
     </View>
@@ -93,9 +84,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state){
-  console.log(state.user)
-  return {user: state.user}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(null, mapDispatchToProps)(HomeScreen);
