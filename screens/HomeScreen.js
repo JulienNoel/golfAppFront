@@ -8,10 +8,9 @@ import Icon from "react-native-vector-icons/FontAwesome";
 function HomeScreen(props) {
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch(
-        "https://calm-bastion-61741.herokuapp.com/askgolf"
-      );
+      var rawResponse = await fetch("http://172.20.10.7:3000/askgolf");
       var response = await rawResponse.json();
+      console.log("useeefect", response);
       props.onInitPage(response);
     }
     GolfFromBdd();

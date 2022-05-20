@@ -72,6 +72,7 @@ function MapScreen(props) {
   };
 
   if (props.golf[0]) {
+    console.log(typeof props.golf[0].result[0].golfAddress.golfLatitude);
     var markerDisplayGolf = props.golf[0].result.map((point, i) => (
       <Marker
         key={Math.random()}
@@ -81,7 +82,7 @@ function MapScreen(props) {
         }}
         title={point.golfName}
       >
-        <Image source={require("../assets/GolfMarker.png")} />
+        <Image source={require("../../assets/GolfMarker.png")} />
       </Marker>
     ));
   }
@@ -114,7 +115,7 @@ function MapScreen(props) {
           }
         >
           <Marker
-            image={require("../assets/UserMarker.png")}
+            image={require("../../assets/UserMarker.png")}
             coordinate={
               location
                 ? {

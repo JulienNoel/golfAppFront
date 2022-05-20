@@ -12,10 +12,11 @@ import { createStore, combineReducers } from "redux";
 const store = createStore(combineReducers({ golf, nameGolfSelect }));
 
 import HomeScreen from "./screens/HomeScreen";
-import MapScreen from "./screens/MapScreen";
+import MapScreen from "./screens/Map/MapScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
-import GolfInfoScreen from "./screens/GolfInfoScreen";
+import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
+import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
 
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -34,6 +35,7 @@ function StackMapScreen() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="GolfInfo" component={GolfInfoScreen} />
+      <Stack.Screen name="Resarvation" component={ReservationPracticeScreen} />
     </Stack.Navigator>
   );
 }
