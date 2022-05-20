@@ -7,16 +7,14 @@ LogBox.ignoreAllLogs();
 import golf from "./reducers/golf";
 import localisation from "./reducers/localisation";
 import nameGolfSelect from "./reducers/nameGolfSelect";
-import user from './reducers/user.reducer'
-import token from './reducers/token'
+import user from "./reducers/user.reducer";
+import token from "./reducers/token";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
-<<<<<<< HEAD
-const store = createStore(combineReducers({ golf, nameGolfSelect, localisation }));
-=======
-const store = createStore(combineReducers({ golf, nameGolfSelect, user, token }));
->>>>>>> 0615fba8d191af9e3c5afff7e76bcbe634446626
+const store = createStore(
+  combineReducers({ golf, nameGolfSelect, user, token, localisation })
+);
 
 import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./screens/Map/MapScreen";
@@ -37,7 +35,6 @@ const Tab = createBottomTabNavigator();
 
 // const StackMap = createStackNavigator();
 
-
 function StackMapScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -54,14 +51,13 @@ import ScoreReservedParty from "./screens/Score/ScoreReservedParty";
 import ScoreNewParty from "./screens/Score/ScoreNewParty";
 import ScorePageScreen from "./screens/Score/ScorePageScreen";
 
-
 function StackScoreScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ScorePageStart" component={ScorePageStart} />
       <Stack.Screen name="ScoreReservedParty" component={ScoreReservedParty} />
       <Stack.Screen name="ScoreNewParty" component={ScoreNewParty} />
-      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} /> 
+      <Stack.Screen name="ScorePageScreen" component={ScorePageScreen} />
     </Stack.Navigator>
   );
 }

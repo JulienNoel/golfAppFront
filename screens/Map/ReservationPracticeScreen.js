@@ -1,14 +1,15 @@
-import { Text, Button } from "react-native-elements";
+import { Text, Button, ButtonGroup } from "react-native-elements";
 import { View, Dimensions, Image, TouchableOpacity } from "react-native";
 import { Link } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 function ReservationPracticeScreen(props) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   var golfSelectInfo = props.golfInDb.filter(
     (golf) => golf.golfName === props.golfName
   );
@@ -71,14 +72,7 @@ function ReservationPracticeScreen(props) {
         <View
           style={{
             width: windowWidth - windowWidth / 15,
-            height: windowHeight - windowHeight / 1.03,
-          }}
-        ></View>
-        <View
-          style={{
-            backgroundColor: "white",
-            width: windowWidth - windowWidth / 15,
-            height: windowHeight - windowHeight / 1.4,
+            height: windowHeight - windowHeight / 1.5,
             marginBottom: windowHeight - windowHeight / 1.05,
             alignItems: "center",
             borderRadius: 10,
@@ -89,20 +83,34 @@ function ReservationPracticeScreen(props) {
               width: "95%",
               height: "95%",
               justifyContent: "space-around",
+              backgroundColor: "red",
+              marginVertical: windowHeight - windowHeight / 1.04,
             }}
           >
             <View
               style={{
-                borderBottomWidth: 1,
-                borderBottomColor: "#b3edbf",
                 height: "30%",
+                backgroundColor: "pink",
               }}
             >
               {/*SELECTION NOMBRE DE TROUS*/}
+              <ButtonGroup
+                buttons={["18 trous", "9 trous"]}
+                selectedIndex={selectedIndex}
+                onPress={(value) => {
+                  setSelectedIndex(value);
+                }}
+                containerStyle={{
+                  marginBottom: 20,
+                  borderRadius: 10,
+                  backgroundColor: "red",
+                }}
+              />
             </View>
             <View
               style={{
-                height: "30%",
+                height: "50%",
+                backgroundColor: "white",
               }}
             >
               {/*Radio Seulement créneaux ouverts aux buddies*/}
@@ -113,8 +121,10 @@ function ReservationPracticeScreen(props) {
             style={{
               width: windowWidth - windowWidth / 15,
               height: windowHeight - windowHeight / 1.08,
-              marginBottom: windowHeight - windowHeight / 1.05,
-              display: "flex",
+              // marginHorizontal: windowHeight - windowHeight / 1.05,
+              backgroundColor: "green",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Button
@@ -124,7 +134,7 @@ function ReservationPracticeScreen(props) {
               title="Voir les disponibilités"
               containerStyle={{
                 borderRadius: 10,
-                width: "30%",
+                width: "100%",
               }}
               // onPress={() => props.navigation.navigate("")}
             />
