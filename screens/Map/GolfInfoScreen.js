@@ -22,16 +22,15 @@ function GolfInfoScreen(props) {
         flex: 1,
         backgroundColor: "#ededed",
         alignItems: "center",
-        justifyContent: "center",
       }}
     >
       <Image
         style={{
-          height: "36%",
+          height: "38%",
           width: windowWidth,
           marginBottom: windowHeight - windowHeight / 1.02,
         }}
-        source={require("../assets/golf.jpg")}
+        source={require("../../assets/paysage3.jpeg")}
       />
       <TouchableOpacity
         activeOpacity={0.7}
@@ -42,11 +41,12 @@ function GolfInfoScreen(props) {
           paddingHorizontal: 10,
           paddingVertical: 10,
           borderRadius: 10,
+          backgroundColor: "#3AB795",
         }}
       >
         <Entypo
           name="chevron-left"
-          size={40}
+          size={24}
           color="white"
           onPress={() => props.navigation.navigate("Map")}
         />
@@ -81,6 +81,7 @@ function GolfInfoScreen(props) {
               borderRadius: 10,
               width: "30%",
             }}
+            onPress={() => props.navigation.navigate("Resarvation")}
           />
         </View>
         <View
@@ -199,7 +200,6 @@ function GolfInfoScreen(props) {
 }
 
 function mapStateToProps(state) {
-  console.log("mapstate", state.golfName);
   return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
 }
 
