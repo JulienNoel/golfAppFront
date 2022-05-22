@@ -43,18 +43,18 @@ function HomeScreen(props) {
       {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
 
-        <View style={{alignItems:"center"}}>
-          <Text style={{ fontWeight:"300", marginTop:10}}>Evolution Index</Text>
-          <AreaChart
-                style={{ height: 200 }}
-                data={data}
-                contentInset={{ top: 30, bottom: 30 }}
-                curve={shape.curveNatural}
-                svg={{ fill: 'rgba(134, 65, 244, 0.8)' }}
-            >
-                <Grid />
-            </AreaChart>
-        </View>
+
+        <Text style={{ fontWeight: "300", marginTop: 10 }}>Evolution Index</Text>
+        <AreaChart
+          style={{ height: "90%",width:"95%"}}
+          data={data}
+          contentInset={{ top: 30, bottom: 30 }}
+          curve={shape.curveNatural}
+          svg={{ fill: '#3AB795' }}
+        >
+          <Grid />
+        </AreaChart>
+
 
       </View>
       {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ededed",
   },
   cartoucheDash: {
+    alignItems:"center",
     width: '95%',
     height: '25%',
     borderRadius: 5,
@@ -112,9 +113,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state){
-  
-  return {user: state.user}
+function mapStateToProps(state) {
+
+  return { user: state.user }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
