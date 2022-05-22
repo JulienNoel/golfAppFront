@@ -1,11 +1,14 @@
-import { Text } from "react-native-elements";
+import { Text, Tooltip } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
 import React, { useEffect } from "react";
+import { AreaChart, Grid } from 'react-native-svg-charts'
+import * as shape from 'd3-shape'
 import { connect } from "react-redux";
 
 import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
 function HomeScreen(props) {
+  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
   useEffect(() => {
     async function GolfFromBdd() {
       var rawResponse = await fetch("http://192.168.10.143:3000/askgolf");
@@ -15,23 +18,48 @@ function HomeScreen(props) {
     }
     GolfFromBdd();
   }, []);
+
+  var Notification = [{ Notification: "nouvelle demande de buddy" }, { Notification: "Réservation" }]
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent:"space-between", height:"12%", width:"100%", marginTop:50}}>
-        <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: "grey", borderRadius: 100, alignItems: 'center', justifyContent: "center", backgroundColor: "grey", marginRight: 10, margin:'10%' }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", height: "12%", width: "100%", marginTop: 50 }}>
+        <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: "grey", borderRadius: 100, alignItems: 'center', justifyContent: "center", backgroundColor: "grey", marginRight: 10, margin: '10%' }}>
           <Icon name="user" size={24} color="white" />
         </View>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center' }}>Alexis M.</Text>
-        <Icon name="bell-o" size={30} color="black" style={{  height:"100%", margin:'10%'  }} />
+        <View style={{ height: "100%", margin: '10%' }}>
+          <Tooltip containerStyle={{ height: 100 }} backgroundColor="#ededed" popover={
+            <View style={{ height: "100%", width: "100%" }}>
+              <Text onPress={() => props.navigation.navigate("notification1")} style={{ height: "50%", width: "100%" }}>0 nouvelle demande de buddie</Text>
+              <Text onPress={() => props.navigation.navigate("notification2")} style={{ height: "50%", width: "100%" }}>Hello</Text>
+            </View>
+          }>
+            <Icon name="bell-o" size={30} color="black" />
+          </Tooltip>
+        </View>
+
       </View>
       {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
-        {/* 1er dashobard vide */}
+
+        <View style={{alignItems:"center"}}>
+          <Text style={{ fontWeight:"300", marginTop:10}}>Evolution Index</Text>
+          <AreaChart
+                style={{ height: 200 }}
+                data={data}
+                contentInset={{ top: 30, bottom: 30 }}
+                curve={shape.curveNatural}
+                svg={{ fill: 'rgba(134, 65, 244, 0.8)' }}
+            >
+                <Grid />
+            </AreaChart>
+        </View>
+
       </View>
       {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
         {/* 2er dashobard vide */}
-        </View>
+      </View>
       {cartouche(props, "Mes réservations", require("../assets/club.jpeg"), "")}
     </View>
   );
@@ -43,12 +71,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ededed",
   },
-  cartoucheDash:{
+  cartoucheDash: {
     width: '95%',
     height: '25%',
     borderRadius: 5,
     shadowColor: "#000",
-    backgroundColor:"white",
+    backgroundColor: "white",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -58,8 +86,8 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  cartoucheTrophy:{
-    backgroundColor:"white",
+  cartoucheTrophy: {
+    backgroundColor: "white",
     width: '95%',
     height: '10%',
     borderRadius: 5,
