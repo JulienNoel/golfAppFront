@@ -7,13 +7,14 @@ import { connect } from "react-redux";
 
 import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
+
 function HomeScreen(props) {
   const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://192.168.10.143:3000/askgolf");
+      var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
       var response = await rawResponse.json();
-      console.log("useeefect", response);
+      //console.log("useeefect", response);
       props.onInitPage(response);
     }
     GolfFromBdd();
@@ -111,4 +112,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(HomeScreen);
+function mapStateToProps(state){
+  
+  return {user: state.user}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
