@@ -10,10 +10,13 @@ import {
   TouchableOpacity,
   ImageBackground,
   
+  
 } from "react-native";
 
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {connect} from 'react-redux'
-
+import moment from 'moment';
+import 'moment/locale/fr'
 import AsyncStorage from '@react-native-async-storage/async-storage';
  
 export function RegisterScreen(props) {
@@ -27,9 +30,10 @@ export function RegisterScreen(props) {
   const [messageError, setMessageError] = useState([]);
   
   
+  
   var handleSubmitRegister = async () => {
     
-    const data = await fetch('http://192.168.10.122:3000/register', {
+    const data = await fetch('https://calm-bastion-61741.herokuapp.com/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
@@ -61,13 +65,28 @@ export function RegisterScreen(props) {
 
   } 
     
-  AsyncStorage.clear()
-  AsyncStorage.getItem("info User", function(error, data) {
-    
-    
-   });
+  //AsyncStorage.clear()
 
-   
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.log("A date has been picked: ", date);
+    moment.locale('fr')
+    var dateFormat = moment(date).format('L');
+
+    console.log(dateFormat)
+    setBirthDate(dateFormat)
+    hideDatePicker();
+  };
+  
   var errorRegister = messageError.map((error,i) => {
     return(<Text style={{color: 'red'}}>{error}</Text>)
   })
@@ -123,19 +142,32 @@ export function RegisterScreen(props) {
         />
       </View>
 
-      <View style={styles.inputView}>
+      <View style={styles.inputView} >
       <TextInput
           style={styles.TextInput}
-          placeholder="Date de Naissance JJ/MM/AAAA"
+          placeholder="Date de Naissance"
           placeholderTextColor="#003f5c"          
           onChangeText={(val) => setBirthDate(val)}
           value={birthDate}          
           keyboardType='number-pad'
-          maxLength={8}
+          maxLength={10}
+          onPressIn={showDatePicker}
+          
           
         />
+        <DateTimePickerModal
+            maximumDate={new Date()}            
+            isVisible={isDatePickerVisible}
+            mode="date"                   
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        
         
       </View>
+
+      
+      
              
       <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitRegister()}>
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
