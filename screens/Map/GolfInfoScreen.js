@@ -13,6 +13,21 @@ function GolfInfoScreen(props) {
     (golf) => golf.golfName === props.golfName
   );
 
+var Reserver = () => {
+
+  if (props.token) {
+
+    props.navigation.navigate("Resarvation")
+
+  } else {
+    
+    props.navigation.navigate("Login")
+    
+  }
+
+}
+
+
   // console.log("golfNameSelect", props.golfName);
   // console.log("golfselectCity", golfSelectInfo[0].golfAddress.golfCity);
 
@@ -81,7 +96,7 @@ function GolfInfoScreen(props) {
               borderRadius: 10,
               width: "30%",
             }}
-            onPress={() => props.navigation.navigate("Resarvation")}
+            onPress={() => Reserver()}
           />
         </View>
         <View
@@ -200,7 +215,7 @@ function GolfInfoScreen(props) {
 }
 
 function mapStateToProps(state) {
-  return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
+  return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect, token: state.token };
 }
 
 export default connect(mapStateToProps, null)(GolfInfoScreen);

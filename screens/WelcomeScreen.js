@@ -8,7 +8,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function WelcomeScreen(props) {
   
-
+  
+    useEffect(() => {
+      async function GolfFromBdd() {
+        var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
+        var response = await rawResponse.json();
+        //console.log("useeefect", response);
+        props.onInitPage(response);
+      }
+      GolfFromBdd();
+    }, []);
   
   
   const [isLogin, setIsLogin] = useState(false)
@@ -57,7 +66,7 @@ function WelcomeScreen(props) {
                     marginHorizontal: 50,
                     marginVertical: 10,
                   }}
-                  onPress={() => props.navigation.navigate('BottomNavigator')}
+                  onPress={() => props.navigation.navigate('BottomNavigator', {screen: 'StackMap'})}
                 />
             </View>
         </View>
@@ -90,9 +99,13 @@ function mapDispatchToProps(dispatch){
     addUser: function(user){
       console.log(user)
       dispatch({type: 'addUser', user: user})
-    }      
+    },
+    onInitPage: function (golf) {
+      dispatch({ type: "AddGolf", golf: golf });
+    }     
   }
 }
+
 
 function mapStateToProps(state) {
   return { user: state.user };

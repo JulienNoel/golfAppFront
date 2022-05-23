@@ -20,7 +20,9 @@ function HomeScreen(props) {
     GolfFromBdd();
   }, []);
 
-  
+  if (!props.token) {
+    props.navigation.navigate('Login')
+  }
 
 
   var Notification = [{ Notification: "nouvelle demande de buddy" }, { Notification: "Réservation" }]
@@ -108,17 +110,11 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitPage: function (golf) {
-      dispatch({ type: "AddGolf", golf: golf });
-    },
-  };
-}
+
 
 function mapStateToProps(state) {
 
-  return { user: state.user }
+  return { token: state.token, user: state.user, golf: state.golf }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, null)(HomeScreen);
