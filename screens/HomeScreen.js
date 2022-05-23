@@ -45,7 +45,7 @@ function HomeScreen(props) {
         </View>
 
       </View>
-      {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
+      {cartouche(props, "Statistiques", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
 
 
@@ -62,7 +62,7 @@ function HomeScreen(props) {
 
 
       </View>
-      {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
+      {cartouche(props, "Trophées", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
         {/* 2er dashobard vide */}
       </View>
