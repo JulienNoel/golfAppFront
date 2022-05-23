@@ -138,7 +138,9 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+          <Stack.Screen name="Login" component={LogScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
           <Stack.Screen name="notification1" component={StackNotification1Screen} />

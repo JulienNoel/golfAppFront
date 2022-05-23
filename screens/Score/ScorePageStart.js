@@ -1,16 +1,21 @@
 import { Text } from "react-native-elements";
 import { StyleSheet, View, ImageBackground, Image, TouchableOpacity } from "react-native";
 import cartouche from "../components/menuCartouche"
+import {connect} from 'react-redux'
 
-export default function ScorePageStart(props) {
+export function ScorePageStart(props) {
+
+  var partieLogin
+
+  if (props.token) {
+     partieLogin = cartouche(props, "Partie réservée", require("../../assets/closeBall1.jpeg"), "ScoreReservedParty")
+  }
 
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 25, fontWeight: "bold", margin: 20 }}>Nouvelle Partie</Text>
-      <View style={{ height: "100%", width: "100%", justifyContent: "center"}}>
-        {cartouche(props, "Partie réservée", require("../../assets/closeBall1.jpeg"), "ScoreReservedParty")}
-        {cartouche(props, "Sans réservation", require("../../assets/joueur3.jpeg"), "ScoreNewParty")}
-      </View>
+      {partieLogin}
+      {cartouche(props, "Sans réservation", require("../../assets/joueur3.jpeg"), "ScoreNewParty")}
     </View>
   );
 }
@@ -22,3 +27,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 })
+
+function mapStateToProps(state) {
+  return { token: state.token };
+}
+
+export default connect(mapStateToProps, null)(ScorePageStart);

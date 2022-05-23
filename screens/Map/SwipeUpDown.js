@@ -15,6 +15,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 
 function SwipeUpDownGolf(props) {
+
+  
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
