@@ -23,7 +23,7 @@ export function ScorePageStart(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    marginTop: 40,
     alignItems: "center",
   },
 })

@@ -11,10 +11,10 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import SwipeUpDownGolf from "./SwipeUpDown"
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import SwipeUpDownGolf from "./SwipeUpDown";
 
 import { connect } from "react-redux";
 
@@ -55,6 +55,18 @@ function MapScreen(props) {
     });
   };
 
+  useEffect(() => {
+    if (props.cityGolf.length > 0){
+      setNewCurrentLocation({
+        latitude: props.cityGolf[0].latitude,
+        longitude: props.cityGolf[0].longitude
+      })
+    }
+  }, [props.cityGolf]);
+
+
+ 
+
   props.localisationTransfer(location);
 
   var mapTypeChange = () => {
@@ -68,7 +80,6 @@ function MapScreen(props) {
   };
 
   if (props.golf[0]) {
-    
     var markerDisplayGolf = props.golf[0].result.map((point, i) => (
       <Marker
         key={Math.random()}
@@ -188,7 +199,7 @@ function MapScreen(props) {
 }
 
 function mapStateToProps(state) {
-  return { golf: state.golf };
+  return { golf: state.golf, cityGolf: state.cityGolf };
 }
 
 function mapDispatchToProps(dispatch) {
