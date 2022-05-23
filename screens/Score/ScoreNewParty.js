@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, Input, ListItem } from "react-native-elements";
-import { StyleSheet, View, TouchableOpacity, Image, TouchableWithoutFeedback, ScrollView } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function ScoreNewParty(props) {
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop:40,
+    backgroundColor:"#ededed"
   },
   titreDiv: {
     flexDirection: 'column',

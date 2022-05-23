@@ -93,6 +93,8 @@ function SwipeUpDownGolf(props) {
   var p = 0.017453292519943295; // Math.PI / 180
   var c = Math.cos;
 
+  //calcul distance geolocalisation vers golf
+  
   for (var golf of filteredGolfs){
     var golfLatitude = golf.golfAddress.golfLatitude
     var golfLongitude = golf.golfAddress.golfLongitude
