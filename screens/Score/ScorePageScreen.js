@@ -27,7 +27,8 @@ export default function ScorePageModel() {
   const [numeroPage, setNumeroPage] = useState(0);
   const [tableauScore, setTableauScore] = useState(generateParcours(18));
   const [page, setPage] = useState(tableauScore[0]);
-  const [score, setScore] = useState(generateScore(18));
+  const [score, setScore] = useState(generateScore(18, 4));
+  const [scoreParcours, setScoreParcours] = useState({ scoreTotal: score.map(item => item.score).reduce((prev, curr) => prev + curr, 0), scorePar: tableauScore.map(item => item.par).reduce((prev, curr) => prev + curr, 0) })
 
   useEffect(() => {
     function page() {
@@ -36,62 +37,70 @@ export default function ScorePageModel() {
     page()
   }, [numeroPage]);
 
+
   function minus() {
     if (numeroPage > 0) {
-      score[numeroPage].score = countScore;
-      score[numeroPage].putts = countPutt;
-      setCountScore(score[numeroPage - 1].score);
-      setCountPutt(score[numeroPage - 1].putts);
+      score[0].result[numeroPage].score = countScore;
+      score[0].result[numeroPage].putts = countPutt;
+      setCountScore(score[0].result[numeroPage - 1].score);
+      setCountPutt(score[0].result[numeroPage - 1].putts);
       setNumeroPage(numeroPage - 1)
     }
   }
-
+  const [finishPatyVisible, setfinishPatyVisible] = useState(false);
   function next() {
     if (numeroPage < 17) {
-      score[numeroPage].score = countScore;
-      score[numeroPage].putts = countPutt;
-      setCountScore(score[numeroPage+1].score);
-      setCountPutt(score[numeroPage+1].putts);
+      score[0].result[numeroPage].score = countScore;
+      score[0].result[numeroPage].putts = countPutt;
+      setCountScore(score[0].result[numeroPage + 1].score);
+      setCountPutt(score[0].result[numeroPage + 1].putts);
       setNumeroPage(numeroPage + 1)
     }
+    if (numeroPage === 17) {
+      setfinishPatyVisible(!finishPatyVisible);
+    }
   }
-//Comptage score
+
+  //Comptage score
   var majScoreMoins = (typeJeux) => {
     if (typeJeux === "putts") {
       if (countPutt > 0 && countScore >= countPutt) {
         setCountScore(countScore - 1);
         setCountPutt(countPutt - 1);
-        score[numeroPage].score = countScore - 1;
-        score[numeroPage].putts = countPutt - 1;
+        score[0].result[numeroPage].score = countScore - 1;
+        score[0].result[numeroPage].putts = countPutt - 1;
       }
     }
     else if (typeJeux === "score") {
       if (countScore > 0 && countScore === countPutt) {
         setCountScore(countScore - 1);
         setCountPutt(countPutt - 1);
-        score[numeroPage].score = countScore - 1;
-        score[numeroPage].putts = countPutt - 1;
+        score[0].result[numeroPage].score = countScore - 1;
+        score[0].result[numeroPage].putts = countPutt - 1;
       } else if (countScore > 0) {
         setCountScore(countScore - 1);
-        score[numeroPage].score = countScore - 1;
+        score[0].result[numeroPage].score = countScore - 1;
       }
     }
+    setScoreParcours({ scoreTotal: score.map(item => item.score).reduce((prev, curr) => prev + curr, 0), scorePar: tableauScore.map(item => item.par).reduce((prev, curr) => prev + curr, 0) })
   };
 
   var majScorePlus = (typeJeux) => {
     if (typeJeux === "putts") {
       setCountScore(countScore + 1);
       setCountPutt(countPutt + 1);
-      score[numeroPage].score = countScore + 1;
-      score[numeroPage].putts = countPutt + 1;
+      score[0].result[numeroPage].score = countScore + 1;
+      score[0].result[numeroPage].putts = countPutt + 1;
     } else if (typeJeux === "score") {
       setCountScore(countScore + 1);
-      score[numeroPage].score = countScore + 1;
+      score[0].result[numeroPage].score = countScore + 1;
     }
+    setScoreParcours({ scoreTotal: score.map(item => item.score).reduce((prev, curr) => prev + curr, 0), scorePar: tableauScore.map(item => item.par).reduce((prev, curr) => prev + curr, 0) })
   };
-//
+  //
 
   const [visible, setVisible] = useState(false); //state overlay
+
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -191,7 +200,7 @@ export default function ScorePageModel() {
               onPress={show}
               style={{ fontWeight: "bold", color: "#3AB795", fontSize: 20 }}
             >Score</Text>
-          
+
           </View>
         )}
         itemFull={(close) => (
@@ -214,6 +223,29 @@ export default function ScorePageModel() {
                   </View>
                 </TouchableOpacity>
                 <View style={styles.main}>
+
+                  <Overlay isVisible={finishPatyVisible} onBackdropPress={next} overlayStyle={styles.overlayScore}>
+                    <View style={{ flex: 1, justifyContent: 'space-between', width: "80%", flexDirection: "columns" }}>
+                      <View style={{ flexDirection: 'row', justifyContent: "center" }}>
+                        <Text style={{ fontWeight: "bold", fontSize: 20, margin: 10, textAlign: "center" }}>Récapitulatif de la partie :</Text>
+                      </View>
+                      <View style={{ marginBottom: 20 }}>
+                        <Text style={{ fontWeight: "bold", fontSize: 35, textAlign: "center" }}>{scoreParcours.scoreTotal}</Text>
+                        <Badge
+                          badgeStyle={{
+                            backgroundColor: "#3AB795",
+                            height: 20,
+                          }}
+                          textStyle={{ fontWeight: "bold", fontSize: 12 }}
+                          value={"+ " + scoreParcours.scorePar + " points"}
+                        />
+                      </View>
+                      <Button title="Valider la partie"
+                        onPress={next}
+                        buttonStyle={{ backgroundColor: '#3AB795' }}
+                      />
+                    </View>
+                  </Overlay>
 
 
                   <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
@@ -244,7 +276,7 @@ export default function ScorePageModel() {
                       </View>
                     </View>
                   </Overlay>
-                  {ScoreTable(score)}
+                  {ScoreTable(score, scoreParcours.scoreTotal, scoreParcours.scorePar)}
                   <View style={{ flex: 1, marginTop: 10, flexDirection: "row" }}>
                     <Badge
                       badgeStyle={{
@@ -385,18 +417,111 @@ function generateParcours(LongueurTrou) {
     score.img = "../../assets/MapType.png"
     tableauScore.push(score)
   }
+
   return tableauScore
 }
 
-function generateScore(LongueurTrou) {
-  var tableauScore = []
-  for (var i = 1; i <= LongueurTrou; i++) {
-    var score = {};
-    score.score = 0;
-    score.putts = 0;
-    tableauScore.push(score)
+function generateScore(LongueurTrou, nombreJoueur) {
+  var tableauScoreJoueur = []
+  for (var j = 1; j <= nombreJoueur; j++) {
+    var ObjectScore = {}
+    ObjectScore.name = "Julien" + j
+    var tableauScore = []
+    for (var i = 1; i <= LongueurTrou; i++) {
+      var score = {};
+      score.score = 0;
+      score.putts = 0;
+      tableauScore.push(score)
+    }
+    ObjectScore.result = tableauScore
+    tableauScoreJoueur.push(ObjectScore)
   }
-  return tableauScore
+  return tableauScoreJoueur
+}
+
+function ScoreTable(tableauScore, scoreTotal, scorePar) {
+  var nombreTrou = 18;
+  var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
+  var score = []
+  var totalScore=[12,23,35]
+
+  for (const element of tableauScore) {
+    var ScoreTab = element.result.map((element, index) => {
+      return (
+        <TouchableWithoutFeedback key={index}>
+          <Col style={{ width: 50 }}>
+            <Row style={styles.cellResult}>
+              <Text style={styles.black}>{element.score}</Text>
+              <Text style={styles.SubCell}>{element.putts}</Text>
+            </Row>
+          </Col>
+        </TouchableWithoutFeedback>
+      )
+    })
+    score.push(ScoreTab)
+  }
+
+  var NameTab = tableauScore.map((element, index) => {
+    var css = { backgroundColor: tableauColor[index], height: 20, width: 8, marginRight: 5 }
+    return (
+      <Row style={styles.SecondCell}>
+        <Badge badgeStyle={css} />
+        <Text style={styles.NameCell}>{element.name}</Text>
+      </Row>
+    )
+  })
+
+  var ParcoursData = generateParcours(18).map((element, index) => {
+    console.log(element.score)
+    return (
+      <TouchableWithoutFeedback key={index}>
+        <Col style={{ width: 50 }}>
+          <Row style={styles.cell}>
+            <Text style={styles.black}>{element.hole}</Text>
+            <Text style={styles.grey}>{element.par}</Text>
+          </Row>
+        </Col>
+      </TouchableWithoutFeedback>
+    )
+  })
+
+  var total = totalScore.map((element, index) => {
+    return (
+        <Row style={styles.SecondCellLast}>
+          <Text style={styles.ScoreCell}>{element}</Text>
+        </Row>
+    )
+  })
+
+  
+  return (
+    <View style={styles.containerTable}>
+      <Grid>
+        <Col style={{ width: 90 }}>
+          <Row style={styles.FirstCell}>
+            <Text style={styles.black}>Hole</Text>
+            <Text style={styles.grey}>Par</Text>
+          </Row>
+          {NameTab}
+        </Col>
+
+        <ScrollViewGH horizontal={true}>
+          <Col>
+            <Row>{ParcoursData}</Row>
+            {score.map((element, index) => { return (<Row>{element}</Row>) })}
+          </Col>
+        </ScrollViewGH>
+        <Col style={{ width: 60 }}>
+        < Row style={styles.FirstCellLast} >
+          <Text style={styles.black}>Total</Text>
+          <Text style={styles.grey}>{scorePar}</Text>
+        </Row >
+        {total}
+        </Col>
+
+      </Grid>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -465,6 +590,22 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     elevation: 12,
   },
+  overlayScore: {
+    alignItems: "center",
+    width: '70%',
+    height: "30%",
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowColor: "#000",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+  },
   inputTitreOverlay: {
     padding: 5,
     minHeight: "10%",
@@ -472,7 +613,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     borderColor: "grey",
-    overflow:"scroll",
+    overflow: "scroll",
   },
   inputTextOverlay: {
     padding: 5,
@@ -481,7 +622,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     borderColor: "grey",
-    overflow:"scroll",
+    overflow: "scroll",
   },
   containerTable: {
     marginTop: 5,
@@ -580,68 +721,3 @@ const styles = StyleSheet.create({
 });
 
 
-function ScoreTable(tableauScore) {
-  var nombreTrou = 18;
-  var nombreJoueur = 1;
-  var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
-
-  var ParcoursData = generateParcours(nombreTrou).map((element, index) => {
-    return (
-      <TouchableWithoutFeedback key={index}>
-        <Col style={{ width: 50 }}>
-          <Row style={styles.cell}>
-            <Text style={styles.black}>{element.hole}</Text>
-            <Text style={styles.grey}>{element.par}</Text>
-          </Row>
-        </Col>
-      </TouchableWithoutFeedback>
-    )
-  })
-
-  var ScoreTab = tableauScore.map((element, index) => {
-    return (
-      <TouchableWithoutFeedback key={index}>
-        <Col style={{ width: 50 }}>
-          <Row style={styles.cellResult}>
-            <Text style={styles.black}>{element.score}</Text>
-            <Text style={styles.SubCell}>{element.putts}</Text>
-          </Row>
-        </Col>
-      </TouchableWithoutFeedback>
-    )
-  })
-
-  return (
-    <View style={styles.containerTable}>
-      <Grid>
-        <Col style={{ width: 90 }}>
-          <Row style={styles.FirstCell}>
-            <Text style={styles.black}>Hole</Text>
-            <Text style={styles.grey}>Par</Text>
-          </Row>
-          <Row style={styles.SecondCell}>
-            <Badge badgeStyle={{ backgroundColor: "#f1c40f", height: 20, width: 8, marginRight: 5 }} />
-            <Text style={styles.NameCell}>Alexis</Text>
-          </Row>
-        </Col>
-
-        <ScrollViewGH horizontal={true}>
-          <Col>
-            <Row>{ParcoursData}</Row>
-            <Row>{ScoreTab}</Row>
-          </Col>
-        </ScrollViewGH>
-
-        <Col style={{ width: 60 }}>
-          <Row style={styles.FirstCellLast}>
-            <Text style={styles.black}>Total</Text>
-            <Text style={styles.grey}>76</Text>
-          </Row>
-          <Row style={styles.SecondCellLast}>
-            <Text style={styles.ScoreCell}>{tableauScore.map(item => item.score).reduce((prev, curr) => prev + curr, 0)}</Text>
-          </Row>
-        </Col>
-      </Grid>
-    </View>
-  );
-}
