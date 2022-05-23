@@ -1,15 +1,17 @@
 import { Text, Tooltip } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AreaChart, Grid } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import { connect } from "react-redux";
 
 import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
+import LogScreen from "./LogScreen";
 
 function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23]
+
   useEffect(() => {
     async function GolfFromBdd() {
       var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
@@ -20,9 +22,17 @@ function HomeScreen(props) {
     GolfFromBdd();
   }, []);
 
+const [isLogin, setIsLogin] = useState(false)
+
   if (!props.token) {
-    props.navigation.navigate('Login')
+
+    return <LogScreen navigation={props.navigation}/>
+    //props.navigation.navigate('Login')
+    
   }
+    
+ 
+  
 
 
   var Notification = [{ Notification: "nouvelle demande de buddy" }, { Notification: "Réservation" }]
@@ -45,7 +55,7 @@ function HomeScreen(props) {
         </View>
 
       </View>
-      {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
+      {cartouche(props, "Statistiques", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
 
 
@@ -62,7 +72,7 @@ function HomeScreen(props) {
 
 
       </View>
-      {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
+      {cartouche(props, "Trophées", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
         {/* 2er dashobard vide */}
       </View>

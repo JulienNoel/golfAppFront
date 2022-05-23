@@ -19,7 +19,8 @@ function WelcomeScreen(props) {
       GolfFromBdd();
     }, []);
   
-  
+  //AsyncStorage.clear()
+
   const [isLogin, setIsLogin] = useState(false)
  
   
