@@ -62,6 +62,32 @@ function StackScoreScreen() {
   );
 }
 
+// navigation notification //
+
+import buddyScreen from "./screens/notification/buddyScreen";
+
+function StackNotification1Screen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="buddyScreen" component={buddyScreen} />
+    </Stack.Navigator>
+  );
+}
+
+// navigation notification //
+
+import Notification2 from "./screens/notification/Notification2";
+
+function StackNotification2Screen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Notification2" component={Notification2} />
+    </Stack.Navigator>
+  );
+}
+
+// navigation statistique //
+
 import StatistiqueHome from "./screens/Statistique/StatHomeScreen";
 import Statistique from "./screens/Statistique/StatUserScreen";
 function StackStatistiqueScreen() {
@@ -114,6 +140,8 @@ export default function App() {
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
+          <Stack.Screen name="notification1" component={StackNotification1Screen} />
+          <Stack.Screen name="notification2" component={StackNotification2Screen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
