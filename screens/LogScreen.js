@@ -10,8 +10,11 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
- 
-export default function LogScreen(props) {
+
+import {connect} from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export function LogScreen(props) {
 
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
@@ -27,9 +30,19 @@ export default function LogScreen(props) {
 
     const body = await data.json()
     
+    if (body.error) {
+      setMessageError(body.error)
+
+    }
+
+    
 
     if (body.result) {
-
+      var userData = {userPrenom: body.user.userPrenom, token: body.token}
+      
+      props.addToken(body.token)
+      props.addUser(body.user.userPrenom)
+      AsyncStorage.setItem("info User", JSON.stringify(userData))
       setEmailLogin('')
       setPasswordLogin('')
       setMessageError([])
@@ -156,3 +169,21 @@ const styles = StyleSheet.create({
   }
   
 });
+
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      
+      dispatch({type: 'addToken', token: token})
+    },
+    addUser: function(user){
+      console.log(user)
+      dispatch({type: 'addUser', user: user})
+    }
+    
+  }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(LogScreen);
