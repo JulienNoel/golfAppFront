@@ -1,21 +1,20 @@
 import { Text } from "react-native-elements";
-import { StyleSheet, View,TouchableOpacity,Image, ScrollView} from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import {Card } from 'react-native-paper';
-import cartouche from "../components/menuCartouche"
-import { FontAwesome } from "@expo/vector-icons";
-export default function StatHomeScreen(props) {
-  var tableau = [{ date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }]
 
+import { FontAwesome } from "@expo/vector-icons";
+import { Row } from "react-native-table-component";
+
+export default function ScoreNewParty(props) {
+  var tableau = [{ date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }]
   return (
     <View style={styles.container}>
       <View style={styles.titreDiv}>
         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
           <Image style={{ width: 40, height: 40 }} source={require("../../assets/previous.png")} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Stat Home</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom:10 }}>Mes réservations</Text>
       </View>
-      {cartouche(props, "Statistique générale", require("../../assets/closeBall1.jpeg"), "StatistiqueUser")}
-      <Text style={{fontSize:18, fontWeight:"600", textAlign:"center", margin:5}}>Statistique par parcours effectués</Text>
       {ReservedPartyTab(tableau, props)}
     </View>
   );
@@ -56,8 +55,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   titreDiv: {
-    flexDirection: 'column',
-    justifyContent: "space-between",
+    flexDirection:'column',
+    justifyContent:"space-between",
   },
   scroll: {
     flexGrow: 1,
@@ -110,4 +109,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
     textAlign: "right"
   }
-})
+});

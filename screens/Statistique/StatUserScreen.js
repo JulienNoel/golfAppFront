@@ -1,5 +1,5 @@
 import { Text } from "react-native-elements";
-import { StyleSheet, View,TouchableOpacity,Image} from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import cartouche from "../components/menuCartouche"
 export default function StatHomeScreen(props) {
 
@@ -12,6 +12,11 @@ export default function StatHomeScreen(props) {
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Stat User</Text>
       </View>
       {cartouche(props, "A voir", require("../../assets/closeBall1.jpeg"), "StatistiqueUser")}
+      <View style={{ alignItems: "center" }}>
+        <View style={styles.cartoucheDash}></View>
+        <View style={styles.cartoucheDash}></View>
+        <View style={styles.cartoucheDash}></View>
+      </View>
     </View>
   );
 }
@@ -19,11 +24,28 @@ export default function StatHomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 40,
+
   },
   titreDiv: {
     flexDirection: 'column',
     justifyContent: "space-between",
+  },
+  cartoucheDash: {
+    alignItems: "center",
+    width: '95%',
+    height: '26%',
+    borderRadius: 5,
+    marginTop: 10,
+    shadowColor: "#000",
+    backgroundColor: "white",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 })
