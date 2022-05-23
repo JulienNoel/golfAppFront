@@ -7,8 +7,10 @@ export default function ScorePageStart(props) {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 25, fontWeight: "bold", margin: 20 }}>Nouvelle Partie</Text>
-      {cartouche(props, "Partie réservée", require("../../assets/closeBall1.jpeg"), "ScoreReservedParty")}
-      {cartouche(props, "Sans réservation", require("../../assets/joueur3.jpeg"), "ScoreNewParty")}
+      <View style={{ height: "100%", width: "100%", justifyContent: "center"}}>
+        {cartouche(props, "Partie réservée", require("../../assets/closeBall1.jpeg"), "ScoreReservedParty")}
+        {cartouche(props, "Sans réservation", require("../../assets/joueur3.jpeg"), "ScoreNewParty")}
+      </View>
     </View>
   );
 }
@@ -16,7 +18,7 @@ export default function ScorePageStart(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    marginTop: 40,
     alignItems: "center",
   },
 })

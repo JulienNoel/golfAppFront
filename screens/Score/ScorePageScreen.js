@@ -105,8 +105,8 @@ export default function ScorePageModel() {
 
   if (isEnabled) {
     notePP = <View style={{ justifyContent: "center", flexDirection: "row", alignItems: "center" }}><Switch
-      trackColor={{ false: "#767577", true: "#81b0ff" }}
-      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+      trackColor={{ false: "#767577", true: "#767577" }}
+      thumbColor={isEnabled ? "#f5dd4b" : "#f5dd4b"}
       ios_backgroundColor="#3e3e3e"
       onValueChange={toggleSwitch}
       value={isEnabled}
@@ -114,8 +114,8 @@ export default function ScorePageModel() {
 
   } else {
     notePP = <View style={{ justifyContent: "center", flexDirection: "row", alignItems: "center" }}><Switch
-      trackColor={{ false: "#767577", true: "#81b0ff" }}
-      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+      trackColor={{ false: "#767577", true: "#767577" }}
+      thumbColor={isEnabled ? "#f5dd4b" : "#f5dd4b"}
       ios_backgroundColor="#3e3e3e"
       onValueChange={toggleSwitch}
       value={isEnabled}
@@ -231,6 +231,7 @@ export default function ScorePageModel() {
                       <TextInput onChangeText={onChangeNote}
                         value={note}
                         multiline={true}
+                        numberOfLines={4}
                         placeholder="Note"
                         style={styles.inputTextOverlay}
                       />
@@ -466,16 +467,21 @@ const styles = StyleSheet.create({
   },
   inputTitreOverlay: {
     padding: 5,
+    minHeight: "10%",
+    maxHeight: "10%",
     borderRadius: 2,
     borderWidth: 1,
     borderColor: "grey",
+    overflow:"scroll",
   },
   inputTextOverlay: {
     padding: 5,
-    height: "50%",
+    minHeight: "50%",
+    maxHeight: "50%",
     borderRadius: 2,
     borderWidth: 1,
     borderColor: "grey",
+    overflow:"scroll",
   },
   containerTable: {
     marginTop: 5,

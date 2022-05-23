@@ -14,7 +14,6 @@ import * as Permissions from "expo-permissions";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import SwipeUpDownGolf from "./SwipeUpDown";
 
 import { connect } from "react-redux";
 

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     position: 'absolute',
-    flexDirection: "columns",
+    flexDirection: "column",
     justifyContent: "space-between",
     width: "100%",
     height: 100,
