@@ -9,7 +9,7 @@ import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
 
 function HomeScreen(props) {
-  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
+  const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23]
   useEffect(() => {
     async function GolfFromBdd() {
       var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
@@ -44,9 +44,9 @@ function HomeScreen(props) {
       <View style={styles.cartoucheDash}>
 
 
-        <Text style={{ fontWeight: "300", marginTop: 10 }}>Evolution Index</Text>
+        <Text style={{ fontWeight: "500", marginTop: 10}}>Evolution Index</Text>
         <AreaChart
-          style={{ height: "90%",width:"95%"}}
+          style={{ height: "80%",width:"95%"}}
           data={data}
           contentInset={{ top: 30, bottom: 30 }}
           curve={shape.curveNatural}
@@ -61,7 +61,7 @@ function HomeScreen(props) {
       <View style={styles.cartoucheTrophy}>
         {/* 2er dashobard vide */}
       </View>
-      {cartouche(props, "Mes réservations", require("../assets/club.jpeg"), "")}
+      {cartouche(props, "Mes réservations", require("../assets/club.jpeg"), "MesReservation")}
     </View>
   );
 }

@@ -23,6 +23,7 @@ import LogScreen from "./screens/LogScreen";
 import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
 import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import MesReservation from "./screens/Réservation/RéservationScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -142,6 +143,7 @@ export default function App() {
           <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
           <Stack.Screen name="notification1" component={StackNotification1Screen} />
           <Stack.Screen name="notification2" component={StackNotification2Screen} />
+          <Stack.Screen name="MesReservation" component={MesReservation} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
