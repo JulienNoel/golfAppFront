@@ -1,4 +1,4 @@
-import { Text } from "react-native-elements";
+import { Text, Button } from "react-native-elements";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
@@ -12,7 +12,7 @@ function WelcomeScreen(props) {
   
   
   const [isLogin, setIsLogin] = useState(false)
-
+ 
   
   AsyncStorage.getItem("info User", function(error, data) {
     var userData = JSON.parse(data);
@@ -27,7 +27,9 @@ function WelcomeScreen(props) {
    var welcome
 
    if (isLogin) {
-       welcome = <Text style={styles.text}>{props.user}</Text>
+       welcome = <Text style={styles.text}>Welcome Back {props.user}</Text>
+   } else {
+     welcome = <Text style={styles.text}>Welcome To GolfApp</Text>
    }
 
 
@@ -37,8 +39,28 @@ function WelcomeScreen(props) {
     
     <ImageBackground source={require('../assets/paysage1.jpeg')} style={styles.container}>
 
-        <Text style={styles.text}>Welcome To GolfApp</Text>
-        {welcome}
+        <View style={{flex: 1, justifyContent: 'space-evenly', alignItems : 'center' }}>
+          <View>
+          {welcome}
+          </View>
+          
+            <View>
+            <Button
+                  title="GO GOLFING"
+                  buttonStyle={{
+                    borderColor: 'white',
+                  }}
+                  type="outline"
+                  titleStyle={{ color: 'white' }}
+                  containerStyle={{
+                    width: 200,
+                    marginHorizontal: 50,
+                    marginVertical: 10,
+                  }}
+                  onPress={() => props.navigation.navigate('BottomNavigator')}
+                />
+            </View>
+        </View>
 
     </ImageBackground> 
     

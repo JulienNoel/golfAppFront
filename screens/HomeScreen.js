@@ -20,6 +20,9 @@ function HomeScreen(props) {
     GolfFromBdd();
   }, []);
 
+  
+
+
   var Notification = [{ Notification: "nouvelle demande de buddy" }, { Notification: "Réservation" }]
   return (
     <View style={styles.container}>
@@ -27,7 +30,7 @@ function HomeScreen(props) {
         <View style={{ width: 65, height: 65, borderWidth: 1, borderColor: "grey", borderRadius: 100, alignItems: 'center', justifyContent: "center", backgroundColor: "grey", marginRight: 10, margin: '10%' }}>
           <Icon name="user" size={24} color="white" />
         </View>
-        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center' }}>Alexis M.</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center' }}>{props.user}</Text>
         <View style={{ height: "100%", margin: '10%' }}>
           <Tooltip containerStyle={{ height: 100 }} backgroundColor="#ededed" popover={
             <View style={{ height: "100%", width: "100%" }}>

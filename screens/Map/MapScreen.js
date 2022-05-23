@@ -68,7 +68,7 @@ function MapScreen(props) {
   };
 
   if (props.golf[0]) {
-    console.log(typeof props.golf[0].result[0].golfAddress.golfLatitude);
+    
     var markerDisplayGolf = props.golf[0].result.map((point, i) => (
       <Marker
         key={Math.random()}
