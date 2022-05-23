@@ -20,11 +20,7 @@ function HomeScreen(props) {
     GolfFromBdd();
   }, []);
 
-<<<<<<< HEAD
-  
-=======
   var Notification = [{ Notification: "nouvelle demande de buddy" }, { Notification: "Réservation" }]
->>>>>>> e9170ca5d6ee5d40e9640c5d26eb175d2645e01a
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", height: "12%", width: "100%", marginTop: 50 }}>
@@ -44,7 +40,7 @@ function HomeScreen(props) {
         </View>
 
       </View>
-      {cartouche(props, "statistique", require("../assets/joueur6.jpeg"), "statistique")}
+      {cartouche(props, "Statistiques", require("../assets/joueur6.jpeg"), "statistique")}
       <View style={styles.cartoucheDash}>
 
 
@@ -61,7 +57,7 @@ function HomeScreen(props) {
 
 
       </View>
-      {cartouche(props, "Trophés", require("../assets/closeBall2.webp"), "")}
+      {cartouche(props, "Trophées", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
         {/* 2er dashobard vide */}
       </View>
