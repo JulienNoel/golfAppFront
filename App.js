@@ -8,24 +8,23 @@ import golf from "./reducers/golf";
 import localisation from "./reducers/localisation";
 import nameGolfSelect from "./reducers/nameGolfSelect";
 import user from "./reducers/user.reducer";
+import cityGolf from "./reducers/cityTransfer";
 import token from "./reducers/token";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
 const store = createStore(
-  combineReducers({
-    golf,
-    nameGolfSelect,
-    user,
-    token,
-    localisation,
-  })
+  combineReducers({ golf, nameGolfSelect, user, token, localisation, cityGolf })
 );
 
 import WelcomeScreen from "./screens/WelcomeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
+import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
+import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import MesReservation from "./screens/Réservation/RéservationScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -70,6 +69,32 @@ function StackScoreScreen() {
     </Stack.Navigator>
   );
 }
+
+// navigation notification //
+
+import buddyScreen from "./screens/notification/buddyScreen";
+
+function StackNotification1Screen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="buddyScreen" component={buddyScreen} />
+    </Stack.Navigator>
+  );
+}
+
+// navigation notification //
+
+import Notification2 from "./screens/notification/Notification2";
+
+function StackNotification2Screen() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Notification2" component={Notification2} />
+    </Stack.Navigator>
+  );
+}
+
+// navigation statistique //
 
 import StatistiqueHome from "./screens/Statistique/StatHomeScreen";
 import Statistique from "./screens/Statistique/StatUserScreen";
@@ -120,9 +145,14 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+          <Stack.Screen name="Login" component={LogScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
+          <Stack.Screen name="notification1" component={StackNotification1Screen} />
+          <Stack.Screen name="notification2" component={StackNotification2Screen} />
+          <Stack.Screen name="MesReservation" component={MesReservation} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
