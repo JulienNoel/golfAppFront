@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 
 import cartouche from "./components/menuCartouche"
 import Icon from "react-native-vector-icons/FontAwesome";
+import { SimpleLineIcons } from '@expo/vector-icons';
 import LogScreen from "./LogScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23]
@@ -22,16 +24,22 @@ function HomeScreen(props) {
     GolfFromBdd();
   }, []);
 
-const [isLogin, setIsLogin] = useState(false)
 
   if (!props.token) {
-
+    
     return <LogScreen navigation={props.navigation}/>
     //props.navigation.navigate('Login')
     
   }
     
- 
+ var Logout = () => {
+
+  AsyncStorage.clear()
+  props.addToken(null)
+  props.addUser(null)
+  props.navigation.navigate('BottomNavigator', {screen: 'StackMap'})
+
+ }
   
 
 
@@ -43,15 +51,17 @@ const [isLogin, setIsLogin] = useState(false)
           <Icon name="user" size={24} color="white" />
         </View>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center' }}>{props.user}</Text>
-        <View style={{ height: "100%", margin: '10%' }}>
+        <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-evenly', alignItems: 'center', height: "100%" }}>
+        
           <Tooltip containerStyle={{ height: 100 }} backgroundColor="#ededed" popover={
             <View style={{ height: "100%", width: "100%" }}>
               <Text onPress={() => props.navigation.navigate("notification1")} style={{ height: "50%", width: "100%" }}>0 nouvelle demande de buddie</Text>
               <Text onPress={() => props.navigation.navigate("notification2")} style={{ height: "50%", width: "100%" }}>Hello</Text>
             </View>
-          }>
-            <Icon name="bell-o" size={30} color="black" />
+          }>            
+            <Icon name="bell-o" size={30} color="black" style={{marginLeft: 60}}/>
           </Tooltip>
+          <SimpleLineIcons name="logout" size={24} color="black" onPress={Logout}/>
         </View>
 
       </View>
@@ -120,11 +130,22 @@ const styles = StyleSheet.create({
   }
 })
 
-
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      
+      dispatch({type: 'addToken', token: token})
+    },
+    addUser: function(user){
+      console.log(user)
+      dispatch({type: 'addUser', user: user})
+    }
+  }
+}
 
 function mapStateToProps(state) {
 
   return { token: state.token, user: state.user, golf: state.golf }
 }
 
-export default connect(mapStateToProps, null)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

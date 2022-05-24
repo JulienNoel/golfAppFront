@@ -93,8 +93,6 @@ export function LogScreen(props) {
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>    
 
-      <Text style={styles.newAccountText}>Pas de Compte ?</Text>
-
       <TouchableOpacity style={styles.loginBtn} onPress={() => props.navigation.navigate('Register')}>
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
       </TouchableOpacity>        
@@ -158,14 +156,6 @@ const styles = StyleSheet.create({
       marginTop: 15,
       fontSize: 20,
       color: '#86BAA1'
-  },
-  newAccountText: {
-
-      fontWeight: 'bold',      
-      marginTop: 15,
-      fontSize: 20,
-      color: '#86BAA1'
-
   }
   
 });
