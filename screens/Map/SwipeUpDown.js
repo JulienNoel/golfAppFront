@@ -93,47 +93,40 @@ function SwipeUpDownGolf(props) {
   var p = 0.017453292519943295; // Math.PI / 180
   var c = Math.cos;
 
-  for (var golf of filteredGolfs){
-    var golfLatitude = golf.golfAddress.golfLatitude
-    var golfLongitude = golf.golfAddress.golfLongitude
+  for (var golf of filteredGolfs) {
+    var golfLatitude = golf.golfAddress.golfLatitude;
+    var golfLongitude = golf.golfAddress.golfLongitude;
 
-    var a = 0.5 - c((userLatitude - golfLatitude) * p)/2 +
-            c(golfLatitude * p) * c(userLatitude * p) *
-            (1 - c((userLongitude - golfLongitude) *p))/2;
+    var a =
+      0.5 -
+      c((userLatitude - golfLatitude) * p) / 2 +
+      (c(golfLatitude * p) *
+        c(userLatitude * p) *
+        (1 - c((userLongitude - golfLongitude) * p))) /
+        2;
 
-    var distances = 12742 * Math.asin(Math.sqrt(a)) // 2 * R; R = 6371 km
+    var distances = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
 
-    golf.distance = parseInt(distances)
+    golf.distance = parseInt(distances);
   }
-  
+
   if (filter9trous) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) => golf.neufTrous == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.neufTrous == true);
   }
 
   if (filter18trous) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) =>
-        golf.dixhuitTrous == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.dixhuitTrous == true);
   }
 
   if (filterPractice) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) =>
-        golf.practice == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.practice == true);
   }
 
   if (filterRestauration) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) =>
-        golf.restauration == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.restauration == true);
   }
 
-  filteredGolfs = filteredGolfs.filter(golf => golf.distance <= valueKm)
+  filteredGolfs = filteredGolfs.filter((golf) => golf.distance <= valueKm);
 
   var golfList = filteredGolfs.map((l, i) => {
     return (
@@ -160,12 +153,16 @@ function SwipeUpDownGolf(props) {
               }}
             />
             <ListItem.Content>
-              <ListItem.Title>{l.golfName}, à {l.distance} km</ListItem.Title>
+              <ListItem.Title>
+                {l.golfName}, à {l.distance} km
+              </ListItem.Title>
               <ListItem.Subtitle>
-                practice: {JSON.stringify(l.practice)}, restauration: {JSON.stringify(l.restauration)}
+                practice: {JSON.stringify(l.practice)}, restauration:{" "}
+                {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)}, 18 trous: {JSON.stringify(l.dixhuitTrous)}
+                9 trous: {JSON.stringify(l.neufTrous)}, 18 trous:{" "}
+                {JSON.stringify(l.dixhuitTrous)}
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -394,9 +391,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { golfInDb: state.golf,
-          userLocalisation: state.localisation
-  };
+  return { golfInDb: state.golf, userLocalisation: state.localisation };
 }
 
 function mapDispatchToProps(dispatch) {

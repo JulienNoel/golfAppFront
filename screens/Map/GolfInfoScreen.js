@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
 function GolfInfoScreen(props) {
   var golfSelectInfo = props.golfInDb.filter(
     (golf) => golf.golfName === props.golfName
@@ -81,7 +80,7 @@ function GolfInfoScreen(props) {
               borderRadius: 10,
               width: "30%",
             }}
-            onPress={() => props.navigation.navigate("Resarvation")}
+            onPress={() => props.navigation.navigate("Reservation")}
           />
         </View>
         <View

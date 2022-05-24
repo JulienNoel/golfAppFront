@@ -1,6 +1,5 @@
-import { Text, Button, ButtonGroup } from "react-native-elements";
+import { Text, Button, ButtonGroup, Switch } from "react-native-elements";
 import { View, Dimensions, Image, TouchableOpacity } from "react-native";
-import { Link } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
@@ -10,12 +9,41 @@ const windowHeight = Dimensions.get("window").height;
 
 function ReservationPracticeScreen(props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [checkedOpenToBuddies, setCheckedOpenToBuddies] = useState(false);
+  const [checkedBuddiesOnly, setCheckedBuddiesOnly] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  console.log("optionNbTrou", selectedIndex);
+  console.log("Switch Buddies", checkedBuddiesOnly);
+  console.log("Switch Open Session To Buddies", checkedOpenToBuddies);
+
   var golfSelectInfo = props.golfInDb.filter(
     (golf) => golf.golfName === props.golfName
   );
+  var handlePress = (NbTrous, OpenToBuddies, BuddiesOnly) => {
+    var trous = "";
+    if (NbTrous == 0) {
+      trous = "18 trous";
+    } else if (NbTrous == 1) {
+      trous = "9 trous";
+    }
 
-  // console.log("golfNameSelect", props.golfName);
-  // console.log("golfselectCity", golfSelectInfo[0].golfAddress.golfCity);
+    if (
+      trous &&
+      ((OpenToBuddies == true && BuddiesOnly == false) ||
+        (OpenToBuddies == false && BuddiesOnly == true) ||
+        (!OpenToBuddies && !BuddiesOnly))
+    ) {
+      console.log("Tous est ok");
+      props.navigation.navigate("Disponibilite", {
+        NombreTrous: trous,
+        checkedBuddiesOnly: BuddiesOnly,
+        checkedOpenToBuddies: OpenToBuddies,
+      });
+    } else if (OpenToBuddies && BuddiesOnly) {
+      setErrorMessage("Selectionne une seul option");
+    }
+  };
 
   return (
     <View
@@ -64,7 +92,7 @@ function ReservationPracticeScreen(props) {
             display: "flex",
             alignItems: "center",
             width: windowWidth - windowWidth / 15,
-            marginVertical: windowHeight - windowHeight / 1.01,
+            marginBottom: windowHeight - windowHeight / 1.02,
           }}
         >
           <Text style={{ fontSize: 30 }}>{golfSelectInfo[0].golfName}</Text>
@@ -75,22 +103,20 @@ function ReservationPracticeScreen(props) {
             height: windowHeight - windowHeight / 1.5,
             marginBottom: windowHeight - windowHeight / 1.05,
             alignItems: "center",
+            backgroundColor: "white",
             borderRadius: 10,
           }}
         >
           <View
             style={{
-              width: "95%",
+              width: "90%",
               height: "95%",
-              justifyContent: "space-around",
-              backgroundColor: "red",
-              marginVertical: windowHeight - windowHeight / 1.04,
             }}
           >
             <View
               style={{
                 height: "30%",
-                backgroundColor: "pink",
+                justifyContent: "center",
               }}
             >
               {/*SELECTION NOMBRE DE TROUS*/}
@@ -101,42 +127,113 @@ function ReservationPracticeScreen(props) {
                   setSelectedIndex(value);
                 }}
                 containerStyle={{
-                  marginBottom: 20,
                   borderRadius: 10,
-                  backgroundColor: "red",
+                  backgroundColor: "#b3edbf",
+                  borderColor: "white",
                 }}
+                selectedButtonStyle={{ backgroundColor: "#3AB795" }}
               />
+              {errorMessage.length > 1 ? (
+                <Text style={{ color: "red", textAlign: "center" }}>
+                  {errorMessage}
+                </Text>
+              ) : null}
             </View>
             <View
               style={{
-                height: "50%",
-                backgroundColor: "white",
+                height: "70%",
               }}
             >
               {/*Radio Seulement créneaux ouverts aux buddies*/}
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  height: "50%",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    width: "70%",
+                  }}
+                >
+                  <Text style={{ fontSize: 15, fontWeight: "400" }}>
+                    Seulement créneaux ouverts aux buddies
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: "30%",
+                    alignItems: "center",
+                  }}
+                >
+                  <Switch
+                    value={checkedBuddiesOnly}
+                    onValueChange={(value) => setCheckedBuddiesOnly(value)}
+                    color="#3AB795"
+                  />
+                </View>
+              </View>
               {/*Radio Proposer mon créneau aux buddies*/}
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  height: "50%",
+                  alignItems: "center",
+                }}
+              >
+                <View
+                  style={{
+                    width: "70%",
+                  }}
+                >
+                  <Text style={{ fontSize: 15, fontWeight: "400" }}>
+                    Proposer mon créneau aux buddies
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: "30%",
+                    alignItems: "center",
+                  }}
+                >
+                  <Switch
+                    value={checkedOpenToBuddies}
+                    onValueChange={(value) => setCheckedOpenToBuddies(value)}
+                    color="#3AB795"
+                  />
+                </View>
+              </View>
             </View>
           </View>
           <View
             style={{
               width: windowWidth - windowWidth / 15,
-              height: windowHeight - windowHeight / 1.08,
-              // marginHorizontal: windowHeight - windowHeight / 1.05,
-              backgroundColor: "green",
-              alignItems: "center",
+              height: windowHeight - windowHeight / 1.1,
               justifyContent: "center",
+              alignItems: "center",
+              marginTop: windowWidth - windowWidth / 1.15,
             }}
           >
             <Button
               buttonStyle={{
                 backgroundColor: "#3AB795",
+                height: windowHeight - windowHeight / 1.06,
               }}
               title="Voir les disponibilités"
               containerStyle={{
                 borderRadius: 10,
                 width: "100%",
               }}
-              // onPress={() => props.navigation.navigate("")}
+              onPress={() => {
+                handlePress(
+                  selectedIndex,
+                  checkedOpenToBuddies,
+                  checkedBuddiesOnly
+                );
+              }}
             />
           </View>
         </View>
@@ -146,8 +243,7 @@ function ReservationPracticeScreen(props) {
 }
 
 function mapStateToProps(state) {
-  console.log("mapstate", state.golfName);
   return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
 }
 
-export default connect(mapStateToProps, null)(ReservationPracticeScreen);
+export default connect(mapStateToProps)(ReservationPracticeScreen);
