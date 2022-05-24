@@ -60,6 +60,7 @@ function SwipeUpDownGolf(props) {
       name: "Vrai golf" }
   ];
 
+  //calcul distance entre user et golf
   var favoriteGolfs = favoriteGolfsdistance.map((l, i) => {
     var golfLatitude = l.latitude
     var golfLongitude = l.longitude

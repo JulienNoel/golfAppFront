@@ -249,9 +249,9 @@ export default function ScorePageModel() {
 
 
                   <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
-                    <View style={{ flex: 1, justifyContent: 'space-between', width: "80%", flexDirection: "columns" }}>
+                    <View style={{ flex: 1, justifyContent: 'space-between', width: "80%", flexDirection: "column" }}>
                       <View style={{ flexDirection: 'row', justifyContent: "center" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 20, margin: 10 }}>Nouvelle note</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 17, margin: 10 }}>Nouvelle note</Text>
                       </View>
 
                       <TextInput onChangeText={onChangeNote}

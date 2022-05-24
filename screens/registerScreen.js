@@ -149,7 +149,7 @@ export function RegisterScreen(props) {
           placeholderTextColor="#003f5c"          
           onChangeText={(val) => setBirthDate(val)}
           value={birthDate}          
-          keyboardType='number-pad'
+          keyboardType='numeric'
           maxLength={10}
           onPressIn={showDatePicker}
           
