@@ -666,7 +666,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     borderColor: "grey",
-    overflow: "scroll",
+    overflow: "hidden",
   },
   containerTable: {
     marginTop: 5,
