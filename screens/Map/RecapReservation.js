@@ -70,7 +70,7 @@ function recapReservation(props) {
   };
 
   var handleSumit = () => {
-    props.navigation.navigate("Home");
+    props.navigation.navigate("Map");
     toggleModal();
   };
 
@@ -121,7 +121,7 @@ function recapReservation(props) {
                   borderRadius: 10,
                   width: "100%",
                 }}
-                title="Home"
+                title="Ok"
                 onPress={() => handleSumit()}
               />
             </View>
@@ -250,8 +250,7 @@ function recapReservation(props) {
                   width: "100%",
                 }}
                 onPress={() => {
-                  toggleModal;
-                  props.navigate.navigation("StackMap");
+                  toggleModal();
                 }}
               />
             </View>
