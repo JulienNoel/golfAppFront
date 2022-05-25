@@ -148,11 +148,11 @@ function SwipeUpDownGolf(props) {
   }
 
   if (filter9trous) {
-    filteredGolfs = filteredGolfs.filter((golf) => golf.neufTrous == true);
+    filteredGolfs = filteredGolfs.filter((golf) => golf.neufTrous > 0);
   }
 
   if (filter18trous) {
-    filteredGolfs = filteredGolfs.filter((golf) => golf.dixhuitTrous == true);
+    filteredGolfs = filteredGolfs.filter((golf) => golf.dixhuitTrous > 0);
   }
 
   if (filterPractice) {
@@ -198,8 +198,7 @@ function SwipeUpDownGolf(props) {
                 {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)}, 18 trous:{" "}
-                {JSON.stringify(l.dixhuitTrous)}
+                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:{JSON.stringify(l.dixhuitTrous)} parcours
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
