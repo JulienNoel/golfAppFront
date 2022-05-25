@@ -6,6 +6,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  ImageBackground,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -89,6 +91,7 @@ export function RegisterScreen(props) {
         source={require("../assets/pro-golf-logo-maker-1558a.png")}
       />
       {errorRegister}
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -141,7 +144,9 @@ export function RegisterScreen(props) {
           keyboardType="numeric"
           maxLength={10}
           onPressIn={showDatePicker}
+          showSoftInputOnFocus={false}
         />
+
         <DateTimePickerModal
           maximumDate={new Date()}
           isVisible={isDatePickerVisible}

@@ -145,11 +145,11 @@ function SwipeUpDownGolf(props) {
   }
 
   if (filter9trous) {
-    filteredGolfs = filteredGolfs.filter((golf) => golf.neufTrous == true);
+    filteredGolfs = filteredGolfs.filter((golf) => golf.neufTrous > 0);
   }
 
   if (filter18trous) {
-    filteredGolfs = filteredGolfs.filter((golf) => golf.dixhuitTrous == true);
+    filteredGolfs = filteredGolfs.filter((golf) => golf.dixhuitTrous > 0);
   }
 
   if (filterPractice) {
