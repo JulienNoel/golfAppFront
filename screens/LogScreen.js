@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -8,63 +7,66 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
- 
-export default function LogScreen(props) {
 
+import { connect } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export function LogScreen(props) {
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
   const [messageError, setMessageError] = useState([]);
 
   var handleSubmitLogin = async () => {
-    
-    const data = await fetch('https://calm-bastion-61741.herokuapp.com/login', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `emailFromFront=${emailLogin}&passwordFromFront=${passwordLogin}`
-    })
+    const data = await fetch("https://calm-bastion-61741.herokuapp.com/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `emailFromFront=${emailLogin}&passwordFromFront=${passwordLogin}`,
+    });
 
-    const body = await data.json()
-    
+    const body = await data.json();
 
-    if (body.result) {
-
-      setEmailLogin('')
-      setPasswordLogin('')
-      setMessageError([])
-      props.navigation.navigate('Home')
+    if (body.error) {
+      setMessageError(body.error);
     }
 
-        
+    if (body.result) {
+      var userData = { userPrenom: body.user.userPrenom, token: body.token };
 
-  } 
+      props.addToken(body.token);
+      props.addUser(body.user.userPrenom);
+      AsyncStorage.setItem("info User", JSON.stringify(userData));
+      setEmailLogin("");
+      setPasswordLogin("");
+      setMessageError([]);
+      props.navigation.navigate("Home");
+    }
+  };
 
-  
+  var errorLogin = messageError.map((error, i) => {
+    return <Text style={{ color: "red" }}>{error}</Text>;
+  });
 
-  var errorLogin = messageError.map((error,i) => {
-    return(<Text style={{color: 'red'}}>{error}</Text>)
-  })
- 
   return (
-    
     <View style={styles.container}>
-    
-      <Image style={styles.image} source={require('../assets/pro-golf-logo-maker-1558a.png')} />
+      <Image
+        style={styles.image}
+        source={require("../assets/pro-golf-logo-maker-1558a.png")}
+      />
       {errorLogin}
       <Text style={styles.signinText}>LOG IN</Text>
       <View style={styles.inputView}>
-        
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#003f5c"
           onChangeText={(email) => setEmailLogin(email)}
           value={emailLogin}
-          keyboardType='email-address'
+          keyboardType="email-address"
         />
       </View>
- 
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -76,21 +78,23 @@ export default function LogScreen(props) {
         />
       </View>
 
-      <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitLogin()}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => handleSubmitLogin()}
+      >
         <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>    
+      </TouchableOpacity>
 
-      <Text style={styles.newAccountText}>Pas de Compte ?</Text>
-
-      <TouchableOpacity style={styles.loginBtn} onPress={() => props.navigation.navigate('Register')}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => props.navigation.navigate("Register")}
+      >
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
-      </TouchableOpacity>        
-     
+      </TouchableOpacity>
     </View>
-    
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -98,32 +102,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
- 
+
   image: {
     height: 200,
     width: 200,
-        
   },
- 
+
   inputView: {
     backgroundColor: "white",
     borderRadius: 5,
     width: "70%",
     height: 45,
-    marginBottom: 20,    
+    marginBottom: 20,
     borderWidth: 1,
     borderColor: "#86BAA1",
-    
   },
- 
+
   TextInput: {
     height: 50,
     flex: 1,
     marginLeft: 5,
-    justifyContent: 'center',
-    alignItems: "center"
+    justifyContent: "center",
+    alignItems: "center",
   },
- 
+
   loginBtn: {
     width: "80%",
     borderRadius: 25,
@@ -134,25 +136,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#3AB795",
     borderWidth: 1,
     borderColor: "#86BAA1",
-    
   },
   loginText: {
-      color: 'white'
+    color: "white",
   },
   signinText: {
-      fontWeight: 'bold',
-      marginBottom: 10,
-      marginTop: 15,
-      fontSize: 20,
-      color: '#86BAA1'
+    fontWeight: "bold",
+    marginBottom: 10,
+    marginTop: 15,
+    fontSize: 20,
+    color: "#86BAA1",
   },
-  newAccountText: {
-
-      fontWeight: 'bold',      
-      marginTop: 15,
-      fontSize: 20,
-      color: '#86BAA1'
-
-  }
-  
 });
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addToken: function (token) {
+      dispatch({ type: "addToken", token: token });
+    },
+    addUser: function (user) {
+      console.log(user);
+      dispatch({ type: "addUser", user: user });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(LogScreen);
