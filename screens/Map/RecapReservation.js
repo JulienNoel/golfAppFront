@@ -63,6 +63,8 @@ function recapReservation(props) {
   //   console.log("navigate", props.route.params);
   const [recapFinalForBdd, setRecapFinalForBdd] = useState({});
 
+  console.log("coucou", props.userInfo);
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
