@@ -17,6 +17,7 @@ import "moment/locale/fr";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function RegisterScreen(props) {
+
   const [emailRegister, setEmailRegister] = useState("");
   const [passwordRegister, setPasswordRegister] = useState("");
   const [name, setName] = useState("");
@@ -25,32 +26,32 @@ export function RegisterScreen(props) {
   const [messageError, setMessageError] = useState([]);
 
   var handleSubmitRegister = async () => {
-    const data = await fetch("http://192.168.10.116:3000/register", {
+    const data = await fetch("https://calm-bastion-61741.herokuapp.com/register", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
     });
 
     const body = await data.json();
-
+    console.log(body)
     if (body.error) {
       setMessageError(body.error);
     }
 
     // initialisation objet user pour local storage
-    var userData = { userPrenom: body.user.userPrenom, token: body.user.token };
+    
 
     if (body.result) {
-      console.log(body.user.userPrenom);
-      props.addToken(body.user.token);
-      props.addUser(body.user);
-      AsyncStorage.setItem("info User", JSON.stringify(userData));
-      setEmailRegister("");
-      setPasswordRegister("");
-      setName("");
-      setPrenom("");
-      setBirthDate("");
-      setMessageError([]);
+      var userData = { userPrenom: body.user.userPrenom, token: body.user.token };
+       props.addToken(body.user.token);
+       props.addUser(body.user.userPrenom);
+       AsyncStorage.setItem("info User", JSON.stringify(userData));
+       setEmailRegister("");
+       setPasswordRegister("");
+       setName("");
+       setPrenom("");
+       setBirthDate("");
+       setMessageError([]);
       props.navigation.navigate("Home");
     }
   };
@@ -137,7 +138,7 @@ export function RegisterScreen(props) {
           placeholderTextColor="#003f5c"
           onChangeText={(val) => setBirthDate(val)}
           value={birthDate}
-          keyboardType="number-pad"
+          keyboardType="numeric"
           maxLength={10}
           onPressIn={showDatePicker}
         />
@@ -166,7 +167,7 @@ function mapDispatchToProps(dispatch) {
       dispatch({ type: "addToken", token: token });
     },
     addUser: function (user) {
-      console.log(user);
+      
       dispatch({ type: "addUser", user: user });
     },
   };
