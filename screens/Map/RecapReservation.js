@@ -17,15 +17,11 @@ function recapReservation(props) {
   );
 
   var NbTrousInt = parseInt(props.route.params.NombreTrous);
-  console.log("userInfoREDUX=>", props.userInfo.user._id);
+  //   console.log("userInfoREDUX=>", props.userInfo.user._id);
   // Je recupere les info du parcour selectionner
   var parcoursSelect = [];
 
   for (var i = 0; i < golfSelectInfo[0].parcours.length; i++) {
-    console.log(
-      "dansboucle",
-      golfSelectInfo[0].parcours[i].parcoursTrou.length
-    );
     if (golfSelectInfo[0].parcours[i].parcoursTrou.length == NbTrousInt) {
       parcoursSelect.push(golfSelectInfo[0].parcours[i]);
     }
@@ -63,8 +59,8 @@ function recapReservation(props) {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
-  console.log("okok", parcoursSelect);
-  console.log("navigate", props.route.params);
+  //   console.log("okok", parcoursSelect);
+  //   console.log("navigate", props.route.params);
   const [recapFinalForBdd, setRecapFinalForBdd] = useState({});
 
   const toggleModal = () => {
@@ -77,6 +73,22 @@ function recapReservation(props) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
     });
+
+    var response = await addReservation.json();
+
+    var idReservation = response.result._id;
+    // console.log("non", response.result._id);
+    if (idReservation) {
+      var addReservationToUser = await fetch(
+        `http://192.168.10.139:3000/userReservation/${props.userInfo.user._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `idReservationFromFront=${idReservation}`,
+        }
+      );
+    }
+
     props.navigation.navigate("Map");
     toggleModal();
   };
@@ -92,7 +104,7 @@ function recapReservation(props) {
       nomParcours: parcoursSelect[0].nomParcours,
     });
   };
-  console.log("recapReserva", recapFinalForBdd);
+  //   console.log("recapReserva", recapFinalForBdd);
   if (
     props.route.params.checkedOpenToBuddies ||
     (!props.route.params.checkedOpenToBuddies &&
