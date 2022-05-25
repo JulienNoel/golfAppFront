@@ -36,7 +36,7 @@ function ScoreNewParty(props) {
 }
 
 function ReservedPartyTab(tableauRéservation, props) {
-
+console.log(tableauRéservation)
   var gallery = tableauRéservation.map((element, index) => {
     moment.locale("fr");
     var dateFormat = moment(element.dateReservation).format("L");
