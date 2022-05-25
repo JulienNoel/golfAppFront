@@ -20,23 +20,33 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function ScorePageModel() {
 
+  var reservation = { date: "20/03/2022", typeReservation: [], idJoueur: ["id1JoueurQuiAFaitLaRéservation", "id2", "id3"], idParcours: "Trouver un idée qui le liera à la bdd" }
+  var parcours = { nomParcours: "Parcours 1", nombreJoueur: 3, typeParcours: 18 }
+
   const swipeUpDownRef = useRef();
   const [countScore, setCountScore] = useState(0);
   const [countPutt, setCountPutt] = useState(0);
   const [note, onChangeNote] = useState("");
   const [numeroPage, setNumeroPage] = useState(0);
-  const [tableauScore, setTableauScore] = useState(generateParcours(18));
-  const [page, setPage] = useState(tableauScore[0]);
-  const [score, setScore] = useState(generateScore(18, 4));
-  const [scoreParcours, setScoreParcours] = useState({ scoreTotal: score.map(item => item.score).reduce((prev, curr) => prev + curr, 0), scorePar: tableauScore.map(item => item.par).reduce((prev, curr) => prev + curr, 0) })
+  const [tableauScore, setTableauScore] = useState(generateParcours());
+  const [page, setPage] = useState(tableauScore.parcoursTrou[0]);
+  const [score, setScore] = useState(generateScore(parcours.typeParcours, reservation.idJoueur.length));
+  const [scoreParcours, setScoreParcours] = useState(comptageScore(score, tableauScore))
+  const [infoParcoursTotal, setInfoParcoursTotal] = useState(comptageParDistanceTotal(tableauScore))
 
   useEffect(() => {
     function page() {
-      setPage(tableauScore[numeroPage])
+      setPage(tableauScore.parcoursTrou[numeroPage])
     }
     page()
   }, [numeroPage]);
 
+  //comptage score Par distance total pour affichage
+  function comptageParDistanceTotal(tableauScore) {
+    var totalPar = tableauScore.parcoursTrou.map(item => item.par).reduce((prev, curr) => prev + curr, 0)
+    var totalDistance = tableauScore.parcoursTrou.map(item => item.distance).reduce((prev, curr) => prev + curr, 0)
+    return { totalPar: totalPar, totalDistance: totalDistance }
+  }
 
   function minus() {
     if (numeroPage > 0) {
@@ -82,7 +92,7 @@ export default function ScorePageModel() {
         score[0].result[numeroPage].score = countScore - 1;
       }
     }
-    setScoreParcours({ scoreTotal: score.map(item => item.score).reduce((prev, curr) => prev + curr, 0), scorePar: tableauScore.map(item => item.par).reduce((prev, curr) => prev + curr, 0) })
+    setScoreParcours(comptageScore(score, tableauScore))
   };
 
   var majScorePlus = (typeJeux) => {
@@ -95,7 +105,7 @@ export default function ScorePageModel() {
       setCountScore(countScore + 1);
       score[0].result[numeroPage].score = countScore + 1;
     }
-    setScoreParcours({ scoreTotal: score.map(item => item.score).reduce((prev, curr) => prev + curr, 0), scorePar: tableauScore.map(item => item.par).reduce((prev, curr) => prev + curr, 0) })
+    setScoreParcours(comptageScore(score, tableauScore))
   };
   //
 
@@ -130,15 +140,15 @@ export default function ScorePageModel() {
       value={isEnabled}
     /><Text style={{ margin: 5 }}>Publique</Text></View>
   }
-
+  console.log(page)
   return (
-    <ImageBackground source={require("../../assets/map.png")} style={styles.div}>
+    <ImageBackground source={page.url} style={styles.div}>
       <View style={styles.infoCard}>
         <View style={{ margin: 20 }}>
           <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 5 }}>
-            Nom du parcours
+            {tableauScore.nomParcours}
           </Text>
-          <Text>Par 72 - 7342 m</Text>
+          <Text>Par {infoParcoursTotal.totalPar} - {infoParcoursTotal.totalDistance} m</Text>
         </View>
         <View style={{ margin: 20, alignItems: "flex-end" }}>
           <Badge
@@ -154,7 +164,7 @@ export default function ScorePageModel() {
               marginBottom: 5,
             }}
           >
-            Trou {page.hole}
+            Trou {page.trou}
           </Text>
           <Text>{page.distance} m</Text>
         </View>
@@ -225,19 +235,19 @@ export default function ScorePageModel() {
                 <View style={styles.main}>
 
                   <Overlay isVisible={finishPatyVisible} onBackdropPress={next} overlayStyle={styles.overlayScore}>
-                    <View style={{ flex: 1, justifyContent: 'space-between', width: "80%", flexDirection: "columns" }}>
+                    <View style={{ flex: 1, justifyContent: 'space-between', width: "80%", flexDirection: "column" }}>
                       <View style={{ flexDirection: 'row', justifyContent: "center" }}>
                         <Text style={{ fontWeight: "bold", fontSize: 20, margin: 10, textAlign: "center" }}>Récapitulatif de la partie :</Text>
                       </View>
                       <View style={{ marginBottom: 20 }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 35, textAlign: "center" }}>{scoreParcours.scoreTotal}</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 35, textAlign: "center" }}>{scoreParcours[0].scoreTotal}</Text>
                         <Badge
                           badgeStyle={{
                             backgroundColor: "#3AB795",
                             height: 20,
                           }}
                           textStyle={{ fontWeight: "bold", fontSize: 12 }}
-                          value={"+ " + scoreParcours.scorePar + " points"}
+                          value={" " + (scoreParcours[0].scoreTotal - scoreParcours[0].scorePar) + " points"}
                         />
                       </View>
                       <Button title="Valider la partie"
@@ -276,7 +286,7 @@ export default function ScorePageModel() {
                       </View>
                     </View>
                   </Overlay>
-                  {ScoreTable(score, scoreParcours.scoreTotal, scoreParcours.scorePar)}
+                  {ScoreTable(score, scoreParcours, tableauScore)}
                   <View style={{ flex: 1, marginTop: 10, flexDirection: "row" }}>
                     <Badge
                       badgeStyle={{
@@ -381,7 +391,7 @@ export default function ScorePageModel() {
                       /></TouchableOpacity>
 
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                      Trou n° {page.hole}
+                      Trou n° {page.trou}
                     </Text>
                     <TouchableOpacity onPress={() => next()}>
                       <Image
@@ -406,19 +416,54 @@ export default function ScorePageModel() {
   );
 }
 
+function comptageScore(tableauScore, tableauScoreA) {
+  var scoreTotalTab = []
+  var totalPar = tableauScoreA.parcoursTrou.map(item => item.par).reduce((prev, curr) => prev + curr, 0)
+  for (const element of tableauScore) {
 
-function generateParcours(LongueurTrou) {
-  var tableauScore = []
-  for (var i = 1; i <= LongueurTrou; i++) {
-    var score = {};
-    score.hole = i;
-    score.par = Math.floor(Math.random() * (0 + 7));
-    score.distance = Math.floor(Math.random() * (0 + 200));
-    score.img = "../../assets/MapType.png"
-    tableauScore.push(score)
+    var total = element.result.map(item => item.score).reduce((prev, curr) => prev + curr, 0)
+    scoreTotalTab.push({ scoreTotal: total, scorePar: totalPar })
   }
+  return scoreTotalTab
+}
+// generate parcours
 
-  return tableauScore
+function generateParcours() {
+  //var parcours = [{nomParcours : "Parcours 1", typeParcours : 18, par : [{trou : 1, url : "", par : 3, distance : 104}]}]
+  var par = [4, 4, 3, 4, 4, 3, 4, 5, 5, 4, 3, 5, 4, 4, 4, 4, 3, 4]
+  var distance = [389, 284, 142, 297, 357, 160, 319, 472, 461, 319, 153, 397, 370, 320, 328, 379, 169, 360]
+  var tableauScore = []
+  var golf = []
+  var parcours = { nomParcours: "Parcours de Vineuil" }
+  for (var i = 1; i <= par.length; i++) {
+    var parcoursTrou = {};
+    parcoursTrou.trou = i;
+    parcoursTrou.par = par[i - 1];
+
+    switch (i) {
+      case 1:
+        parcoursTrou.url = require(`../../assets/photo_golf/vineuil-1-sm.jpeg`)
+        break;
+      case 2:
+        parcoursTrou.url = require(`../../assets/photo_golf/vineuil-2-sm.jpeg`)
+        break;
+      case 3:
+        parcoursTrou.url = require(`../../assets/photo_golf/vineuil-3-sm.jpeg`)
+        break;
+      case 4:
+          parcoursTrou.url = require(`../../assets/photo_golf/vineuil-4-sm.jpeg`)
+        break;
+      case 5:
+          parcoursTrou.url = require(`../../assets/photo_golf/vineuil-5-sm.jpeg`)
+        break;
+    }
+    
+    parcoursTrou.distance = distance[i - 1];
+    tableauScore.push(parcoursTrou)
+  }
+  parcours.parcoursTrou = tableauScore
+
+  return parcours
 }
 
 function generateScore(LongueurTrou, nombreJoueur) {
@@ -439,13 +484,14 @@ function generateScore(LongueurTrou, nombreJoueur) {
   return tableauScoreJoueur
 }
 
-function ScoreTable(tableauScore, scoreTotal, scorePar) {
-  var nombreTrou = 18;
+function ScoreTable(score, scoreTotal, tableauScore) {
+  // console.log(score)//score par joueur Putts Score
+  // console.log(scoreTotal)//score total scorePar scoreTotal
+  // console.log(tableauScore);//Détail parcours 
   var tableauColor = ["#f1c40f", "#FF5E57", "#DDA0DD", "#9f957d"]
-  var score = []
-  var totalScore=[12,23,35]
+  var scoreAffichage = []
 
-  for (const element of tableauScore) {
+  for (const element of score) {
     var ScoreTab = element.result.map((element, index) => {
       return (
         <TouchableWithoutFeedback key={index}>
@@ -458,10 +504,10 @@ function ScoreTable(tableauScore, scoreTotal, scorePar) {
         </TouchableWithoutFeedback>
       )
     })
-    score.push(ScoreTab)
+    scoreAffichage.push(ScoreTab)
   }
 
-  var NameTab = tableauScore.map((element, index) => {
+  var NameTab = score.map((element, index) => {
     var css = { backgroundColor: tableauColor[index], height: 20, width: 8, marginRight: 5 }
     return (
       <Row style={styles.SecondCell}>
@@ -471,13 +517,12 @@ function ScoreTable(tableauScore, scoreTotal, scorePar) {
     )
   })
 
-  var ParcoursData = generateParcours(18).map((element, index) => {
-    console.log(element.score)
+  var ParcoursData = tableauScore.parcoursTrou.map((element, index) => {
     return (
       <TouchableWithoutFeedback key={index}>
         <Col style={{ width: 50 }}>
           <Row style={styles.cell}>
-            <Text style={styles.black}>{element.hole}</Text>
+            <Text style={styles.black}>{element.trou}</Text>
             <Text style={styles.grey}>{element.par}</Text>
           </Row>
         </Col>
@@ -485,15 +530,14 @@ function ScoreTable(tableauScore, scoreTotal, scorePar) {
     )
   })
 
-  var total = totalScore.map((element, index) => {
+  var total = scoreTotal.map((element, index) => {
     return (
-        <Row style={styles.SecondCellLast}>
-          <Text style={styles.ScoreCell}>{element}</Text>
-        </Row>
+      <Row style={styles.SecondCellLast}>
+        <Text style={styles.ScoreCell}>{element.scoreTotal}</Text>
+      </Row>
     )
   })
 
-  
   return (
     <View style={styles.containerTable}>
       <Grid>
@@ -508,15 +552,15 @@ function ScoreTable(tableauScore, scoreTotal, scorePar) {
         <ScrollViewGH horizontal={true}>
           <Col>
             <Row>{ParcoursData}</Row>
-            {score.map((element, index) => { return (<Row>{element}</Row>) })}
+            {scoreAffichage.map((element, index) => { return (<Row>{element}</Row>) })}
           </Col>
         </ScrollViewGH>
         <Col style={{ width: 60 }}>
-        < Row style={styles.FirstCellLast} >
-          <Text style={styles.black}>Total</Text>
-          <Text style={styles.grey}>{scorePar}</Text>
-        </Row >
-        {total}
+          < Row style={styles.FirstCellLast} >
+            <Text style={styles.black}>Total</Text>
+            <Text style={styles.grey}>{scoreTotal[0].scorePar}</Text>
+          </Row >
+          {total}
         </Col>
 
       </Grid>
