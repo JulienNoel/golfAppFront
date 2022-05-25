@@ -60,6 +60,7 @@ function SwipeUpDownGolf(props) {
       name: "Vrai golf" }
   ];
 
+  //calcul distance entre user et golf
   var favoriteGolfs = favoriteGolfsdistance.map((l, i) => {
     var golfLatitude = l.latitude
     var golfLongitude = l.longitude
@@ -198,7 +199,7 @@ function SwipeUpDownGolf(props) {
                 {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:{JSON.stringify(l.dixhuitTrous)} parcours
+                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous: {JSON.stringify(l.dixhuitTrous)} parcours
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>

@@ -11,7 +11,7 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import SwipeUpDownGolf from "./SwipeUpDown"
+import SwipeUpDownGolf from "./SwipeUpDown";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -46,7 +46,6 @@ function MapScreen(props) {
     }
     askPermissions();
   }, []);
-
   var currentLocation = async () => {
     var currentPosition = await Location.getCurrentPositionAsync();
     setNewCurrentLocation({
@@ -56,16 +55,13 @@ function MapScreen(props) {
   };
 
   useEffect(() => {
-    if (props.cityGolf.length > 0){
+    if (props.cityGolf.length > 0) {
       setNewCurrentLocation({
         latitude: props.cityGolf[0].latitude,
-        longitude: props.cityGolf[0].longitude
-      })
+        longitude: props.cityGolf[0].longitude,
+      });
     }
   }, [props.cityGolf]);
-
-
- 
 
   props.localisationTransfer(location);
 
@@ -200,7 +196,7 @@ function MapScreen(props) {
 }
 
 function mapStateToProps(state) {
-  return { golf: state.golf, cityGolf: state.cityGolf };
+  return { golf: state.golf, cityGolf: state.cityGolf, user: state.user };
 }
 
 function mapDispatchToProps(dispatch) {
