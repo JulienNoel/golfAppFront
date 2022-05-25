@@ -36,6 +36,16 @@ function WelcomeScreen(props) {
     welcome = <Text style={styles.text}>Welcome To GolfApp</Text>;
   }
 
+  var cheminLogin = () => {
+
+    if (isLogin) {
+      props.navigation.navigate("BottomNavigator", {screen: "Home"})
+    } else {
+      props.navigation.navigate("BottomNavigator", {screen: "StackMap"})
+    }
+
+  }
+
   return (
     <ImageBackground
       source={require("../assets/paysage1.jpeg")}
@@ -63,11 +73,8 @@ function WelcomeScreen(props) {
               marginHorizontal: 50,
               marginVertical: 10,
             }}
-            onPress={() =>
-              props.navigation.navigate("BottomNavigator", {
-                screen: "StackMap",
-              })
-            }
+            onPress={cheminLogin}
+            
           />
         </View>
       </View>
