@@ -88,6 +88,7 @@ function MapScreen(props) {
           longitude: point.golfAddress.golfLongitude,
         }}
         title={point.golfName}
+        // onPress={props.navigation.navigate("GolfInfo")}
       >
         <Image source={require("../../assets/GolfMarker.png")} />
       </Marker>
