@@ -272,15 +272,7 @@ function mapStateToProps(state) {
   return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onPressVoirDispo: function (user) {
-      dispatch({ type: "AddActiveUser", user: user });
-    },
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(ReservationPracticeScreen);
