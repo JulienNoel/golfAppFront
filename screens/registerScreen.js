@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -9,66 +8,57 @@ import {
   Button,
   TouchableOpacity,
   ImageBackground,
-  
-  
 } from "react-native";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import {connect} from 'react-redux'
-import moment from 'moment';
-import 'moment/locale/fr'
-import AsyncStorage from '@react-native-async-storage/async-storage';
- 
-export function RegisterScreen(props) {
+import { connect } from "react-redux";
+import moment from "moment";
+import "moment/locale/fr";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-  
+export function RegisterScreen(props) {
   const [emailRegister, setEmailRegister] = useState("");
   const [passwordRegister, setPasswordRegister] = useState("");
-  const [name, setName] = useState('');
-  const [prenom, setPrenom] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [name, setName] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [messageError, setMessageError] = useState([]);
-  
-  
-  
-  var handleSubmitRegister = async () => {
-    
-    const data = await fetch('https://calm-bastion-61741.herokuapp.com/register', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
-    })
 
-    const body = await data.json()
+  var handleSubmitRegister = async () => {
+    const data = await fetch("http://192.168.10.116:3000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
+    });
+
+    const body = await data.json();
 
     if (body.error) {
-      setMessageError(body.error)
-
+      setMessageError(body.error);
     }
-    
+
     // initialisation objet user pour local storage
-    var userData = {userPrenom: body.user.userPrenom, token: body.user.token};
-    
-    if (body.result) {
-    console.log(body.user.userPrenom)
-    props.addToken(body.user.token)
-    props.addUser(body.user.userPrenom)
-    AsyncStorage.setItem("info User", JSON.stringify(userData))
-    setEmailRegister('')
-    setPasswordRegister('')
-    setName('')
-    setPrenom('')
-    setBirthDate('')
-    setMessageError([])
-    props.navigation.navigate('Home')
-    }
+    var userData = { userPrenom: body.user.userPrenom, token: body.user.token };
 
-  } 
-    
+    if (body.result) {
+      console.log(body.user.userPrenom);
+      props.addToken(body.user.token);
+      props.addUser(body.user);
+      AsyncStorage.setItem("info User", JSON.stringify(userData));
+      setEmailRegister("");
+      setPasswordRegister("");
+      setName("");
+      setPrenom("");
+      setBirthDate("");
+      setMessageError([]);
+      props.navigation.navigate("Home");
+    }
+  };
+
   //AsyncStorage.clear()
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -79,24 +69,24 @@ export function RegisterScreen(props) {
 
   const handleConfirm = (date) => {
     console.log("A date has been picked: ", date);
-    moment.locale('fr')
-    var dateFormat = moment(date).format('L');
+    moment.locale("fr");
+    var dateFormat = moment(date).format("L");
 
-    console.log(dateFormat)
-    setBirthDate(dateFormat)
+    console.log(dateFormat);
+    setBirthDate(dateFormat);
     hideDatePicker();
   };
-  
-  var errorRegister = messageError.map((error,i) => {
-    return(<Text style={{color: 'red'}}>{error}</Text>)
-  })
 
- 
+  var errorRegister = messageError.map((error, i) => {
+    return <Text style={{ color: "red" }}>{error}</Text>;
+  });
+
   return (
-    
     <View style={styles.container}>
-    
-      <Image style={styles.image} source={require('../assets/pro-golf-logo-maker-1558a.png')} />
+      <Image
+        style={styles.image}
+        source={require("../assets/pro-golf-logo-maker-1558a.png")}
+      />
       {errorRegister}
       <View style={styles.inputView}>
         <TextInput
@@ -118,19 +108,17 @@ export function RegisterScreen(props) {
         />
       </View>
 
-      
       <View style={styles.inputView}>
-        
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#003f5c"
           onChangeText={(val) => setEmailRegister(val)}
           value={emailRegister}
-          keyboardType='email-address'
+          keyboardType="email-address"
         />
       </View>
-      
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -142,59 +130,48 @@ export function RegisterScreen(props) {
         />
       </View>
 
-      <View style={styles.inputView} >
-      <TextInput
+      <View style={styles.inputView}>
+        <TextInput
           style={styles.TextInput}
           placeholder="Date de Naissance"
-          placeholderTextColor="#003f5c"          
+          placeholderTextColor="#003f5c"
           onChangeText={(val) => setBirthDate(val)}
-          value={birthDate}          
-          keyboardType='numeric'
+          value={birthDate}
+          keyboardType="number-pad"
           maxLength={10}
           onPressIn={showDatePicker}
-          
-          
         />
         <DateTimePickerModal
-            maximumDate={new Date()}            
-            isVisible={isDatePickerVisible}
-            mode="date"                   
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-          />
-        
-        
+          maximumDate={new Date()}
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
       </View>
 
-      
-      
-             
-      <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitRegister()}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => handleSubmitRegister()}
+      >
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
-      </TouchableOpacity>      
-     
+      </TouchableOpacity>
     </View>
-    
   );
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return {
-    addToken: function(token){
-      
-      dispatch({type: 'addToken', token: token})
+    addToken: function (token) {
+      dispatch({ type: "addToken", token: token });
     },
-    addUser: function(user){
-      console.log(user)
-      dispatch({type: 'addUser', user: user})
-    }      
-    
-    }
-  }
+    addUser: function (user) {
+      console.log(user);
+      dispatch({ type: "addUser", user: user });
+    },
+  };
+}
 
-
-
- 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -202,13 +179,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
- 
+
   image: {
     height: 200,
     width: 200,
-        
   },
- 
+
   inputView: {
     backgroundColor: "white",
     borderRadius: 5,
@@ -217,16 +193,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: "#86BAA1",
-    
   },
- 
+
   TextInput: {
     height: 50,
     flex: 1,
     marginLeft: 5,
-    
   },
- 
+
   loginBtn: {
     width: "80%",
     borderRadius: 25,
@@ -237,21 +211,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#3AB795",
     borderWidth: 1,
     borderColor: "#86BAA1",
-    
   },
   loginText: {
-      color: 'white'
+    color: "white",
   },
   signinText: {
-      fontWeight: 'bold',
-      marginBottom: 15,
-      fontSize: 20,
-      color: '#86BAA1'
+    fontWeight: "bold",
+    marginBottom: 15,
+    fontSize: 20,
+    color: "#86BAA1",
   },
-  
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(RegisterScreen)
+export default connect(null, mapDispatchToProps)(RegisterScreen);
