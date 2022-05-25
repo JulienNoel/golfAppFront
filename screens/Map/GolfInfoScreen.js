@@ -7,26 +7,18 @@ import { connect } from "react-redux";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
 function GolfInfoScreen(props) {
   var golfSelectInfo = props.golfInDb.filter(
     (golf) => golf.golfName === props.golfName
   );
 
-var Reserver = () => {
-
-  if (props.token) {
-
-    props.navigation.navigate("Resarvation")
-
-  } else {
-    
-    props.navigation.navigate("Login")
-    
-  }
-
-}
-
+  var Reserver = () => {
+    if (props.token) {
+      props.navigation.navigate("Reservation");
+    } else {
+      props.navigation.navigate("Login");
+    }
+  };
 
   // console.log("golfNameSelect", props.golfName);
   // console.log("golfselectCity", golfSelectInfo[0].golfAddress.golfCity);
@@ -215,7 +207,11 @@ var Reserver = () => {
 }
 
 function mapStateToProps(state) {
-  return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect, token: state.token };
+  return {
+    golfInDb: state.golf[0].result,
+    golfName: state.nameGolfSelect,
+    token: state.token,
+  };
 }
 
 export default connect(mapStateToProps, null)(GolfInfoScreen);

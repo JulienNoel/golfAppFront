@@ -5,7 +5,7 @@ import { AreaChart, Grid } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import { connect } from "react-redux";
 
-import cartouche from "./components/menuCartouche"
+import cartouche from "./components/menuCartouche";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { SimpleLineIcons } from '@expo/vector-icons';
 import LogScreen from "./LogScreen";
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
-  }
-})
+  },
+});
 
 function mapDispatchToProps(dispatch){
   return {

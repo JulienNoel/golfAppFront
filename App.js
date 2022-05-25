@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, LogBox } from "react-native";
+import { LogBox } from "react-native";
 
 LogBox.ignoreAllLogs();
 
@@ -18,11 +18,8 @@ const store = createStore(
 );
 
 import HomeScreen from "./screens/HomeScreen";
-import MapScreen from "./screens/Map/MapScreen";
 import RegisterScreen from "./screens/registerScreen";
 import LogScreen from "./screens/LogScreen";
-import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
-import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import MesReservation from "./screens/Réservation/RéservationScreen";
 
@@ -35,14 +32,20 @@ import { FontAwesome } from "@expo/vector-icons";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// const StackMap = createStackNavigator();
+import MapScreen from "./screens/Map/MapScreen";
+import GolfInfoScreen from "./screens/Map/GolfInfoScreen";
+import DisponibilitesScreen from "./screens/Map/DisponibilitesScreen";
+import ReservationPracticeScreen from "./screens/Map/ReservationPracticeScreen";
+import RecapReservation from "./screens/Map/RecapReservation";
 
 function StackMapScreen() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="GolfInfo" component={GolfInfoScreen} />
-      <Stack.Screen name="Resarvation" component={ReservationPracticeScreen} />
+      <Stack.Screen name="Reservation" component={ReservationPracticeScreen} />
+      <Stack.Screen name="Disponibilite" component={DisponibilitesScreen} />
+      <Stack.Screen name="Recap" component={RecapReservation} />
     </Stack.Navigator>
   );
 }
@@ -144,8 +147,14 @@ export default function App() {
           <Stack.Screen name="Login" component={LogScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="statistique" component={StackStatistiqueScreen} />
-          <Stack.Screen name="notification1" component={StackNotification1Screen} />
-          <Stack.Screen name="notification2" component={StackNotification2Screen} />
+          <Stack.Screen
+            name="notification1"
+            component={StackNotification1Screen}
+          />
+          <Stack.Screen
+            name="notification2"
+            component={StackNotification2Screen}
+          />
           <Stack.Screen name="MesReservation" component={MesReservation} />
         </Stack.Navigator>
       </NavigationContainer>
