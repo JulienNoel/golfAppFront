@@ -16,11 +16,26 @@ function HomeScreen(props) {
 
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://172.20.10.7:3000/askgolf");
+      var rawResponse = await fetch("http://192.168.10.136:3000/askgolf");
       var response = await rawResponse.json();
       props.onInitPage(response);
     }
+    async function UserActiveFromBdd() {
+      AsyncStorage.getItem("info User", async function (error, data) {
+        var userData = JSON.parse(data);
+        console.log("useEffectUserData", userData);
+        if (userData.token) {
+          var rawResponse = await fetch(
+            `http://192.168.10.136:3000/getUserByToken/${userData.token}/`
+          );
+          var response = await rawResponse.json();
+          //console.log("useEffectRes", response);
+          props.onPressVoirDispo(response);
+        }
+      });
+    }
     GolfFromBdd();
+    UserActiveFromBdd();
   }, []);
 
   if (!props.token) {
@@ -190,14 +205,16 @@ function mapDispatchToProps(dispatch) {
       dispatch({ type: "addToken", token: token });
     },
     addUser: function (user) {
-      console.log(user);
       dispatch({ type: "addUser", user: user });
+    },
+    onPressVoirDispo: function (user) {
+      dispatch({ type: "AddActiveUser", user: user });
     },
   };
 }
 
 function mapStateToProps(state) {
-  return { token: state.token, user: state.user, golf: state.golf };
+  return { token: state.token, user: state.user, golf: state.golf, userInfo : state.userActiveInfo };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
