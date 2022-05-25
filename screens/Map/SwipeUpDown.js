@@ -194,7 +194,7 @@ function SwipeUpDownGolf(props) {
                 practice: {JSON.stringify(l.practice)}, restauration: {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)}, 18 trous: {JSON.stringify(l.dixhuitTrous)}
+                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous: {JSON.stringify(l.dixhuitTrous)} parcours
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
