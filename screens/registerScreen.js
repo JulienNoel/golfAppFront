@@ -8,6 +8,7 @@ import {
   Button,
   TouchableOpacity,
   ImageBackground,
+  KeyboardAvoidingView
 } from "react-native";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -83,12 +84,16 @@ export function RegisterScreen(props) {
   });
 
   return (
+
+    
     <View style={styles.container}>
+      
       <Image
         style={styles.image}
         source={require("../assets/pro-golf-logo-maker-1558a.png")}
       />
       {errorRegister}
+      
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -130,8 +135,10 @@ export function RegisterScreen(props) {
           value={passwordRegister}
         />
       </View>
-
+      
+      
       <View style={styles.inputView}>
+      
         <TextInput
           style={styles.TextInput}
           placeholder="Date de Naissance"
@@ -141,7 +148,9 @@ export function RegisterScreen(props) {
           keyboardType="numeric"
           maxLength={10}
           onPressIn={showDatePicker}
+          showSoftInputOnFocus={false}
         />
+        
         <DateTimePickerModal
           maximumDate={new Date()}
           isVisible={isDatePickerVisible}
@@ -149,15 +158,19 @@ export function RegisterScreen(props) {
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
+        
       </View>
-
+      
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={() => handleSubmitRegister()}
       >
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
       </TouchableOpacity>
+      
     </View>
+    
+    
   );
 }
 
