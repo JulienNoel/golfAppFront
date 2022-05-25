@@ -20,7 +20,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function ScorePageModel() {
 
-  var reservation = { date: "20/03/2022", typeReservation: [], idJoueur: ["id1JoueurQuiAFaitLaRéservation", "id2", "id3"], idParcours: "Trouver un idée qui le liera à la bdd" }
+  var reservation = { dateReservation: "20/03/2022", typeReservation: [], idJoueur: ["id1JoueurQuiAFaitLaRéservation", "id2", "id3"], idParcours: "Trouver un idée qui le liera à la bdd" }
   var parcours = { nomParcours: "Parcours 1", nombreJoueur: 3, typeParcours: 18 }
 
   const swipeUpDownRef = useRef();
@@ -140,7 +140,6 @@ export default function ScorePageModel() {
       value={isEnabled}
     /><Text style={{ margin: 5 }}>Publique</Text></View>
   }
-  console.log(page)
   return (
     <ImageBackground source={page.url} style={styles.div}>
       <View style={styles.infoCard}>
@@ -433,36 +432,17 @@ function generateParcours() {
   var par = [4, 4, 3, 4, 4, 3, 4, 5, 5, 4, 3, 5, 4, 4, 4, 4, 3, 4]
   var distance = [389, 284, 142, 297, 357, 160, 319, 472, 461, 319, 153, 397, 370, 320, 328, 379, 169, 360]
   var tableauScore = []
-  var golf = []
   var parcours = { nomParcours: "Parcours de Vineuil" }
   for (var i = 1; i <= par.length; i++) {
     var parcoursTrou = {};
     parcoursTrou.trou = i;
     parcoursTrou.par = par[i - 1];
-
-    switch (i) {
-      case 1:
-        parcoursTrou.url = require(`../../assets/photo_golf/vineuil-1-sm.jpeg`)
-        break;
-      case 2:
-        parcoursTrou.url = require(`../../assets/photo_golf/vineuil-2-sm.jpeg`)
-        break;
-      case 3:
-        parcoursTrou.url = require(`../../assets/photo_golf/vineuil-3-sm.jpeg`)
-        break;
-      case 4:
-          parcoursTrou.url = require(`../../assets/photo_golf/vineuil-4-sm.jpeg`)
-        break;
-      case 5:
-          parcoursTrou.url = require(`../../assets/photo_golf/vineuil-5-sm.jpeg`)
-        break;
-    }
-    
+    //parcours.url = require(`../../assets/photo_golf/vineuil-${i}-sm.jpeg`)
     parcoursTrou.distance = distance[i - 1];
     tableauScore.push(parcoursTrou)
   }
   parcours.parcoursTrou = tableauScore
-
+  console.log(parcours)
   return parcours
 }
 
