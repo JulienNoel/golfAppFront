@@ -16,7 +16,7 @@ function HomeScreen(props) {
 
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://172.20.10.7:3000/askgolf");
+      var rawResponse = await fetch("http://192.168.10.139:3000/askgolf");
       var response = await rawResponse.json();
       props.onInitPage(response);
     }

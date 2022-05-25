@@ -75,7 +75,7 @@ function recapReservation(props) {
     var addReservation = await fetch("http://192.168.10.139:3000/reservation", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
+      body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
     });
     props.navigation.navigate("Map");
     toggleModal();
