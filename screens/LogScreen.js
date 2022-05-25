@@ -10,8 +10,11 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
- 
-export default function LogScreen(props) {
+
+import {connect} from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export function LogScreen(props) {
 
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
@@ -27,9 +30,19 @@ export default function LogScreen(props) {
 
     const body = await data.json()
     
+    if (body.error) {
+      setMessageError(body.error)
+
+    }
+
+    
 
     if (body.result) {
-
+      var userData = {userPrenom: body.user.userPrenom, token: body.token}
+      
+      props.addToken(body.token)
+      props.addUser(body.user.userPrenom)
+      AsyncStorage.setItem("info User", JSON.stringify(userData))
       setEmailLogin('')
       setPasswordLogin('')
       setMessageError([])
@@ -79,8 +92,6 @@ export default function LogScreen(props) {
       <TouchableOpacity style={styles.loginBtn} onPress={() => handleSubmitLogin()}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>    
-
-      <Text style={styles.newAccountText}>Pas de Compte ?</Text>
 
       <TouchableOpacity style={styles.loginBtn} onPress={() => props.navigation.navigate('Register')}>
         <Text style={styles.loginText}>CREER UN COMPTE</Text>
@@ -145,14 +156,24 @@ const styles = StyleSheet.create({
       marginTop: 15,
       fontSize: 20,
       color: '#86BAA1'
-  },
-  newAccountText: {
-
-      fontWeight: 'bold',      
-      marginTop: 15,
-      fontSize: 20,
-      color: '#86BAA1'
-
   }
   
 });
+
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      
+      dispatch({type: 'addToken', token: token})
+    },
+    addUser: function(user){
+      console.log(user)
+      dispatch({type: 'addUser', user: user})
+    }
+    
+  }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(LogScreen);

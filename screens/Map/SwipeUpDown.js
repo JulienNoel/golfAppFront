@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import * as Location from "expo-location";
 
 function SwipeUpDownGolf(props) {
+
+  
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
@@ -120,49 +122,48 @@ function SwipeUpDownGolf(props) {
 
   var filteredGolfs = props.golfInDb[0].result;
 
+  var userLongitude = props.userLocalisation.longitude;
+  var userLatitude = props.userLocalisation.latitude;
+  var p = 0.017453292519943295; // Math.PI / 180
+  var c = Math.cos;
+
+ 
   //calcul distance geolocalisation vers golf
   
   for (var golf of filteredGolfs){
     var golfLatitude = golf.golfAddress.golfLatitude
     var golfLongitude = golf.golfAddress.golfLongitude
 
-    var a = 0.5 - c((userLatitude - golfLatitude) * p)/2 +
-            c(golfLatitude * p) * c(userLatitude * p) *
-            (1 - c((userLongitude - golfLongitude) *p))/2;
+    var a =
+      0.5 -
+      c((userLatitude - golfLatitude) * p) / 2 +
+      (c(golfLatitude * p) *
+        c(userLatitude * p) *
+        (1 - c((userLongitude - golfLongitude) * p))) /
+        2;
 
-    var distances = 12742 * Math.asin(Math.sqrt(a)) // 2 * R; R = 6371 km
+    var distances = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
 
-    golf.distance = parseInt(distances)
+    golf.distance = parseInt(distances);
   }
-  
+
   if (filter9trous) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) => golf.neufTrous == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.neufTrous > 0);
   }
 
   if (filter18trous) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) =>
-        golf.dixhuitTrous == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.dixhuitTrous > 0);
   }
 
   if (filterPractice) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) =>
-        golf.practice == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.practice == true);
   }
 
   if (filterRestauration) {
-    filteredGolfs = filteredGolfs.filter(
-      (golf) =>
-        golf.restauration == true
-    );
+    filteredGolfs = filteredGolfs.filter((golf) => golf.restauration == true);
   }
 
-  filteredGolfs = filteredGolfs.filter(golf => golf.distance <= valueKm)
+  filteredGolfs = filteredGolfs.filter((golf) => golf.distance <= valueKm);
 
   var golfList = filteredGolfs.map((l, i) => {
     return (
@@ -189,12 +190,15 @@ function SwipeUpDownGolf(props) {
               }}
             />
             <ListItem.Content>
-              <ListItem.Title>{l.golfName}, à {l.distance} km</ListItem.Title>
+              <ListItem.Title>
+                {l.golfName}, à {l.distance} km
+              </ListItem.Title>
               <ListItem.Subtitle>
-                practice: {JSON.stringify(l.practice)}, restauration: {JSON.stringify(l.restauration)}
+                practice: {JSON.stringify(l.practice)}, restauration:{" "}
+                {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous: {JSON.stringify(l.dixhuitTrous)} parcours
+                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:{JSON.stringify(l.dixhuitTrous)} parcours
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -423,9 +427,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { golfInDb: state.golf,
-          userLocalisation: state.localisation
-  };
+  return { golfInDb: state.golf, userLocalisation: state.localisation };
 }
 
 function mapDispatchToProps(dispatch) {

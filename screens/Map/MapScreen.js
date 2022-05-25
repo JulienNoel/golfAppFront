@@ -11,10 +11,10 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import SwipeUpDownGolf from "./SwipeUpDown"
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import SwipeUpDownGolf from "./SwipeUpDown";
 
 import { connect } from "react-redux";
 
@@ -88,6 +88,7 @@ function MapScreen(props) {
           longitude: point.golfAddress.golfLongitude,
         }}
         title={point.golfName}
+        // onPress={props.navigation.navigate("GolfInfo")}
       >
         <Image source={require("../../assets/GolfMarker.png")} />
       </Marker>
