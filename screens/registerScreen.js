@@ -33,7 +33,7 @@ export function RegisterScreen(props) {
   
   var handleSubmitRegister = async () => {
     
-    const data = await fetch('https://calm-bastion-61741.herokuapp.com/register', {
+    const data = await fetch('http://192.168.10.182:3000/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`
