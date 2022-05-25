@@ -16,7 +16,11 @@ function HomeScreen(props) {
 
   useEffect(() => {
     async function GolfFromBdd() {
+<<<<<<< HEAD
       var rawResponse = await fetch("http://192.168.10.139:3000/askgolf");
+=======
+      var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
+>>>>>>> e3d2072ad26666475b629e0b13d5be069039da16
       var response = await rawResponse.json();
       props.onInitPage(response);
     }
