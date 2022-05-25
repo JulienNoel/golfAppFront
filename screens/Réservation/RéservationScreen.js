@@ -17,6 +17,7 @@ function ScoreNewParty(props) {
       var rawResponse = await fetch(`http://192.168.10.136:3000/getReservation/${props.userInfo.user.token}/`)
       var response = await rawResponse.json();
       setReservationTableau(response.reservation)
+     
     }
     ReservationFromBdd();
   }, []);
@@ -36,12 +37,16 @@ function ScoreNewParty(props) {
 }
 
 function ReservedPartyTab(tableauRéservation, props) {
-console.log(tableauRéservation)
   var gallery = tableauRéservation.map((element, index) => {
-    moment.locale("fr");
     var dateFormat = moment(element.dateReservation).format("L");
+    for (const a of element.golfId.parcours){
+      if (a.nomParcours === element.nomParcours){
+      var l = a.parcoursTrou.length
+    }
+  }
+
     return (
-      <TouchableOpacity key={index} style={styles.card} onPress={() => { props.navigation.navigate('') }}>
+      <TouchableOpacity key={index} style={styles.card}>
         <Card>
           <Card.Cover source={require("../../assets/joueur5.jpeg")} style={{ height: 100 }} />
           <View style={styles.overlay}>
@@ -50,7 +55,7 @@ console.log(tableauRéservation)
             </View>
             <View style={{ flex: 1, height: "40%" }}>
               <Text style={styles.subTitreImage}>{(element.idJoueur.length)} <FontAwesome name="user" size={14} color={"white"} /></Text>
-              <Text style={styles.subTitreImage}>{element.trou + " trous"}</Text>
+              <Text style={styles.subTitreImage}>{l + " trous"}</Text>
             </View>
           </View>
           <Card.Content style={{ height: 70, justifyContent: "center", alignItems: "center" }}>

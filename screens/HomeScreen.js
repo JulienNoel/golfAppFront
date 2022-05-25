@@ -13,7 +13,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23];
-
   useEffect(() => {
     async function GolfFromBdd() {
       var rawResponse = await fetch("http://192.168.10.136:3000/askgolf");
@@ -23,8 +22,9 @@ function HomeScreen(props) {
     async function UserActiveFromBdd() {
       AsyncStorage.getItem("info User", async function (error, data) {
         var userData = JSON.parse(data);
-        console.log("useEffectUserData", userData);
+        //console.log("useEffectUserData", userData);
         if (userData.token) {
+          console.log(userData.token)
           var rawResponse = await fetch(
             `http://192.168.10.136:3000/getUserByToken/${userData.token}/`
           );
