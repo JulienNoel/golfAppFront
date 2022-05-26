@@ -3,11 +3,30 @@ import { View, Dimensions, Image, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 function ReservationPracticeScreen(props) {
+  useEffect(() => {
+    async function UserActiveFromBdd() {
+      AsyncStorage.getItem("info User", async function (error, data) {
+        var userData = JSON.parse(data);
+        console.log("useEffectUserData", userData);
+        if (userData.token) {
+          var rawResponse = await fetch(
+            `http://192.168.10.139:3000/getUserByToken/${userData.token}/`
+          );
+          var response = await rawResponse.json();
+          console.log("useEffectRes", response);
+          props.onPressVoirDispo(response);
+        }
+      });
+    }
+    UserActiveFromBdd();
+  }, []);
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [checkedOpenToBuddies, setCheckedOpenToBuddies] = useState(false);
   const [checkedBuddiesOnly, setCheckedBuddiesOnly] = useState(false);
@@ -28,6 +47,12 @@ function ReservationPracticeScreen(props) {
       trous = "9 trous";
     }
 
+    var typeReservation = "";
+    if (OpenToBuddies & !BuddiesOnly) {
+      typeReservation = "ouvertBuddy";
+    } else if (!OpenToBuddies && !BuddiesOnly) {
+      typeReservation = "reservationClassique";
+    }
     if (
       trous &&
       ((OpenToBuddies == true && BuddiesOnly == false) ||
@@ -39,6 +64,7 @@ function ReservationPracticeScreen(props) {
         NombreTrous: trous,
         checkedBuddiesOnly: BuddiesOnly,
         checkedOpenToBuddies: OpenToBuddies,
+        typeReservation: typeReservation,
       });
     } else if (OpenToBuddies && BuddiesOnly) {
       setErrorMessage("Selectionne une seul option");
@@ -246,4 +272,7 @@ function mapStateToProps(state) {
   return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
 }
 
-export default connect(mapStateToProps)(ReservationPracticeScreen);
+export default connect(
+  mapStateToProps,
+  null
+)(ReservationPracticeScreen);

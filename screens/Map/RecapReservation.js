@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Entypo } from "@expo/vector-icons";
 
@@ -16,22 +17,15 @@ function recapReservation(props) {
   );
 
   var NbTrousInt = parseInt(props.route.params.NombreTrous);
-
+  //   console.log("userInfoREDUX=>", props.userInfo.user._id);
   // Je recupere les info du parcour selectionner
   var parcoursSelect = [];
 
   for (var i = 0; i < golfSelectInfo[0].parcours.length; i++) {
-    console.log(
-      "dansboucle",
-      golfSelectInfo[0].parcours[i].parcoursTrou.length
-    );
     if (golfSelectInfo[0].parcours[i].parcoursTrou.length == NbTrousInt) {
       parcoursSelect.push(golfSelectInfo[0].parcours[i]);
     }
   }
-
-  console.log("okok", parcoursSelect);
-  console.log("navigate", props.route.params);
 
   var dayOfWeek = [
     "Dimanche",
@@ -65,15 +59,54 @@ function recapReservation(props) {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
+  //   console.log("okok", parcoursSelect);
+  //   console.log("navigate", props.route.params);
+  const [recapFinalForBdd, setRecapFinalForBdd] = useState({});
+
+  console.log("coucou", props.userInfo);
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  var handleSumit = () => {
+  var handleSubmit = async () => {
+    var addReservation = await fetch("http://192.168.10.139:3000/reservation", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
+    });
+
+    var response = await addReservation.json();
+
+    var idReservation = response.result._id;
+    // console.log("non", response.result._id);
+    if (idReservation) {
+      var addReservationToUser = await fetch(
+        `http://192.168.10.139:3000/userReservation/${props.userInfo.user._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `idReservationFromFront=${idReservation}`,
+        }
+      );
+    }
+
     props.navigation.navigate("Map");
     toggleModal();
   };
 
+  var handlePress = () => {
+    toggleModal();
+    setRecapFinalForBdd({
+      dateReservation: new Date(props.route.params.dateSelect),
+      heureReservation: props.route.params.hourSelect,
+      typeReservation: props.route.params.typeReservation,
+      idJoueur: props.userInfo.user._id,
+      golfId: golfSelectInfo[0]._id,
+      nomParcours: parcoursSelect[0].nomParcours,
+    });
+  };
+  //   console.log("recapReserva", recapFinalForBdd);
   if (
     props.route.params.checkedOpenToBuddies ||
     (!props.route.params.checkedOpenToBuddies &&
@@ -100,7 +133,13 @@ function recapReservation(props) {
               justifyContent: "space-around",
             }}
           >
-            <Text style={{ fontWeight: "500", fontSize: 20 }}>
+            <Text
+              style={{
+                fontWeight: "500",
+                fontSize: 20,
+                marginTop: windowHeight - windowHeight / 1.02,
+              }}
+            >
               Réservation validée !
             </Text>
             <Image
@@ -111,7 +150,12 @@ function recapReservation(props) {
               }}
               source={require("../../assets/icons8-vérifié.gif")}
             />
-            <View style={{ width: "90%" }}>
+            <View
+              style={{
+                width: "90%",
+                marginBottom: windowHeight - windowHeight / 1.02,
+              }}
+            >
               <Button
                 buttonStyle={{
                   backgroundColor: "#3AB795",
@@ -122,7 +166,7 @@ function recapReservation(props) {
                   width: "100%",
                 }}
                 title="Ok"
-                onPress={() => handleSumit()}
+                onPress={() => handleSubmit()}
               />
             </View>
           </View>
@@ -250,7 +294,7 @@ function recapReservation(props) {
                   width: "100%",
                 }}
                 onPress={() => {
-                  toggleModal();
+                  handlePress();
                 }}
               />
             </View>
@@ -271,6 +315,8 @@ function mapStateToProps(state) {
   return {
     golfInDb: state.golf[0].result,
     golfName: state.nameGolfSelect,
+    user: state.user,
+    userInfo: state.userActiveInfo,
   };
 }
 

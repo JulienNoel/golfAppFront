@@ -8,13 +8,22 @@ import golf from "./reducers/golf";
 import localisation from "./reducers/localisation";
 import nameGolfSelect from "./reducers/nameGolfSelect";
 import user from "./reducers/user.reducer";
+import userActiveInfo from "./reducers/userActiveInfo";
 import cityGolf from "./reducers/cityTransfer";
 import token from "./reducers/token";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
 const store = createStore(
-  combineReducers({ golf, nameGolfSelect, user, token, localisation, cityGolf })
+  combineReducers({
+    golf,
+    nameGolfSelect,
+    user,
+    token,
+    localisation,
+    cityGolf,
+    userActiveInfo,
+  })
 );
 
 import HomeScreen from "./screens/HomeScreen";

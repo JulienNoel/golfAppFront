@@ -15,7 +15,6 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import CalendarPicker from "react-native-calendar-picker";
 import RNPickerSelect from "react-native-picker-select";
-import { TextInput } from "react-native-gesture-handler";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -87,6 +86,7 @@ function DisponibilitesScreen(props) {
         NombreTrous: props.route.params.NombreTrous,
         checkedBuddiesOnly: props.route.params.checkedBuddiesOnly,
         checkedOpenToBuddies: props.route.params.checkedOpenToBuddies,
+        typeReservation: props.route.params.typeReservation,
       });
     } else if (!date) {
       setErrorMessage("Sélectionne une date");
@@ -99,12 +99,13 @@ function DisponibilitesScreen(props) {
 
   var handleSubmit = (inputText) => {
     setEmailJoueurs((prevState) => [...prevState, inputText]);
-    if (emailJoueurs.length < nbJoueur) {
-      console.log("oui", emailJoueurs);
-    } else {
-      console.log("PLUS DE PLACE");
-    }
   };
+
+  if (emailJoueurs.length < nbJoueur) {
+    console.log("oui", emailJoueurs);
+  } else {
+    console.log("PLUS DE PLACE");
+  }
 
   return (
     <View

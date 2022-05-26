@@ -1,12 +1,26 @@
-import { Text, Button, Badge } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { Text} from "react-native-elements";
 import { StyleSheet, View, Image, TouchableOpacity, ScrollView } from "react-native";
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 
 import { FontAwesome } from "@expo/vector-icons";
-import { Row } from "react-native-table-component";
+import { connect } from "react-redux";
 
-export default function ScoreNewParty(props) {
-  var tableau = [{ date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }]
+import moment from "moment";
+import "moment/locale/fr";
+
+function ScoreNewParty(props) {
+  const [reservationTableau, setReservationTableau] = useState([]);
+  useEffect(() => {
+    async function ReservationFromBdd() {
+      var rawResponse = await fetch(`http://192.168.10.136:3000/getReservation/${props.userInfo.user.token}/`)
+      var response = await rawResponse.json();
+      setReservationTableau(response.reservation)
+     
+    }
+    ReservationFromBdd();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.titreDiv}>
@@ -15,29 +29,38 @@ export default function ScoreNewParty(props) {
         </TouchableOpacity>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom:10 }}>Séléctionner une partie</Text>
       </View>
-      {ReservedPartyTab(tableau, props)}
+      {ReservedPartyTab(reservationTableau, props)}
     </View>
   );
 }
 
 function ReservedPartyTab(tableauRéservation, props) {
   var gallery = tableauRéservation.map((element, index) => {
+    var dateFormat = moment(element.dateReservation).format("L");
+    
+    for (const a of element.golfId.parcours){
+      if (a.nomParcours === element.nomParcours){
+      var l = a.parcoursTrou.length
+      var t = a.parcoursTrou
+    }
+  }
+
     return (
-      <TouchableOpacity key={index} style={styles.card} onPress={() => { props.navigation.navigate('ScorePageScreen') }}>
+      <TouchableOpacity key={index} style={styles.card} onPress={() => { props.navigation.navigate('ScorePageScreen', {parcours :{nomParcours: element.nomParcours, typeParcours : l, parcoursTrou : t}}) }}>
         <Card>
-          <Card.Cover source={element.url} style={{ height: 100 }} />
+          <Card.Cover source={require("../../assets/joueur5.jpeg")} style={{ height: 100 }} />
           <View style={styles.overlay}>
             <View style={{ flex: 1, height: "100%" }}>
               <Text style={styles.titreImage}>{element.nomParcours}</Text>
             </View>
             <View style={{ flex: 1, height: "40%" }}>
-              <Text style={styles.subTitreImage}>{element.nombreJoueur} <FontAwesome name="user" size={14} color={"white"} /></Text>
-              <Text style={styles.subTitreImage}>{element.trou + " trous"}</Text>
+              <Text style={styles.subTitreImage}>{(element.idJoueur.length)} <FontAwesome name="user" size={14} color={"white"} /></Text>
+              <Text style={styles.subTitreImage}>{l + " trous"}</Text>
             </View>
           </View>
           <Card.Content style={{ height: 70, justifyContent: "center", alignItems: "center" }}>
-            <Text style={styles.titreCard}>{element.date}</Text>
-            <Text style={styles.titreCard}>{element.heure}</Text>
+            <Text style={styles.titreCard}>{dateFormat}</Text>
+            <Text style={styles.titreCard}>{element.heureReservation}</Text>
           </Card.Content>
         </Card>
       </TouchableOpacity>)
@@ -110,3 +133,9 @@ const styles = StyleSheet.create({
     textAlign: "right"
   }
 });
+
+function mapStateToProps(state) {
+  return {userInfo : state.userActiveInfo };
+}
+
+export default connect(mapStateToProps, null)(ScoreNewParty);
