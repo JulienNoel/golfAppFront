@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import { AreaChart, Grid } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 import { connect } from "react-redux";
+import { Avatar } from 'react-native-elements';
+
 
 import cartouche from "./components/menuCartouche";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import LogScreen from "./LogScreen";
@@ -31,7 +34,7 @@ function HomeScreen(props) {
             `https://calm-bastion-61741.herokuapp.com/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
-          //console.log("useEffectRes", response);
+          
           props.onPressVoirDispo(response);
         }
       });
@@ -40,7 +43,8 @@ function HomeScreen(props) {
     UserActiveFromBdd();
   }, []);
 
-  console.log("homePage", props.userInfo);
+  
+  
   if (!props.token) {
     return <LogScreen navigation={props.navigation} />;
   }
@@ -56,6 +60,8 @@ function HomeScreen(props) {
     { Notification: "nouvelle demande de buddy" },
     { Notification: "Réservation" },
   ];
+  
+
   return (
     <View style={styles.container}>
       <View
@@ -82,7 +88,10 @@ function HomeScreen(props) {
             margin: "10%",
           }}
         >
-          <Icon name="user" size={24} color="white" />
+          <Avatar rounded
+                  source={require('../assets/joueur9.jpeg')}
+                  size={65}
+              />
         </View>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: "center" }}>
           {props.user}
@@ -147,13 +156,53 @@ function HomeScreen(props) {
         </AreaChart>
       </View>
       {cartouche(props, "Trophées", require("../assets/closeBall2.webp"), "")}
-      <View style={styles.cartoucheTrophy}>{/* 2er dashobard vide */}</View>
+      <View style={styles.cartoucheTrophy}>
+        
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly'}}>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/joueur1.jpeg')}
+                  size='small'               
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Tiger</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/alexis.jpg')}
+                  size='small'
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Alexis</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/joueur3.jpeg')}
+                  size='small'
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Sophie</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/shady.jpg')}
+                  size='small'
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Shady</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/joueur5.jpeg')}
+                  size='small'                
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Laura</Text>
+          </View>
+        </View>
+      </View>
       {cartouche(
         props,
         "Mes réservations",
         require("../assets/club.jpeg"),
         "MesReservation"
       )}
+      
     </View>
   );
 }

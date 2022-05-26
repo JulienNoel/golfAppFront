@@ -33,6 +33,7 @@ export default function ScorePageModel(props) {
   const [scoreParcours, setScoreParcours] = useState(comptageScore(score, tableauScore))
   const [infoParcoursTotal, setInfoParcoursTotal] = useState(comptageParDistanceTotal(tableauScore))
 
+ 
   useEffect(() => {
     function page() {
       setPage(tableauScore.parcoursTrou[numeroPage])
