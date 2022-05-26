@@ -36,15 +36,10 @@ export function RegisterScreen(props) {
 
     if (body.error) {
       setMessageError(body.error);
-    }
-
-    // initialisation objet user pour local storage
+    }    
 
     if (body.result) {
-      var userData = {
-        userPrenom: body.user.userPrenom,
-        token: body.user.token,
-      };
+      var userData = { userPrenom: body.user.userPrenom, token: body.user.token };
       props.addToken(body.user.token);
       props.addUser(body.user.userPrenom);
       AsyncStorage.setItem("info User", JSON.stringify(userData));
@@ -58,7 +53,7 @@ export function RegisterScreen(props) {
     }
   };
 
-  //AsyncStorage.clear()
+ 
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
