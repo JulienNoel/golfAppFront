@@ -33,6 +33,7 @@ export default function ScorePageModel(props) {
   const [scoreParcours, setScoreParcours] = useState(comptageScore(score, tableauScore))
   const [infoParcoursTotal, setInfoParcoursTotal] = useState(comptageParDistanceTotal(tableauScore))
 
+ 
   useEffect(() => {
     function page() {
       setPage(tableauScore.parcoursTrou[numeroPage])
@@ -263,7 +264,7 @@ export default function ScorePageModel(props) {
                         />
                       </View>
                       <Button title="Valider la partie"
-                        onPress={next}
+                        onPress={()=> [props.navigation.navigate('statistique', {screen: "StatistiqueUser"}), setfinishPatyVisible(!finishPatyVisible)]}
                         buttonStyle={{ backgroundColor: '#3AB795' }}
                       />
                     </View>

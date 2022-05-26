@@ -7,31 +7,31 @@ import { CountUp } from 'use-count-up'
 export default function StatHomeScreen(props) {
   const data = [
     {
-      value: 50,
+      value: 3,
       svg: {
         fill: "#084C61",
       },
     },
     {
-      value: 10,
+      value: 5,
       svg: {
         fill: "#DB504A",
       },
     },
     {
-      value: 40,
+      value: 8,
       svg: {
         fill: "#E3B505",
       },
     },
     {
-      value: 95,
+      value: 4,
       svg: {
         fill: "#4F6D7A",
       },
     },
     {
-      value: 85,
+      value: 2,
       svg: {
         fill: '#56A3A6',
       },
@@ -55,7 +55,7 @@ export default function StatHomeScreen(props) {
         <TouchableOpacity onPress={() => props.navigation.navigate('StatistiqueHome')}>
           <Image style={{ width: 40, height: 40 }} source={require("../../assets/previous.png")} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Partie 1</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>nom pacours</Text>
       </View>
       {cartouche(props, "Statistique générale", require("../../assets/closeBall1.jpeg"), "")}
       <View style={{ alignItems: "center" }}>
@@ -76,23 +76,35 @@ export default function StatHomeScreen(props) {
 
         </View>
         <View style={styles.cartoucheDash}>
-          
-          <View style={[styles.cercle, {borderColor:'#DB504A', marginTop:30, marginLeft:20}]}>
-            <Text style={{textAlign:"center",fontSize:26, fontWeight:"800"}}><CountUp isCounting end={2.2} duration={2.9} /></Text>
-            <Text style={{textAlign:"center", fontSize:12, marginLeft:5, marginRight:5, marginBottom:10}}>Moy. putts sur total partie</Text>
+
+          <View style={[styles.cercle, { borderColor: '#DB504A', marginTop: 30, marginLeft: 20 }]}>
+            <Text style={{ textAlign: "center", fontSize: 26, fontWeight: "800" }}><CountUp isCounting end={2.2} duration={0.9} /></Text>
+            <Text style={{ textAlign: "center", fontSize: 12, marginLeft: 5, marginRight: 5, marginBottom: 10 }}>Moy. putts sur total partie</Text>
           </View>
-          <View style={[styles.cercle, {borderColor:'#E3B505',width:130,height:130,marginBottom:20,}]}>
-            <Text style={{textAlign:"center",fontSize:30, fontWeight:"800"}}>+<CountUp isCounting end={4.4} duration={2.9} /></Text>
-            <Text style={{textAlign:"center", fontSize:13, marginLeft:5,fontWeight:"500", marginRight:5, marginBottom:10}}>Moy. sur total partie</Text>
+          <View style={[styles.cercle, { borderColor: '#E3B505', width: 130, height: 130, marginBottom: 20, }]}>
+            <Text style={{ textAlign: "center", fontSize: 30, fontWeight: "800" }}>+<CountUp isCounting end={4.4} duration={2} /></Text>
+            <Text style={{ textAlign: "center", fontSize: 13, marginLeft: 5, fontWeight: "500", marginRight: 5, marginBottom: 10 }}>Moy. sur total partie</Text>
           </View>
-          <View style={[styles.cercle, {borderColor:'#56A3A6',marginTop:30, marginRight:20}]}>
-            <Text style={{textAlign:"center",fontSize:26, fontWeight:"800"}}>+<CountUp isCounting end={4.2} duration={2.9} /></Text>
-            <Text style={{textAlign:"center", fontSize:12, marginLeft:5, marginRight:5, marginBottom:10}}>Moy. sur total partie</Text>
+          <View style={[styles.cercle, { borderColor: '#56A3A6', marginTop: 30, marginRight: 20 }]}>
+            <Text style={{ textAlign: "center", fontSize: 26, fontWeight: "800" }}>+<CountUp isCounting end={4.2} duration={3} /></Text>
+            <Text style={{ textAlign: "center", fontSize: 12, marginLeft: 5, marginRight: 5, marginBottom: 10 }}>Moy. sur total partie</Text>
           </View>
         </View>
         <View style={styles.cartoucheDash}>
-          <Image source={require("../../assets/medal.png")} style={{height:60, width:60}}/>
-         
+          <View style={{ width: "45%", alignItems:"center", marginRight:10}}>
+            <Image source={require("../../assets/medal.png")} style={{ height: 60, width: 60 , marginBottom:"10%"}} />
+            <Text style={{ fontSize: 12, fontWeight:"600" }}>classement sur la partie</Text>
+          </View>
+          <View style={{ width: "50%", borderLeftWidth: 2, borderColor: "#E3B505" }}>
+            <View style={{ marginLeft: 15, marginBottom: 10, marginTop: 10, flexDirection: "row", alignItems: "center", width: "100%" }}>
+              <Text style={{ fontSize: 35, fontWeight: "600", color: "#084C61" }}><CountUp isCounting end={73} duration={4.2} /></Text>
+              <Text style={{ marginLeft: 5, width: "60%" }}>ème sur 145 cette semaine</Text>
+            </View>
+            <View style={{ marginLeft: 15, marginBottom: 10, flexDirection: "row", alignItems: "center", width: "100%" }}>
+              <Text style={{ fontSize: 35, fontWeight: "600", color: "#56A3A6" }}><CountUp isCounting end={342} duration={1.9} /></Text>
+              <Text style={{ marginLeft: 5, width: "60%" }}>ème sur 3641 cette année</Text>
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -104,14 +116,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 40,
   },
-  cercle:{
-    margin:5,
-    borderWidth:3,
-    borderRadius:200,
-    width:100,
-    height:100,
-    alignItems:"center",
-    justifyContent:"center"
+  cercle: {
+    margin: 5,
+    borderWidth: 3,
+    borderRadius: 200,
+    width: 100,
+    height: 100,
+    alignItems: "center",
+    justifyContent: "center"
   },
   titreDiv: {
     flexDirection: 'column',
@@ -119,7 +131,7 @@ const styles = StyleSheet.create({
   },
   cartoucheDash: {
     flexDirection: "row",
-    alignItems:"center",
+    alignItems: "center",
     justifyContent: "center",
     width: '95%',
     height: '26%',
