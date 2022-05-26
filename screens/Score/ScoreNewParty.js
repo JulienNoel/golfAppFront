@@ -1,13 +1,41 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Text, Input, ListItem } from "react-native-elements";
 import { StyleSheet, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { connect } from "react-redux";
 
-export default function ScoreNewParty(props) {
+function ScoreNewParty(props) {
   var tableau = [{ date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") },{ date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }, { date: "19 mars 1996", heure: "9h30", nombreJoueur: 3, nomParcours: 'Beau soleil', trou: 18, url: require("../../assets/practice.jpeg") }]
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("")
+  const [tousLesParcours, setTousLesParcours] = useState([])
 
-  var golfList = tableau.map((element, index) => {
+  var allGolfs = props.golfInDb[0].result;
+  var allParcours = []
+
+  for (var golf of allGolfs){
+    for (var parcours of golf.parcours){
+      allParcours.push({parcoursName: parcours.nomParcours, nombreTrous: parcours.parcoursTrou.length})
+    }
+  }
+
+  var parcoursSearched = () => {
+    var filteredParcours = allParcours.filter((elt) => elt.parcoursName == value)
+    if (filteredParcours.length > 0) {
+      setTousLesParcours(filteredParcours)
+    } else {
+      setTousLesParcours([])
+    }
+  }
+
+  var parcoursAAfficher = [];
+
+  if (tousLesParcours.length > 0){
+    parcoursAAfficher = tousLesParcours
+  } else {
+    parcoursAAfficher = allParcours
+  }
+
+  var golfList = parcoursAAfficher.map((element, index) => {
     return (
       <TouchableOpacity key={index} onPress={() => props.navigation.navigate("ScorePageScreen")}>
         <ListItem style={{ borderBottomWidth: 1, borderBottomColor: "#3AB795", width: "100%" }}>
@@ -20,9 +48,9 @@ export default function ScoreNewParty(props) {
             }}
           />
           <ListItem.Content>
-            <ListItem.Title>{element.nomParcours}</ListItem.Title>
+            <ListItem.Title>{element.parcoursName}</ListItem.Title>
             <ListItem.Subtitle>
-              {element.trou} trous
+              {element.nombreTrous} trous
             </ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
@@ -52,6 +80,7 @@ export default function ScoreNewParty(props) {
           placeholder="Nom parcours"
           leftIcon={<Icon name="search" size={24} color="#3AB795" />}
           onChangeText={(val) => setValue(val)}
+          onSubmitEditing={() => parcoursSearched()}
         />
         <View style={{ width: '100%'}}>
           <ScrollView style={{ marginTop: 10, height:"83%"}}>
@@ -74,3 +103,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 })
+
+
+function mapStateToProps(state) {
+  return { golfInDb: state.golf,
+  };
+}
+
+export default connect(mapStateToProps, null)(ScoreNewParty);
