@@ -21,10 +21,12 @@ const windowHeight = Dimensions.get("window").height;
 function SwipeUpDownGolf(props) {
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
-  const [bgColorFilter1, setBgColorFilter1] = useState("#3AB795");
-  const [bgColorFilter2, setBgColorFilter2] = useState("#3AB795");
-  const [bgColorFilter3, setBgColorFilter3] = useState("#3AB795");
-  const [bgColorFilter4, setBgColorFilter4] = useState("#3AB795");
+  const [bgColorFilter1, setBgColorFilter1] = useState("#b3edbf");
+  const [bgColorFilter2, setBgColorFilter2] = useState("#b3edbf");
+  const [bgColorFilter3, setBgColorFilter3] = useState("#b3edbf");
+  const [bgColorFilter4, setBgColorFilter4] = useState("#b3edbf");
+  const [colorTextBtn, setColorTextBtn] = useState("white");
+
   const [filter9trous, setFilter9trous] = useState(false);
   const [filter18trous, setFilter18trous] = useState(false);
   const [filterPractice, setFilterPractice] = useState(false);
@@ -196,16 +198,11 @@ function SwipeUpDownGolf(props) {
               }}
             />
             <ListItem.Content>
-              <ListItem.Title>
-                {l.golfName}, à {l.distance} km
+              <ListItem.Title style={{ marginBottom: "2%", fontWeight: "500" }}>
+                {l.golfName}
               </ListItem.Title>
-              <ListItem.Subtitle>
-                practice: {JSON.stringify(l.practice)}, restauration:{" "}
-                {JSON.stringify(l.restauration)}
-              </ListItem.Subtitle>
-              <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:
-                {JSON.stringify(l.dixhuitTrous)} parcours
+              <ListItem.Subtitle style={{ color: "grey" }}>
+                {l.distance} km
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -215,41 +212,49 @@ function SwipeUpDownGolf(props) {
   });
 
   var changeColor1 = () => {
-    if (bgColorFilter1 == "#b3edbf") {
-      setBgColorFilter1("#3AB795");
+    if (bgColorFilter1 == "#3AB795") {
+      setBgColorFilter1("#b3edbf");
+      setColorTextBtn("white");
       setFilter9trous(false);
     } else {
-      setBgColorFilter1("#b3edbf");
+      setBgColorFilter1("#3AB795");
+      setColorTextBtn("black");
       setFilter9trous(true);
     }
   };
 
   var changeColor2 = () => {
-    if (bgColorFilter2 == "#b3edbf") {
-      setBgColorFilter2("#3AB795");
+    if (bgColorFilter2 == "#3AB795") {
+      setBgColorFilter2("#b3edbf");
+      setColorTextBtn("white");
       setFilter18trous(false);
     } else {
-      setBgColorFilter2("#b3edbf");
+      setBgColorFilter2("#3AB795");
+      setColorTextBtn("black");
       setFilter18trous(true);
     }
   };
 
   var changeColor3 = () => {
-    if (bgColorFilter3 == "#b3edbf") {
-      setBgColorFilter3("#3AB795");
+    if (bgColorFilter3 == "#3AB795") {
+      setBgColorFilter3("#b3edbf");
+      setColorTextBtn("white");
       setFilterPractice(false);
     } else {
       setFilterPractice(true);
-      setBgColorFilter3("#b3edbf");
+      setColorTextBtn("black");
+      setBgColorFilter3("#3AB795");
     }
   };
 
   var changeColor4 = () => {
     if (bgColorFilter4 == "#b3edbf") {
       setBgColorFilter4("#3AB795");
+      setColorTextBtn("white");
       setFilterRestauration(false);
     } else {
       setFilterRestauration(true);
+      setColorTextBtn("black");
       setBgColorFilter4("#b3edbf");
     }
   };
@@ -327,6 +332,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 6,
                       backgroundColor: bgColorFilter1,
                     }}
+                    textStyle={{ color: colorTextBtn }}
                   />
                   <Badge
                     onPress={() => changeColor2()}
@@ -337,6 +343,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 6,
                       backgroundColor: bgColorFilter2,
                     }}
+                    textStyle={{ color: colorTextBtn }}
                   />
                   <Badge
                     onPress={() => changeColor3()}
@@ -347,6 +354,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 6,
                       backgroundColor: bgColorFilter3,
                     }}
+                    textStyle={{ color: colorTextBtn }}
                   />
                   <Badge
                     onPress={() => changeColor4()}
@@ -357,6 +365,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 5,
                       backgroundColor: bgColorFilter4,
                     }}
+                    textStyle={{ color: colorTextBtn }}
                   />
                 </View>
                 <View style={{ width: "100%" }}>

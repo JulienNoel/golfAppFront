@@ -46,22 +46,22 @@ function DisponibilitesScreen(props) {
   console.log("navigate", props.route.params);
 
   const ButtonHours = hours.map((hours, i) => {
-    const [colorButton, setColorButton] = useState("#3AB795");
-    const [colorTextBtn, setColorTextBtn] = useState("white");
+    const [colorButton, setColorButton] = useState("#b3edbf");
+    const [colorTextBtn, setColorTextBtn] = useState("black");
 
     var buttonChangeColor = () => {
-      if (colorButton === "#3AB795") {
-        setColorButton("#b3edbf");
-        setColorTextBtn("balck");
-      } else {
-        hours = "";
-        setColorTextBtn("white");
+      if (colorButton === "#b3edbf") {
         setColorButton("#3AB795");
+        setColorTextBtn("white");
+      } else {
+        setColorButton("#b3edbf");
+        setColorTextBtn("black");
+        hours = "";
       }
     };
     return (
       <TouchableWithoutFeedback key={Math.random()}>
-        <View style={{ margin: 10 }}>
+        <View style={{ marginVertical: "2%", marginHorizontal: "10%" }}>
           <Button
             buttonStyle={{
               backgroundColor: colorButton,
