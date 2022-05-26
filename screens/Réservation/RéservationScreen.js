@@ -21,13 +21,9 @@ function ScoreNewParty(props) {
   console.log(props.userInfo.user.token);
   useEffect(() => {
     async function ReservationFromBdd() {
-<<<<<<< HEAD
-      var rawResponse = await fetch(`http://192.168.10.125:3000/getReservation/${props.userInfo.user.token}/`)
-=======
       var rawResponse = await fetch(
         `https://calm-bastion-61741.herokuapp.com/getReservation/${props.userInfo.user.token}/`
       );
->>>>>>> 80773067c0240d2fcdc7c78430222e8134cbff59
       var response = await rawResponse.json();
       console.log("reservaation", response);
       setReservationTableau(response.reservation);

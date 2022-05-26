@@ -16,11 +16,7 @@ function ReservationPracticeScreen(props) {
         console.log("useEffectUserData", userData);
         if (userData.token) {
           var rawResponse = await fetch(
-<<<<<<< HEAD
-            `http://192.168.10.125:3000/getUserByToken/${userData.token}/`
-=======
             `https://calm-bastion-61741.herokuapp.com/getUserByToken/${userData.token}/`
->>>>>>> 80773067c0240d2fcdc7c78430222e8134cbff59
           );
           var response = await rawResponse.json();
           console.log("useEffectRes", response);

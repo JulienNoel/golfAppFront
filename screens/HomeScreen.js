@@ -88,7 +88,10 @@ function HomeScreen(props) {
             margin: "10%",
           }}
         >
-          <Icon name="user" size={24} color="white"/>
+          <Avatar rounded
+                  source={require('../assets/joueur9.jpeg')}
+                  size={65}
+              />
         </View>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: "center" }}>
           {props.user}
@@ -154,27 +157,43 @@ function HomeScreen(props) {
       </View>
       {cartouche(props, "Trophées", require("../assets/closeBall2.webp"), "")}
       <View style={styles.cartoucheTrophy}>
+        
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly'}}>
-        <Avatar rounded
-                source={require('../assets/joueur1.jpeg')}
-                size='medium'
-            />
-        <Avatar rounded
-                source={require('../assets/joueur2.jpeg')}
-                size='medium'
-            />
-        <Avatar rounded
-                source={require('../assets/joueur3.jpeg')}
-                size='medium'
-            />
-        <Avatar rounded
-                source={require('../assets/joueur4.jpeg')}
-                size='medium'
-            />
-        <Avatar rounded
-                source={require('../assets/joueur5.jpeg')}
-                size='medium'
-            />
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/joueur1.jpeg')}
+                  size='small'               
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Tiger</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/alexis.jpg')}
+                  size='small'
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Alexis</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/joueur3.jpeg')}
+                  size='small'
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Sophie</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/shady.jpg')}
+                  size='small'
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Shady</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar rounded
+                  source={require('../assets/joueur5.jpeg')}
+                  size='small'                
+              />
+          <Text style={{fontSize: 11, fontWeight: "700", color: 'grey'}}>Laura</Text>
+          </View>
         </View>
       </View>
       {cartouche(
