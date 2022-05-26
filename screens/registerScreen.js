@@ -25,14 +25,14 @@ export function RegisterScreen(props) {
   const [messageError, setMessageError] = useState([]);
 
   var handleSubmitRegister = async () => {
-    const data = await fetch("http://192.168.10.139:3000/register", {
+    const data = await fetch("https://calm-bastion-61741.herokuapp.com/register", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
     });
 
     const body = await data.json();
-    console.log("BODY", body);
+    
 
     if (body.error) {
       setMessageError(body.error);

@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import { AreaChart, Grid } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 import { connect } from "react-redux";
+import { Avatar } from 'react-native-elements';
+
 
 import cartouche from "./components/menuCartouche";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import LogScreen from "./LogScreen";
@@ -15,7 +18,7 @@ function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23];
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://192.168.10.139:3000/askgolf");
+      var rawResponse = await fetch("https://calm-bastion-61741.herokuapp.com/askgolf");
       var response = await rawResponse.json();
       props.onInitPage(response);
     }
@@ -26,10 +29,10 @@ function HomeScreen(props) {
         if (userData.token) {
           console.log(userData.token);
           var rawResponse = await fetch(
-            `http://192.168.10.139:3000/getUserByToken/${userData.token}/`
+            `https://calm-bastion-61741.herokuapp.com/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
-          //console.log("useEffectRes", response);
+          
           props.onPressVoirDispo(response);
         }
       });
@@ -38,7 +41,8 @@ function HomeScreen(props) {
     UserActiveFromBdd();
   }, []);
 
-  console.log("homePage", props.userInfo);
+  
+  
   if (!props.token) {
     return <LogScreen navigation={props.navigation} />;
   }
@@ -54,6 +58,8 @@ function HomeScreen(props) {
     { Notification: "nouvelle demande de buddy" },
     { Notification: "Réservation" },
   ];
+  
+
   return (
     <View style={styles.container}>
       <View
@@ -80,7 +86,7 @@ function HomeScreen(props) {
             margin: "10%",
           }}
         >
-          <Icon name="user" size={24} color="white" />
+          <Icon name="user" size={24} color="white"/>
         </View>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: "center" }}>
           {props.user}
@@ -150,13 +156,37 @@ function HomeScreen(props) {
         </AreaChart>
       </View>
       {cartouche(props, "Trophées", require("../assets/closeBall2.webp"), "")}
-      <View style={styles.cartoucheTrophy}>{/* 2er dashobard vide */}</View>
+      <View style={styles.cartoucheTrophy}>
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly'}}>
+        <Avatar rounded
+                source={require('../assets/joueur1.jpeg')}
+                size='medium'
+            />
+        <Avatar rounded
+                source={require('../assets/joueur2.jpeg')}
+                size='medium'
+            />
+        <Avatar rounded
+                source={require('../assets/joueur3.jpeg')}
+                size='medium'
+            />
+        <Avatar rounded
+                source={require('../assets/joueur4.jpeg')}
+                size='medium'
+            />
+        <Avatar rounded
+                source={require('../assets/joueur5.jpeg')}
+                size='medium'
+            />
+        </View>
+      </View>
       {cartouche(
         props,
         "Mes réservations",
         require("../assets/club.jpeg"),
         "MesReservation"
       )}
+      
     </View>
   );
 }
