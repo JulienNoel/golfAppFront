@@ -16,7 +16,7 @@ function ReservationPracticeScreen(props) {
         console.log("useEffectUserData", userData);
         if (userData.token) {
           var rawResponse = await fetch(
-            `http://192.168.10.126:3000/getUserByToken/${userData.token}/`
+            `https://calm-bastion-61741.herokuapp.com/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
           console.log("useEffectRes", response);
@@ -59,7 +59,6 @@ function ReservationPracticeScreen(props) {
         (OpenToBuddies == false && BuddiesOnly == true) ||
         (!OpenToBuddies && !BuddiesOnly))
     ) {
-      console.log("Tous est ok");
       props.navigation.navigate("Disponibilite", {
         NombreTrous: trous,
         checkedBuddiesOnly: BuddiesOnly,
@@ -70,7 +69,7 @@ function ReservationPracticeScreen(props) {
       setErrorMessage("Selectionne une seul option");
     }
   };
-
+  console.log("reservPractice");
   return (
     <View
       style={{

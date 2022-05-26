@@ -83,6 +83,7 @@ function DisponibilitesScreen(props) {
     );
   });
 
+  console.log("dispo", props.route.params);
   var handlePress = (date, hour) => {
     if (date && hour) {
       props.navigation.navigate("Recap", {

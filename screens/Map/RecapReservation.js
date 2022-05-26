@@ -70,11 +70,14 @@ function recapReservation(props) {
   };
 
   var handleSubmit = async () => {
-    var addReservation = await fetch("http://192.168.10.126:3000/reservation", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
-    });
+    var addReservation = await fetch(
+      "https://calm-bastion-61741.herokuapp.com/reservation",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
+      }
+    );
 
     var response = await addReservation.json();
 
@@ -82,7 +85,7 @@ function recapReservation(props) {
     console.log("non", response);
     if (idReservation) {
       var addReservationToUser = await fetch(
-        `http://192.168.10.126:3000/userReservation/${props.userInfo.user._id}`,
+        `https://calm-bastion-61741.herokuapp.com/userReservation/${props.userInfo.user._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -94,6 +97,7 @@ function recapReservation(props) {
     props.navigation.navigate("Map");
     toggleModal();
   };
+  console.log("recap", recapFinalForBdd);
 
   var handlePress = () => {
     toggleModal();

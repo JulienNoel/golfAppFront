@@ -15,7 +15,9 @@ function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23];
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://192.168.10.126:3000/askgolf");
+      var rawResponse = await fetch(
+        "https://calm-bastion-61741.herokuapp.com/askgolf"
+      );
       var response = await rawResponse.json();
       props.onInitPage(response);
     }
@@ -26,7 +28,7 @@ function HomeScreen(props) {
         if (userData.token) {
           console.log(userData.token);
           var rawResponse = await fetch(
-            `http://192.168.10.126:3000/getUserByToken/${userData.token}/`
+            `https://calm-bastion-61741.herokuapp.com/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
           //console.log("useEffectRes", response);

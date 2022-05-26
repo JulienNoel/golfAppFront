@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Text, Button } from "react-native-elements";
 import { View, Dimensions, Image, TouchableOpacity } from "react-native";
 import { Link } from "@react-navigation/native";
@@ -20,6 +21,25 @@ function GolfInfoScreen(props) {
     }
   };
 
+  const [golfRating, setGolfRating] = useState(0);
+
+  var tabGolfRating = [];
+  for (var i = 0; i < 5; i++) {
+    var starColor = "star-o";
+    if (i < golfRating) {
+      starColor = "star";
+    }
+    let count = i + 1;
+    tabGolfRating.push(
+      <FontAwesome
+        onPress={() => setGolfRating(count)}
+        name={starColor}
+        size={24}
+        color="#f1c40f"
+      />
+    );
+  }
+  //name="star-o"
   // console.log("golfNameSelect", props.golfName);
   // console.log("golfselectCity", golfSelectInfo[0].golfAddress.golfCity);
 

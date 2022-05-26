@@ -18,91 +18,19 @@ import "moment/locale/fr";
 function ScoreNewParty(props) {
   const [reservationTableau, setReservationTableau] = useState([]);
 
+  console.log(props.userInfo.user.token);
   useEffect(() => {
     async function ReservationFromBdd() {
       var rawResponse = await fetch(
-        `http://192.168.10.126:3000/getReservation/${props.userInfo.user.token}/`
+        `https://calm-bastion-61741.herokuapp.com/getReservation/${props.userInfo.user.token}/`
       );
       var response = await rawResponse.json();
+      console.log("reservaation", response);
       setReservationTableau(response.reservation);
     }
     ReservationFromBdd();
   }, []);
 
-  var tableau = [
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-    {
-      date: "19 mars 1996",
-      heure: "9h30",
-      nombreJoueur: 3,
-      nomParcours: "Beau soleil",
-      trou: 18,
-      url: require("../../assets/practice.jpeg"),
-    },
-  ];
   return (
     <View style={styles.container}>
       <View style={styles.titreDiv}>

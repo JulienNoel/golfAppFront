@@ -8,10 +8,15 @@ import {
   Button,
   TouchableOpacity,
   ImageBackground,
+  Dimensions
 } from "react-native";
 
+import { Entypo } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export function LogScreen(props) {
   const [emailLogin, setEmailLogin] = useState("");
@@ -50,6 +55,26 @@ export function LogScreen(props) {
 
   return (
     <View style={styles.container}>
+    <TouchableOpacity
+        activeOpacity={0.7}
+        style={{
+          position: "absolute",
+          left: windowWidth - windowWidth / 1.01,
+          top: windowHeight - windowHeight / 1.05,
+          paddingHorizontal: 10,
+          paddingVertical: 10,
+          borderRadius: 10,
+          backgroundColor: "#3AB795",
+        }}
+      >
+        <Entypo
+          name="chevron-left"
+          size={24}
+          color="white"
+          onPress={() => props.navigation.goBack()}
+        />
+      </TouchableOpacity>
+
       <Image
         style={styles.image}
         source={require("../assets/pro-golf-logo-maker-1558a.png")}

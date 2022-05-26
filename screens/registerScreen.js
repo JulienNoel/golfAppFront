@@ -25,11 +25,14 @@ export function RegisterScreen(props) {
   const [messageError, setMessageError] = useState([]);
 
   var handleSubmitRegister = async () => {
-    const data = await fetch("http://192.168.10.126.7:3000/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
-    });
+    const data = await fetch(
+      "https://calm-bastion-61741.herokuapp.com/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
+      }
+    );
 
     const body = await data.json();
     console.log("BODY", body);
@@ -37,8 +40,6 @@ export function RegisterScreen(props) {
     if (body.error) {
       setMessageError(body.error);
     }
-
-    // initialisation objet user pour local storage
 
     if (body.result) {
       var userData = {
@@ -57,8 +58,6 @@ export function RegisterScreen(props) {
       props.navigation.navigate("Home");
     }
   };
-
-  //AsyncStorage.clear()
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 

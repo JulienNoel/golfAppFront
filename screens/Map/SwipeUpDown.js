@@ -204,7 +204,7 @@ function SwipeUpDownGolf(props) {
                 {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:{" "}
+                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:
                 {JSON.stringify(l.dixhuitTrous)} parcours
               </ListItem.Subtitle>
             </ListItem.Content>
@@ -293,7 +293,9 @@ function SwipeUpDownGolf(props) {
               style={{ paddingTop: windowHeight - windowHeight / 1.01 }}
             />
           </View>
-          <View style={{ alignItems: "center" }}>{inputSearchGolf}</View>
+          <View style={{ display: "flex", alignItems: "center" }}>
+            {inputSearchGolf}
+          </View>
           <View
             style={{
               width: "100%",

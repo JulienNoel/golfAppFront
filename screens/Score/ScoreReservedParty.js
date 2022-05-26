@@ -20,7 +20,7 @@ function ScoreNewParty(props) {
   useEffect(() => {
     async function ReservationFromBdd() {
       var rawResponse = await fetch(
-        `http://192.168.10.126:3000/getReservation/${props.userInfo.user.token}/`
+        `https://calm-bastion-61741.herokuapp.com/getReservation/${props.userInfo.user.token}/`
       );
       var response = await rawResponse.json();
       setReservationTableau(response.reservation);
