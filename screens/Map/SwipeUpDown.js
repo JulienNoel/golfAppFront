@@ -328,6 +328,7 @@ function SwipeUpDownGolf(props) {
           </View>
 
           <Slider
+            style = {{width:'90%', marginHorizontal: windowWidth - windowWidth / 1.04}}
             value={valueKm}
             onValueChange={setValueKm}
             maximumValue={200}
