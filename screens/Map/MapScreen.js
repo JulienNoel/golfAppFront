@@ -152,10 +152,12 @@ function MapScreen(props) {
             position: "absolute",
             left: windowWidth - windowWidth / 6,
             top: windowHeight - windowHeight / 1.09,
-            backgroundColor: "#A0E8AF",
+            backgroundColor: "#ededed",
             paddingHorizontal: 10,
             paddingVertical: 10,
             borderRadius: 10,
+            borderWidth: 1,
+            borderColor: "lightgrey",
           }}
         >
           <FontAwesome

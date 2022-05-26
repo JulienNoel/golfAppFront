@@ -25,21 +25,35 @@ export function RegisterScreen(props) {
   const [messageError, setMessageError] = useState([]);
 
   var handleSubmitRegister = async () => {
+<<<<<<< HEAD
     const data = await fetch("http://192.168.10.125:3000/register", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
     });
+=======
+    const data = await fetch(
+      "https://calm-bastion-61741.herokuapp.com/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `emailFromFront=${emailRegister}&passwordFromFront=${passwordRegister}&userNameFromFront=${name}&prenomFromFront=${prenom}&birthDateFromFront=${birthDate}`,
+      }
+    );
+>>>>>>> 80773067c0240d2fcdc7c78430222e8134cbff59
 
     const body = await data.json();
     console.log("BODY", body);
 
     if (body.error) {
       setMessageError(body.error);
-    }    
+    }
 
     if (body.result) {
-      var userData = { userPrenom: body.user.userPrenom, token: body.user.token };
+      var userData = {
+        userPrenom: body.user.userPrenom,
+        token: body.user.token,
+      };
       props.addToken(body.user.token);
       props.addUser(body.user.userPrenom);
       AsyncStorage.setItem("info User", JSON.stringify(userData));
@@ -52,8 +66,6 @@ export function RegisterScreen(props) {
       props.navigation.navigate("Home");
     }
   };
-
- 
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 

@@ -52,7 +52,7 @@ function StackMapScreen() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Map" component={MapScreen} />
       <Stack.Screen name="GolfInfo" component={GolfInfoScreen} />
-      <Stack.Screen name="Reservation" component={ReservationPracticeScreen} />
+      <Stack.Screen name="Reserv" component={ReservationPracticeScreen} />
       <Stack.Screen name="Disponibilite" component={DisponibilitesScreen} />
       <Stack.Screen name="Recap" component={RecapReservation} />
     </Stack.Navigator>

@@ -15,22 +15,29 @@ function GolfInfoScreen(props) {
 
   var Reserver = () => {
     if (props.token) {
-      props.navigation.navigate("Reservation");
+      props.navigation.navigate("Reserv");
     } else {
       props.navigation.navigate("Login");
     }
   };
 
-  const [golfRating, setGolfRating] = useState(0)
+  const [golfRating, setGolfRating] = useState(0);
 
-  var tabGolfRating = []
-  for(var i=0;i<5;i++){
-      var starColor = "star-o"
-      if(i < golfRating){
-        starColor = 'star'
-      }
-      let count = i+1
-      tabGolfRating.push(<FontAwesome onPress={() => setGolfRating(count)} name={starColor} size={24} color='#f1c40f' /> )
+  var tabGolfRating = [];
+  for (var i = 0; i < 5; i++) {
+    var starColor = "star-o";
+    if (i < golfRating) {
+      starColor = "star";
+    }
+    let count = i + 1;
+    tabGolfRating.push(
+      <FontAwesome
+        onPress={() => setGolfRating(count)}
+        name={starColor}
+        size={24}
+        color="#f1c40f"
+      />
+    );
   }
   //name="star-o"
   // console.log("golfNameSelect", props.golfName);
@@ -57,17 +64,16 @@ function GolfInfoScreen(props) {
         style={{
           position: "absolute",
           left: windowWidth - windowWidth / 1.01,
-          top: windowHeight - windowHeight / 1.05,
+          top: windowHeight - windowHeight / 1.038,
           paddingHorizontal: 10,
           paddingVertical: 10,
           borderRadius: 10,
-          backgroundColor: "#3AB795",
         }}
       >
         <Entypo
           name="chevron-left"
-          size={24}
-          color="white"
+          size={40}
+          color="#3AB795"
           onPress={() => props.navigation.navigate("Map")}
         />
       </TouchableOpacity>
@@ -88,7 +94,7 @@ function GolfInfoScreen(props) {
             marginVertical: windowHeight - windowHeight / 1.01,
           }}
         >
-          <Text style={{ fontSize: 20 }}>
+          <Text style={{ fontSize: 20, width: "70%" }}>
             {golfSelectInfo[0].golfName} -{" "}
             {golfSelectInfo[0].golfAddress.golfCity}
           </Text>
@@ -113,6 +119,7 @@ function GolfInfoScreen(props) {
           <Text
             style={{
               marginBottom: windowHeight - windowHeight / 1.01,
+              color: "grey",
             }}
           >
             Détails
@@ -138,26 +145,26 @@ function GolfInfoScreen(props) {
             <View
               style={{
                 borderBottomWidth: 1,
-                borderBottomColor: "#b3edbf",
+                borderBottomColor: "#3AB795",
                 height: "30%",
               }}
             >
               <Text style={{ color: "#939393", marginVertical: "4%" }}>
                 Télephone
               </Text>
-              <Text>0651803967</Text>
+              <Text style={{ color: "#0000FF" }}>+33 1 51 80 39 67</Text>
             </View>
             <View
               style={{
                 borderBottomWidth: 1,
-                borderBottomColor: "#b3edbf",
+                borderBottomColor: "#3AB795",
                 height: "30%",
               }}
             >
               <Text style={{ color: "#939393", marginVertical: "4%" }}>
                 Site Web
               </Text>
-              <Link>zebi.com</Link>
+              <Link style={{ color: "#0000FF" }}>golfweb.com</Link>
             </View>
             <View
               style={{
@@ -171,11 +178,10 @@ function GolfInfoScreen(props) {
               <View>
                 <Text>{golfSelectInfo[0].golfAddress.golfAddressName}</Text>
                 <Text>
-                  {" "}
                   {golfSelectInfo[0].golfAddress.golfPostCode}{" "}
                   {golfSelectInfo[0].golfAddress.golfCity}
                 </Text>
-                <Text> France</Text>
+                <Text>France</Text>
               </View>
             </View>
           </View>
@@ -207,8 +213,11 @@ function GolfInfoScreen(props) {
               alignItems: "center",
             }}
           >
-          {tabGolfRating}
-            
+            <FontAwesome name="star" size={24} color="#F1C40F" />
+            <FontAwesome name="star" size={24} color="#F1C40F" />
+            <FontAwesome name="star" size={24} color="#F1C40F" />
+            <FontAwesome name="star" size={24} color="#F1C40F" />
+            <FontAwesome name="star-o" size={24} color="#F1C40F" />
           </View>
         </View>
       </View>
