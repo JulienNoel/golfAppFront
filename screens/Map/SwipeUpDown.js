@@ -17,8 +17,6 @@ import { connect } from "react-redux";
 import * as Location from "expo-location";
 
 function SwipeUpDownGolf(props) {
-
-  
   const swipeUpDownRef = useRef();
   const [research, setResearch] = useState("");
   const windowWidth = Dimensions.get("window").width;
@@ -32,48 +30,44 @@ function SwipeUpDownGolf(props) {
   const [filterPractice, setFilterPractice] = useState(false);
   const [filterRestauration, setFilterRestauration] = useState(false);
   const [valueKm, setValueKm] = useState(40);
-  const [city, setCity] = useState('')
+  const [city, setCity] = useState("");
 
-  if (city == ''){
+  if (city == "") {
     var userLongitude = props.userLocalisation.longitude;
     var userLatitude = props.userLocalisation.latitude;
-   } else {
+  } else {
     var userLongitude = city.longitude;
     var userLatitude = city.latitude;
-   }
+  }
 
-    var p = 0.017453292519943295; // Math.PI / 180
-    var c = Math.cos;
+  var p = 0.017453292519943295; // Math.PI / 180
+  var c = Math.cos;
 
   let favoriteGolfsdistance = [
-    { longitude: 36,
-      latitude: 42,
-      name: "Coucou" },
-    { longitude: 36,
-      latitude: 42,
-      name: "Mon beau soleil" },
-    { longitude: 36,
-      latitude: 42,
-      name: "Le golf" },
-    { longitude: 36,
-      latitude: 42,
-      name: "Vrai golf" }
+    { longitude: 36, latitude: 42, name: "Coucou" },
+    { longitude: 36, latitude: 42, name: "Mon beau soleil" },
+    { longitude: 36, latitude: 42, name: "Le golf" },
+    { longitude: 36, latitude: 42, name: "Vrai golf" },
   ];
 
   //calcul distance entre user et golf
   var favoriteGolfs = favoriteGolfsdistance.map((l, i) => {
-    var golfLatitude = l.latitude
-    var golfLongitude = l.longitude
+    var golfLatitude = l.latitude;
+    var golfLongitude = l.longitude;
 
-    var a = 0.5 - c((userLatitude - golfLatitude) * p)/2 +
-            c(golfLatitude * p) * c(userLatitude * p) *
-            (1 - c((userLongitude - golfLongitude) *p))/2;
+    var a =
+      0.5 -
+      c((userLatitude - golfLatitude) * p) / 2 +
+      (c(golfLatitude * p) *
+        c(userLatitude * p) *
+        (1 - c((userLongitude - golfLongitude) * p))) /
+        2;
 
-    var distances = parseInt(12742 * Math.asin(Math.sqrt(a))) // 2 * R; R = 6371 km
+    var distances = parseInt(12742 * Math.asin(Math.sqrt(a))); // 2 * R; R = 6371 km
 
     return (
       <TouchableWithoutFeedback key={Math.random()}>
-        <View style={{ marginHorizontal: 20, alignItems: 'center' }}>
+        <View style={{ marginHorizontal: 20, alignItems: "center" }}>
           <Text>{l.name}</Text>
           <Image
             source={require("../../assets/golf-icon.jpg")}
@@ -90,14 +84,14 @@ function SwipeUpDownGolf(props) {
   });
 
   var citySearched = async () => {
-      var city = await Location.geocodeAsync(research)
-      if (city.length > 0){
-        setCity(city[0])
-      } else {
-        setCity('')
-      }
-    props.transferCityToMapscreen(city)
-  }
+    var city = await Location.geocodeAsync(research);
+    if (city.length > 0) {
+      setCity(city[0]);
+    } else {
+      setCity("");
+    }
+    props.transferCityToMapscreen(city);
+  };
 
   var inputSearchGolf = (
     <Input
@@ -107,7 +101,7 @@ function SwipeUpDownGolf(props) {
         backgroundColor: "white",
         borderRadius: 10,
         height: 50,
-        marginRight: 20
+        marginRight: 20,
       }}
       inputContainerStyle={{ borderBottomWidth: 0 }}
       inputStyle={{ marginLeft: 10 }}
@@ -117,7 +111,10 @@ function SwipeUpDownGolf(props) {
         swipeUpDownRef.current.showFull();
       }}
       onChangeText={(val) => setResearch(val)}
-      onSubmitEditing={() => {citySearched(); swipeUpDownRef.current.showMini()}}
+      onSubmitEditing={() => {
+        citySearched();
+        swipeUpDownRef.current.showMini();
+      }}
     />
   );
 
@@ -128,12 +125,11 @@ function SwipeUpDownGolf(props) {
   var p = 0.017453292519943295; // Math.PI / 180
   var c = Math.cos;
 
- 
   //calcul distance geolocalisation vers golf
-  
-  for (var golf of filteredGolfs){
-    var golfLatitude = golf.golfAddress.golfLatitude
-    var golfLongitude = golf.golfAddress.golfLongitude
+
+  for (var golf of filteredGolfs) {
+    var golfLatitude = golf.golfAddress.golfLatitude;
+    var golfLongitude = golf.golfAddress.golfLongitude;
 
     var a =
       0.5 -
@@ -199,7 +195,8 @@ function SwipeUpDownGolf(props) {
                 {JSON.stringify(l.restauration)}
               </ListItem.Subtitle>
               <ListItem.Subtitle>
-                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous: {JSON.stringify(l.dixhuitTrous)} parcours
+                9 trous: {JSON.stringify(l.neufTrous)} parcours, 18 trous:{" "}
+                {JSON.stringify(l.dixhuitTrous)} parcours
               </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
@@ -250,7 +247,7 @@ function SwipeUpDownGolf(props) {
 
   return (
     <SwipeUpDown
-      style={{ backgroundColor: "#A0E8AF" }}
+      style={{ backgroundColor: "#ededed" }}
       ref={swipeUpDownRef}
       itemMini={() => (
         <View
@@ -391,7 +388,9 @@ function SwipeUpDownGolf(props) {
               style={{
                 width: "90%",
                 height: 100,
-                backgroundColor: "#b3edbf",
+                backgroundColor: "white",
+
+                borderRadius: 10,
               }}
               contentContainerStyle={{
                 display: "flex",
@@ -438,9 +437,9 @@ function mapDispatchToProps(dispatch) {
       dispatch({ type: "AddGolfName", name: golfName });
     },
     transferCityToMapscreen: function (cityGolf) {
-      dispatch({type: "transferCity", cityGolf})
-    }
-  }
+      dispatch({ type: "transferCity", cityGolf });
+    },
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwipeUpDownGolf);

@@ -16,7 +16,7 @@ function ReservationPracticeScreen(props) {
         console.log("useEffectUserData", userData);
         if (userData.token) {
           var rawResponse = await fetch(
-            `http://172.20.10.7:3000/getUserByToken/${userData.token}/`
+            `http://192.168.10.139:3000/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
           console.log("useEffectRes", response);
@@ -272,15 +272,7 @@ function mapStateToProps(state) {
   return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onPressVoirDispo: function (user) {
-      dispatch({ type: "AddActiveUser", user: user });
-    },
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(ReservationPracticeScreen);

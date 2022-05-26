@@ -15,7 +15,6 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import CalendarPicker from "react-native-calendar-picker";
 import RNPickerSelect from "react-native-picker-select";
-import { TextInput } from "react-native-gesture-handler";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

@@ -115,13 +115,18 @@ function MapScreen(props) {
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }
-              : undefined
+              : {
+                  latitude: locationInit.latitude,
+                  longitude: locationInit.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }
           }
         >
           <Marker
             image={require("../../assets/UserMarker.png")}
             coordinate={
-              location
+              location.latitude
                 ? {
                     latitude: location.latitude,
                     longitude: location.longitude,
