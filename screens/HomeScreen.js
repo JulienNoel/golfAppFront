@@ -15,7 +15,7 @@ function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23];
   useEffect(() => {
     async function GolfFromBdd() {
-      var rawResponse = await fetch("http://192.168.0.45:3000/askgolf");
+      var rawResponse = await fetch("http://192.168.10.125:3000/askgolf");
       var response = await rawResponse.json();
       props.onInitPage(response);
     }
@@ -95,22 +95,17 @@ function HomeScreen(props) {
           }}
         >
           <Tooltip
-            containerStyle={{ height: 100 }}
+            containerStyle={{ height: 60 }}
             backgroundColor="#ededed"
             popover={
               <View style={{ height: "100%", width: "100%" }}>
                 <Text
                   onPress={() => props.navigation.navigate("notification1")}
-                  style={{ height: "50%", width: "100%" }}
+                  style={{ height: "100%", width: "100%" }}
                 >
-                  0 nouvelle demande de buddie
+                  5 nouvelle demande de buddie
                 </Text>
-                <Text
-                  onPress={() => props.navigation.navigate("notification2")}
-                  style={{ height: "50%", width: "100%" }}
-                >
-                  Hello
-                </Text>
+  
               </View>
             }
           >

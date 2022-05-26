@@ -17,7 +17,7 @@ import SwipeUpDown from "react-native-swipe-up-down";
 import { Badge, Overlay, Button } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import { Entypo } from "@expo/vector-icons";
 export default function ScorePageModel(props) {
 
   var reservation = { dateReservation: "20/03/2022", typeReservation: [], idJoueur: ["id1JoueurQuiAFaitLaRéservation", "id2", "id3"], idParcours: "Trouver un idée qui le liera à la bdd" }
@@ -141,7 +141,11 @@ export default function ScorePageModel(props) {
   }
 
   return (
-    <ImageBackground source={{uri: page.url}} style={styles.div}>
+    <View style={styles.div}>
+      <Image
+        style={{width:350,height:550,marginTop:"30%", position:'absolute'}}
+        source={{uri: page.url}}
+      />
       <View style={styles.infoCard}>
         <View style={{ margin: 20 }}>
           <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 5 }}>
@@ -200,17 +204,26 @@ export default function ScorePageModel(props) {
       <SwipeUpDown
         ref={swipeUpDownRef}
         itemMini={(show) => (
+
           <View
-            style={{
-              alignItems: "center",
-            }}
-          >
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <Entypo
+            name="chevron-thin-up"
+            size={24}
+            color="black"
+            style={{ paddingTop: 0 }}
+          />
+        
+        
+
             <Text
               onPress={show}
               style={{ fontWeight: "bold", color: "#3AB795", fontSize: 20 }}
-            >Score</Text>
+            >Score</Text></View>
 
-          </View>
         )}
         itemFull={(close) => (
           <ScrollView>
@@ -408,10 +421,10 @@ export default function ScorePageModel(props) {
         extraMarginTop={90}
         disableSwipeIcon
         disablePressToShow={true} // Press item mini to show full
-        style={{ backgroundColor: "white" }} // style for swipe
-        swipeHeight={80}
+        style={{ backgroundColor: "white", borderTopColor:"#ededed" , borderTopWidth:2}} // style for swipe
+        swipeHeight={110}
       />
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -551,12 +564,14 @@ const styles = StyleSheet.create({
   div: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor:"white"
   },
   infoCard: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 40,
+
   },
   navigationIcon: {
     flex: 1,

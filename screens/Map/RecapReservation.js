@@ -70,7 +70,7 @@ function recapReservation(props) {
   };
 
   var handleSubmit = async () => {
-    var addReservation = await fetch("http://192.168.0.45:3000/reservation", {
+    var addReservation = await fetch("http://192.168.10.125:3000/reservation", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
@@ -82,7 +82,7 @@ function recapReservation(props) {
     // console.log("non", response.result._id);
     if (idReservation) {
       var addReservationToUser = await fetch(
-        `http://192.168.10.139:3000/userReservation/${props.userInfo.user._id}`,
+        `http://192.168.10.125:3000/userReservation/${props.userInfo.user._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },

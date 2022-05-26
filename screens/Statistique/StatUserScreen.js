@@ -1,8 +1,8 @@
 import { Text, Badge } from "react-native-elements";
-import { StyleSheet, View, TouchableOpacity, Image, ScrollView } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import cartouche from "../components/menuCartouche"
 import { BarChart, XAxis } from 'react-native-svg-charts'
-import * as scale from 'd3-scale'
+import { CountUp } from 'use-count-up'
 
 export default function StatHomeScreen(props) {
   const data = [
@@ -55,9 +55,9 @@ export default function StatHomeScreen(props) {
         <TouchableOpacity onPress={() => props.navigation.navigate('StatistiqueHome')}>
           <Image style={{ width: 40, height: 40 }} source={require("../../assets/previous.png")} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Stat User</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Partie 1</Text>
       </View>
-      {cartouche(props, "Statistique de la partie", require("../../assets/closeBall1.jpeg"), "")}
+      {cartouche(props, "Statistique générale", require("../../assets/closeBall1.jpeg"), "")}
       <View style={{ alignItems: "center" }}>
         <View style={styles.cartoucheDash}>
           <BarChart
@@ -74,25 +74,26 @@ export default function StatHomeScreen(props) {
             {TableauScoreNom}
           </View>
 
-
-
         </View>
         <View style={styles.cartoucheDash}>
           
           <View style={[styles.cercle, {borderColor:'#DB504A', marginTop:30, marginLeft:20}]}>
-            <Text style={{textAlign:"center",fontSize:26, fontWeight:"800"}}>2.2</Text>
+            <Text style={{textAlign:"center",fontSize:26, fontWeight:"800"}}><CountUp isCounting end={2.2} duration={2.9} /></Text>
             <Text style={{textAlign:"center", fontSize:12, marginLeft:5, marginRight:5, marginBottom:10}}>Moy. putts sur total partie</Text>
           </View>
           <View style={[styles.cercle, {borderColor:'#E3B505',width:130,height:130,marginBottom:20,}]}>
-            <Text style={{textAlign:"center",fontSize:30, fontWeight:"800"}}>+4.2</Text>
+            <Text style={{textAlign:"center",fontSize:30, fontWeight:"800"}}>+<CountUp isCounting end={4.4} duration={2.9} /></Text>
             <Text style={{textAlign:"center", fontSize:13, marginLeft:5,fontWeight:"500", marginRight:5, marginBottom:10}}>Moy. sur total partie</Text>
           </View>
           <View style={[styles.cercle, {borderColor:'#56A3A6',marginTop:30, marginRight:20}]}>
-            <Text style={{textAlign:"center",fontSize:26, fontWeight:"800"}}>5.2</Text>
+            <Text style={{textAlign:"center",fontSize:26, fontWeight:"800"}}>+<CountUp isCounting end={4.2} duration={2.9} /></Text>
             <Text style={{textAlign:"center", fontSize:12, marginLeft:5, marginRight:5, marginBottom:10}}>Moy. sur total partie</Text>
           </View>
         </View>
-        <View style={styles.cartoucheDash}></View>
+        <View style={styles.cartoucheDash}>
+          <Image source={require("../../assets/medal.png")} style={{height:60, width:60}}/>
+         
+        </View>
       </View>
     </View>
   );

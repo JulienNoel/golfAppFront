@@ -16,7 +16,7 @@ function ReservationPracticeScreen(props) {
         console.log("useEffectUserData", userData);
         if (userData.token) {
           var rawResponse = await fetch(
-            `http://192.168.0.45:3000/getUserByToken/${userData.token}/`
+            `http://192.168.10.125:3000/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
           console.log("useEffectRes", response);

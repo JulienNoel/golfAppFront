@@ -1,9 +1,23 @@
 import { Text, Button, Badge } from "react-native-elements";
+import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import { checkPluginState } from "react-native-reanimated/lib/reanimated2/core";
 
 export default function buddyScreen(props) {
+  var tableauBuddy = [{name : "Julien N. 40 ans", index : 32, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
+  {name : "Cyprien M. 32 ans", index : 40, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
+  {name : "Edouard R. 27 ans", index : 37, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
+  {name : "Alexis M. 23 ans", index : 43, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
+  {name : "Julien N. 40 ans", index : 32, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"}]
+  
+  const [page, setPage] = useState(0);
+  function plus() {
+    if(page < tableauBuddy.length-1){
+      setPage(page+1)
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.titreDiv}>
@@ -18,22 +32,22 @@ export default function buddyScreen(props) {
             <Icon name="user" size={18} color="white" />
           </View>
           <View style={{ alignItems: "flex-start" }}>
-            <Text style={{ textAlign: "center", fontWeight: "600", fontSize: "18", marginRight: 50 }}>Julien N. 40 ans</Text>
+            <Text style={{ textAlign: "center", fontWeight: "600", fontSize: "18", marginRight: 50 }}>{tableauBuddy[page].name}</Text>
             <Badge
               badgeStyle={{ backgroundColor: "#3AB795", height: 20, marginTop: 5 }}
               textStyle={{ fontWeight: "bold" }}
-              value={" Index : 32"} //+ page.index
+              value={" Index : "+ tableauBuddy[page].index} //+ page.index
             />
           </View>
         </View>
         <View style={styles.cartoucheText}>
-          <View style={{ padding: 10 }}><Text>Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</Text></View>
+          <View style={{ padding: 10 }}><Text>{tableauBuddy[page].text}</Text></View>
         </View>
       </View>
-      <Text style={{ margin: 10 }}>2 / 10</Text>
+      <Text style={{ margin: 10 }}>{page+1} / {tableauBuddy.length}</Text>
       <View style={styles.navigationIcon}>
 
-        <TouchableOpacity onPress={() => console.log("hello")}>
+        <TouchableOpacity onPress={() => plus()}>
           <View style={{ borderRadius: 100, borderWidth: 2, width: 70, height: 70, borderColor: "red", justifyContent: "center", alignItems: "center" }}>
             <Image
               style={{ width: 40, height: 40, tintColor: 'red' }}
@@ -43,11 +57,11 @@ export default function buddyScreen(props) {
 
         <Button
           title="Message"
-          style={{ marginRight: "10%", marginLeft: "10%" }}
+          buttonStyle={{ marginRight: "10%", marginLeft: "10%",backgroundColor:"#3AB795"}}
           onPress={() => console.log("hello")}
         />
 
-        <TouchableOpacity onPress={() => console.log("hello")}>
+        <TouchableOpacity onPress={() => plus()}>
           <View style={{ borderRadius: 100, borderWidth: 2, width: 70, height: 70, borderColor: "green", justifyContent: "center", alignItems: "center" }}>
             <Image
               style={{ width: 60, height: 60, tintColor: 'green' }}
