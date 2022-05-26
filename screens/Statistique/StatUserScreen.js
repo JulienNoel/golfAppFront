@@ -55,7 +55,7 @@ export default function StatHomeScreen(props) {
         <TouchableOpacity onPress={() => props.navigation.navigate('StatistiqueHome')}>
           <Image style={{ width: 40, height: 40 }} source={require("../../assets/previous.png")} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>Partie 1</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>nom pacours</Text>
       </View>
       {cartouche(props, "Statistique générale", require("../../assets/closeBall1.jpeg"), "")}
       <View style={{ alignItems: "center" }}>

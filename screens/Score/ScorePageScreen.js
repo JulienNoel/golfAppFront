@@ -263,7 +263,7 @@ export default function ScorePageModel(props) {
                         />
                       </View>
                       <Button title="Valider la partie"
-                        onPress={next}
+                        onPress={()=> [props.navigation.navigate('statistique', {screen: "StatistiqueUser"}), setfinishPatyVisible(!finishPatyVisible)]}
                         buttonStyle={{ backgroundColor: '#3AB795' }}
                       />
                     </View>
