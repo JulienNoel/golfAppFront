@@ -70,7 +70,7 @@ function recapReservation(props) {
   };
 
   var handleSubmit = async () => {
-    var addReservation = await fetch("http://192.168.10.139:3000/reservation", {
+    var addReservation = await fetch("http://192.168.10.126:3000/reservation", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `heureReservation=${recapFinalForBdd.heureReservation}&date=${recapFinalForBdd.dateReservation}&type=${recapFinalForBdd.typeReservation}&idJoueur=${recapFinalForBdd.idJoueur}&golfId=${recapFinalForBdd.golfId}&nomParcours=${recapFinalForBdd.nomParcours}`,
@@ -79,10 +79,10 @@ function recapReservation(props) {
     var response = await addReservation.json();
 
     var idReservation = response.result._id;
-    // console.log("non", response.result._id);
+    console.log("non", response);
     if (idReservation) {
       var addReservationToUser = await fetch(
-        `http://192.168.10.139:3000/userReservation/${props.userInfo.user._id}`,
+        `http://192.168.10.126:3000/userReservation/${props.userInfo.user._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -176,29 +176,26 @@ function recapReservation(props) {
           style={{
             position: "absolute",
             left: windowWidth - windowWidth / 1.01,
-            top: windowHeight - windowHeight / 1.05,
+            top: windowHeight - windowHeight / 1.038,
             paddingHorizontal: 10,
             paddingVertical: 10,
             borderRadius: 10,
-            backgroundColor: "#3AB795",
           }}
         >
           <Entypo
             name="chevron-left"
-            size={24}
-            color="white"
+            size={40}
+            color="#3AB795"
             onPress={() => props.navigation.navigate("Disponibilite")}
           />
         </TouchableOpacity>
         <View
           style={{
-            alignItems: "center",
             marginTop: windowHeight - windowHeight / 1.11,
           }}
         >
           <View
             style={{
-              display: "flex",
               alignItems: "center",
               width: windowWidth - windowWidth / 15,
               marginBottom: windowHeight - windowHeight / 1.1,
@@ -206,10 +203,20 @@ function recapReservation(props) {
           >
             <Text style={{ fontSize: 30 }}>{golfSelectInfo[0].golfName}</Text>
           </View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "600",
+              marginVertical: windowHeight - windowHeight / 1.02,
+              color: "grey",
+            }}
+          >
+            Récapitulatif de la réservation
+          </Text>
           <View
             style={{
               width: windowWidth - windowWidth / 15,
-              height: windowHeight - windowHeight / 1.5,
+              height: windowHeight - windowHeight / 1.3,
               marginBottom: windowHeight - windowHeight / 2,
               alignItems: "center",
               backgroundColor: "white",
@@ -219,7 +226,7 @@ function recapReservation(props) {
             <View
               style={{
                 width: "90%",
-                height: "95%",
+                height: "100%",
               }}
             >
               <View
@@ -227,16 +234,18 @@ function recapReservation(props) {
                   height: "20%",
                   marginTop: windowHeight - windowHeight / 1.02,
                 }}
+              ></View>
+              <View
+                style={{
+                  height: "80%",
+                  alignItems: "center",
+                }}
               >
-                <Text style={{ fontSize: 23, fontWeight: "600" }}>
-                  Récapitulatif de la réservation
-                </Text>
-              </View>
-              <View style={{ height: "80%" }}>
                 <View
                   style={{
                     flexDirection: "row",
                     height: "40%",
+                    width: "100%",
                   }}
                 >
                   <Image
@@ -280,7 +289,7 @@ function recapReservation(props) {
                 height: windowHeight - windowHeight / 1.1,
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: windowWidth - windowWidth / 1.15,
+                marginTop: windowWidth - windowWidth / 2.5,
               }}
             >
               <Button

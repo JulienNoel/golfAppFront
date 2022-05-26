@@ -16,7 +16,7 @@ function ReservationPracticeScreen(props) {
         console.log("useEffectUserData", userData);
         if (userData.token) {
           var rawResponse = await fetch(
-            `http://192.168.10.139:3000/getUserByToken/${userData.token}/`
+            `http://192.168.10.126:3000/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
           console.log("useEffectRes", response);
@@ -92,17 +92,16 @@ function ReservationPracticeScreen(props) {
         style={{
           position: "absolute",
           left: windowWidth - windowWidth / 1.01,
-          top: windowHeight - windowHeight / 1.05,
+          top: windowHeight - windowHeight / 1.038,
           paddingHorizontal: 10,
           paddingVertical: 10,
           borderRadius: 10,
-          backgroundColor: "#3AB795",
         }}
       >
         <Entypo
           name="chevron-left"
-          size={24}
-          color="white"
+          size={40}
+          color="#3AB795"
           onPress={() => props.navigation.navigate("GolfInfo")}
         />
       </TouchableOpacity>
@@ -272,7 +271,4 @@ function mapStateToProps(state) {
   return { golfInDb: state.golf[0].result, golfName: state.nameGolfSelect };
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(ReservationPracticeScreen);
+export default connect(mapStateToProps, null)(ReservationPracticeScreen);

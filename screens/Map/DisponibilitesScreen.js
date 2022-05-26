@@ -28,7 +28,7 @@ function DisponibilitesScreen(props) {
   const [textInputEmail, setTextInputEmail] = useState("");
   var hours = ["9h15", "10h15", "11h30", "12h45", "14h30", "15h45", "16h30"];
 
-  var height = windowHeight - windowHeight / 2.3;
+  var height = windowHeight - windowHeight / 3.5;
   if (
     !props.route.params.checkedBuddiesOnly &&
     !props.route.params.checkedOpenToBuddies
@@ -46,13 +46,17 @@ function DisponibilitesScreen(props) {
   console.log("navigate", props.route.params);
 
   const ButtonHours = hours.map((hours, i) => {
-    const [colorButton, setColorButton] = useState("#b3edbf");
+    const [colorButton, setColorButton] = useState("#3AB795");
+    const [colorTextBtn, setColorTextBtn] = useState("white");
+
     var buttonChangeColor = () => {
-      if (colorButton === "#b3edbf") {
-        setColorButton("#3AB795");
+      if (colorButton === "#3AB795") {
+        setColorButton("#b3edbf");
+        setColorTextBtn("balck");
       } else {
         hours = "";
-        setColorButton("#b3edbf");
+        setColorTextBtn("white");
+        setColorButton("#3AB795");
       }
     };
     return (
@@ -68,6 +72,7 @@ function DisponibilitesScreen(props) {
               borderRadius: 10,
               width: "100%",
             }}
+            titleStyle={{ color: colorTextBtn }}
             onPress={() => {
               setColorButton(buttonChangeColor);
               setHourSelect(hours);
@@ -119,22 +124,20 @@ function DisponibilitesScreen(props) {
         activeOpacity={0.7}
         style={{
           position: "absolute",
-          left: windowWidth - windowWidth / 1.01,
-          top: windowHeight - windowHeight / 1.05,
+          left: windowWidth - windowWidth / 0.99,
+          top: windowHeight - windowHeight / 1.037,
           paddingHorizontal: 10,
           paddingVertical: 10,
           borderRadius: 10,
-          backgroundColor: "#3AB795",
         }}
       >
         <Entypo
           name="chevron-left"
-          size={24}
-          color="white"
-          onPress={() => props.navigation.navigate("Reservation")}
+          size={40}
+          color="#3AB795"
+          onPress={() => props.navigation.navigate("Reserv")}
         />
       </TouchableOpacity>
-
       <View
         style={{
           alignItems: "center",
@@ -145,7 +148,7 @@ function DisponibilitesScreen(props) {
           style={{
             display: "flex",
             alignItems: "center",
-            width: windowWidth - windowWidth / 15,
+            width: windowWidth - windowWidth / 6,
             marginBottom: windowHeight - windowHeight / 1.02,
           }}
         >
@@ -207,19 +210,29 @@ function DisponibilitesScreen(props) {
                   {errorMessage}
                 </Text>
               ) : null}
-              <Text style={{ fontWeight: "600", fontSize: 20 }}>Départ : </Text>
+              <Text
+                style={{
+                  fontWeight: "600",
+                  fontSize: 20,
+                  marginVertical: "2%",
+                }}
+              >
+                Départ :{" "}
+              </Text>
               {/*Heure de départ*/}
               {dateSelect !== null ? (
                 <ScrollView
                   style={{
-                    maxHeight: "40%",
+                    maxHeight: "90%",
                     marginBottom: windowHeight - windowHeight / 1.01,
                   }}
                 >
                   {ButtonHours}
                 </ScrollView>
               ) : (
-                <Text>Sélectionne une date</Text>
+                <Text style={{ color: "grey", fontSize: 15 }}>
+                  Sélectionne une date
+                </Text>
               )}
               {!props.route.params.checkedBuddiesOnly &&
               !props.route.params.checkedOpenToBuddies ? (
