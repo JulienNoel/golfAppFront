@@ -26,7 +26,7 @@ function HomeScreen(props) {
         if (userData.token) {
           console.log(userData.token);
           var rawResponse = await fetch(
-            `http://192.168.0.45:3000/getUserByToken/${userData.token}/`
+            `http://192.168.10.125:3000/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
           //console.log("useEffectRes", response);
