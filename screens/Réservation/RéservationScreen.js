@@ -14,7 +14,7 @@ function ScoreNewParty(props) {
 
   useEffect(() => {
     async function ReservationFromBdd() {
-      var rawResponse = await fetch(`http://192.168.10.136:3000/getReservation/${props.userInfo.user.token}/`)
+      var rawResponse = await fetch(`http://192.168.0.45:3000/getReservation/${props.userInfo.user.token}/`)
       var response = await rawResponse.json();
       setReservationTableau(response.reservation)
      
