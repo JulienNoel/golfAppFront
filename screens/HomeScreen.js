@@ -103,7 +103,7 @@ function HomeScreen(props) {
           }}
         >
           <Tooltip
-            containerStyle={{ height: 60 }}
+            containerStyle={{ height: 60, width:200 }}
             backgroundColor="#ededed"
             popover={
               <View style={{ height: "100%", width: "100%" }}>
@@ -111,7 +111,7 @@ function HomeScreen(props) {
                   onPress={() => props.navigation.navigate("notification1")}
                   style={{ height: "100%", width: "100%" }}
                 >
-                  5 nouvelle demande de buddie
+                  5 nouvelles demandes de buddy
                 </Text>
               </View>
             }

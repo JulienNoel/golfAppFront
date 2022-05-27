@@ -139,7 +139,7 @@ export default function StatHomeScreen(props) {
                 marginBottom: 10,
               }}
             >
-              Moy. putts sur total partie
+              Moy. putts
             </Text>
           </View>
           <View
@@ -156,7 +156,7 @@ export default function StatHomeScreen(props) {
             <Text
               style={{ textAlign: "center", fontSize: 30, fontWeight: "800" }}
             >
-              +<CountUp isCounting end={4.4} duration={2} />
+              + <CountUp isCounting end={5.7} duration={2} /> %
             </Text>
             <Text
               style={{
@@ -168,7 +168,7 @@ export default function StatHomeScreen(props) {
                 marginBottom: 10,
               }}
             >
-              Moy. sur total partie
+              amélioration de mon score moy.
             </Text>
           </View>
           <View
@@ -180,7 +180,7 @@ export default function StatHomeScreen(props) {
             <Text
               style={{ textAlign: "center", fontSize: 26, fontWeight: "800" }}
             >
-              +<CountUp isCounting end={4.2} duration={3} />
+              - <CountUp isCounting end={6} duration={3} />
             </Text>
             <Text
               style={{
@@ -191,7 +191,7 @@ export default function StatHomeScreen(props) {
                 marginBottom: 10,
               }}
             >
-              Moy. sur total partie
+              Dif. au par
             </Text>
           </View>
         </View>
