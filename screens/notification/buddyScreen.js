@@ -6,11 +6,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { checkPluginState } from "react-native-reanimated/lib/reanimated2/core";
 
 export default function buddyScreen(props) {
-  var tableauBuddy = [{name : "Julien N. 40 ans", index : 32, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
-  {name : "Cyprien M. 32 ans", index : 40, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
-  {name : "Edouard R. 27 ans", index : 37, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
-  {name : "Alexis M. 23 ans", index : 43, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"},
-  {name : "Julien N. 40 ans", index : 32, text : "Industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee"}]
+  var tableauBuddy = [{name : "Steve N. 40 ans", index : 42, text : "Bonjour Tiger ! Je viens de voir votre créaneau, je suis motivé de jouer avec vous si mon profil plains :)"},
+  {name : "Cyprien M. 32 ans", index : 35, text : "Salut, je suis seul sur le weekend de ton créneau je suis motivé de jouer avec toi. Je ramène les bière ;)"},
+  {name : "Laure R. 27 ans", index : 47, text : "Bonsoir, je cherche un créneau pour jouer au golf chaumont, hésitez pas à m'accepter"},
+  {name : "Louis M. 23 ans", index : 43, text : "Motivé pour jouer avec toi !"},
+  {name : "Julien N. 40 ans", index : 32, text : "Hello ! j'ai un bon niveau et je suis motivé de jouer sur Paris le weekend prochain je ramènerais le petit déjeuner !"}]
   
   const [page, setPage] = useState(0);
   function plus() {
@@ -24,7 +24,7 @@ export default function buddyScreen(props) {
         <TouchableOpacity style={{ width: "100%", alignItems: "flex-start" }} onPress={() => props.navigation.navigate('Home')}>
           <Image style={{ width: 40, height: 40 }} source={require("../../assets/previous.png")} />
         </TouchableOpacity>
-        <Text style={{ textAlign: "center", marginBottom: 40, marginTop:"15%", fontWeight: "700", fontSize: "20" }}>Parcours du {"\n"} 21 mars 2022 - 9h15 {"\n"} Golf au gros boule</Text>
+        <Text style={{ textAlign: "center", marginBottom: 40, marginTop:"15%", fontWeight: "700", fontSize: "20" }}>Parcours divin {"\n"}4 juin 2022 - 9h15 {"\n"} Golf Chaumont</Text>
       </View>
       <View style={styles.cartoucheDash}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
