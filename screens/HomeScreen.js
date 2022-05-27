@@ -60,6 +60,7 @@ function HomeScreen(props) {
     { Notification: "nouvelle demande de buddy" },
     { Notification: "Réservation" },
   ];
+
   
 
   return (
