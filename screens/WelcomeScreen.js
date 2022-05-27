@@ -3,6 +3,8 @@ import { ImageBackground, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppLoading from "expo-app-loading";
+import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
 
 function WelcomeScreen(props) {
   useEffect(() => {
@@ -18,6 +20,10 @@ function WelcomeScreen(props) {
 
   const [isLogin, setIsLogin] = useState(false);
 
+  let [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+  });
+
   AsyncStorage.getItem("info User", function (error, data) {
     var userData = JSON.parse(data);
 
@@ -31,7 +37,11 @@ function WelcomeScreen(props) {
   var welcome;
 
   if (isLogin) {
-    welcome = <Text style={styles.text}>Welcome Back {props.user}</Text>;
+    welcome = (
+      <Text style={styles.text}>
+        Welcome Back {"\n"} {props.user} !
+      </Text>
+    );
   } else {
     welcome = <Text style={styles.text}>Welcome To GolfApp</Text>;
   }
@@ -43,41 +53,43 @@ function WelcomeScreen(props) {
       props.navigation.navigate("BottomNavigator", { screen: "StackMap" });
     }
   };
-
-  return (
-    <ImageBackground
-      source={require("../assets/paysage1.jpeg")}
-      style={styles.container}
-    >
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "space-evenly",
-          alignItems: "center",
-        }}
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <ImageBackground
+        source={require("../assets/paysage1.jpeg")}
+        style={styles.container}
       >
-        <View>{welcome}</View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-evenly",
+            alignItems: "center",
+          }}
+        >
+          <View>{welcome}</View>
 
-        <View>
-          <Button
-            title="GO GOLFING"
-            buttonStyle={{
-              backgroundColor: "#3AB795",
-            }}
-            titleStyle={{ color: "white" }}
-            containerStyle={{
-              width: 200,
-              marginHorizontal: 50,
-              marginVertical: 10,
-            }}
-            onPress={cheminLogin}
-          />
+          <View>
+            <Button
+              title="GO GOLFING"
+              buttonStyle={{
+                backgroundColor: "#3AB795",
+              }}
+              titleStyle={{ color: "white" }}
+              containerStyle={{
+                width: 200,
+                marginHorizontal: 50,
+                marginVertical: 10,
+              }}
+              onPress={cheminLogin}
+            />
+          </View>
         </View>
-      </View>
-    </ImageBackground>
-  );
+      </ImageBackground>
+    );
+  }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -86,8 +98,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "500",
+    fontFamily: "Roboto_400Regular",
+    textAlign: "center",
   },
 });
 
