@@ -56,6 +56,7 @@ function ScoreNewParty(props) {
 }
 
 function ReservedPartyTab(tableauRéservation, props) {
+  var photo = [require("../../assets/joueur8.jpeg"),require("../../assets/joueur10.jpeg"),require("../../assets/joueur12.jpeg"),require("../../assets/joueur13.jpeg")]
   var gallery = tableauRéservation.map((element, index) => {
     var dateFormat = moment(element.dateReservation).format("L");
 
@@ -82,7 +83,7 @@ function ReservedPartyTab(tableauRéservation, props) {
       >
         <Card>
           <Card.Cover
-            source={require("../../assets/joueur5.jpeg")}
+            source={photo[index]}
             style={{ height: 100 }}
           />
           <View style={styles.overlay}>
@@ -126,11 +127,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   scroll: {
-    flexGrow: 1,
+    marginTop:"3%",
     width: "100%",
+    flexDirection:"row",
     alignItems: "center",
     flexWrap: "wrap",
-    height: 1000,
   },
   card: {
     width: "45%",
@@ -156,13 +157,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#00000080",
   },
   titreImage: {
-    fontSize: 18,
+    fontSize: 13,
     fontWeight: "700",
     color: "white",
     margin: 10,
+    width:"90%", 
+    height:"100%",
   },
   titreCard: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "700",
     color: "black",
     textAlign: "justify",

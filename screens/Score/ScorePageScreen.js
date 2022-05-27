@@ -29,7 +29,7 @@ export default function ScorePageModel(props) {
   const [numeroPage, setNumeroPage] = useState(0);
   const [tableauScore, setTableauScore] = useState(props.route.params.parcours);
   const [page, setPage] = useState(tableauScore.parcoursTrou[0]);
-  const [score, setScore] = useState(generateScore(parcours.typeParcours, reservation.idJoueur.length));
+  const [score, setScore] = useState(generateScore(parcours.typeParcours, 4));
   const [scoreParcours, setScoreParcours] = useState(comptageScore(score, tableauScore))
   const [infoParcoursTotal, setInfoParcoursTotal] = useState(comptageParDistanceTotal(tableauScore))
 
@@ -143,10 +143,12 @@ export default function ScorePageModel(props) {
 
   return (
     <View style={styles.div}>
-      <Image
-        style={{width:350,height:550,marginTop:"30%", position:'absolute'}}
-        source={{uri: page.url}}
-      />
+      <View style={{width:"100%",height:"100%", position:'absolute', alignItems:"center"}}>
+        <Image
+          style={{width:"70%",height:"100%", resizeMode:"contain"}}
+          source={{uri: page.url}}
+        />
+      </View>
       <View style={styles.infoCard}>
         <View style={{ margin: 20 }}>
           <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 5 }}>
@@ -194,12 +196,12 @@ export default function ScorePageModel(props) {
             marginBottom: 5,
           }}
           textStyle={{ fontWeight: "bold" }}
-          value="avg score : 4,3"
+          value={"avg score : " + page.par}
         />
         <Badge
           badgeStyle={{ backgroundColor: "#3AB795", height: 20, marginEnd: 20 }}
           textStyle={{ fontWeight: "bold" }}
-          value="avg score : 4,3"
+          value="avg score putts : 2,4"
         />
       </View>
       <SwipeUpDown
@@ -461,9 +463,10 @@ function comptageScore(tableauScore, tableauScoreA) {
 
 function generateScore(LongueurTrou, nombreJoueur) {
   var tableauScoreJoueur = []
+  var tableauNom = ["Tiger", "Alexis", "Julien", "Cyprien"]
   for (var j = 1; j <= nombreJoueur; j++) {
     var ObjectScore = {}
-    ObjectScore.name = "Julien" + j
+    ObjectScore.name = tableauNom[j-1]
     var tableauScore = []
     for (var i = 1; i <= LongueurTrou; i++) {
       var score = {};

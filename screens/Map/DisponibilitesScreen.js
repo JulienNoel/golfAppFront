@@ -61,11 +61,11 @@ function DisponibilitesScreen(props) {
     };
     return (
       <TouchableWithoutFeedback key={Math.random()}>
-        <View style={{ marginVertical: "2%", marginHorizontal: "10%" }}>
+        <View style={{ marginVertical: 4, marginHorizontal: "10%" }}>
           <Button
             buttonStyle={{
               backgroundColor: colorButton,
-              height: windowHeight - windowHeight / 1.04,
+              height: windowHeight - windowHeight / 1.05,
             }}
             title={hours}
             containerStyle={{
