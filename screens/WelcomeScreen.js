@@ -37,14 +37,12 @@ function WelcomeScreen(props) {
   }
 
   var cheminLogin = () => {
-
     if (isLogin) {
-      props.navigation.navigate("BottomNavigator", {screen: "Home"})
+      props.navigation.navigate("BottomNavigator", { screen: "Home" });
     } else {
-      props.navigation.navigate("BottomNavigator", {screen: "StackMap"})
+      props.navigation.navigate("BottomNavigator", { screen: "StackMap" });
     }
-
-  }
+  };
 
   return (
     <ImageBackground
@@ -64,9 +62,8 @@ function WelcomeScreen(props) {
           <Button
             title="GO GOLFING"
             buttonStyle={{
-              borderColor: "white",
+              backgroundColor: "#3AB795",
             }}
-            type="outline"
             titleStyle={{ color: "white" }}
             containerStyle={{
               width: 200,
@@ -74,7 +71,6 @@ function WelcomeScreen(props) {
               marginVertical: 10,
             }}
             onPress={cheminLogin}
-            
           />
         </View>
       </View>
@@ -91,7 +87,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 24,
-    fontWeight:"500"
+    fontWeight: "500",
   },
 });
 
