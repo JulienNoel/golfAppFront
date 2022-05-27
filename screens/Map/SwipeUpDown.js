@@ -25,7 +25,10 @@ function SwipeUpDownGolf(props) {
   const [bgColorFilter2, setBgColorFilter2] = useState("#b3edbf");
   const [bgColorFilter3, setBgColorFilter3] = useState("#b3edbf");
   const [bgColorFilter4, setBgColorFilter4] = useState("#b3edbf");
-  const [colorTextBtn, setColorTextBtn] = useState("white");
+  const [colorTextBtn1, setColorTextBtn1] = useState("white");
+  const [colorTextBtn2, setColorTextBtn2] = useState("white");
+  const [colorTextBtn3, setColorTextBtn3] = useState("white");
+  const [colorTextBtn4, setColorTextBtn4] = useState("white");
 
   const [filter9trous, setFilter9trous] = useState(false);
   const [filter18trous, setFilter18trous] = useState(false);
@@ -214,11 +217,11 @@ function SwipeUpDownGolf(props) {
   var changeColor1 = () => {
     if (bgColorFilter1 == "#3AB795") {
       setBgColorFilter1("#b3edbf");
-      setColorTextBtn("white");
+      setColorTextBtn1("white");
       setFilter9trous(false);
     } else {
       setBgColorFilter1("#3AB795");
-      setColorTextBtn("black");
+      setColorTextBtn1("black");
       setFilter9trous(true);
     }
   };
@@ -226,11 +229,11 @@ function SwipeUpDownGolf(props) {
   var changeColor2 = () => {
     if (bgColorFilter2 == "#3AB795") {
       setBgColorFilter2("#b3edbf");
-      setColorTextBtn("white");
+      setColorTextBtn2("white");
       setFilter18trous(false);
     } else {
       setBgColorFilter2("#3AB795");
-      setColorTextBtn("black");
+      setColorTextBtn2("black");
       setFilter18trous(true);
     }
   };
@@ -238,24 +241,24 @@ function SwipeUpDownGolf(props) {
   var changeColor3 = () => {
     if (bgColorFilter3 == "#3AB795") {
       setBgColorFilter3("#b3edbf");
-      setColorTextBtn("white");
+      setColorTextBtn3("white");
       setFilterPractice(false);
     } else {
       setFilterPractice(true);
-      setColorTextBtn("black");
+      setColorTextBtn3("black");
       setBgColorFilter3("#3AB795");
     }
   };
 
   var changeColor4 = () => {
-    if (bgColorFilter4 == "#b3edbf") {
-      setBgColorFilter4("#3AB795");
-      setColorTextBtn("white");
+    if (bgColorFilter4 == "#3AB795") {
+      setBgColorFilter4("#b3edbf");
+      setColorTextBtn4("white");
       setFilterRestauration(false);
     } else {
       setFilterRestauration(true);
-      setColorTextBtn("black");
-      setBgColorFilter4("#b3edbf");
+      setColorTextBtn4("black");
+      setBgColorFilter4("#3AB795");
     }
   };
 
@@ -332,7 +335,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 6,
                       backgroundColor: bgColorFilter1,
                     }}
-                    textStyle={{ color: colorTextBtn }}
+                    textStyle={{ color: colorTextBtn1 }}
                   />
                   <Badge
                     onPress={() => changeColor2()}
@@ -343,7 +346,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 6,
                       backgroundColor: bgColorFilter2,
                     }}
-                    textStyle={{ color: colorTextBtn }}
+                    textStyle={{ color: colorTextBtn2 }}
                   />
                   <Badge
                     onPress={() => changeColor3()}
@@ -354,7 +357,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 6,
                       backgroundColor: bgColorFilter3,
                     }}
-                    textStyle={{ color: colorTextBtn }}
+                    textStyle={{ color: colorTextBtn3 }}
                   />
                   <Badge
                     onPress={() => changeColor4()}
@@ -365,7 +368,7 @@ function SwipeUpDownGolf(props) {
                       width: windowWidth / 5,
                       backgroundColor: bgColorFilter4,
                     }}
-                    textStyle={{ color: colorTextBtn }}
+                    textStyle={{ color: colorTextBtn4 }}
                   />
                 </View>
                 <View style={{ width: "100%" }}>

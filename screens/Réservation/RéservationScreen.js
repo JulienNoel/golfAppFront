@@ -17,15 +17,12 @@ import "moment/locale/fr";
 
 function ScoreNewParty(props) {
   const [reservationTableau, setReservationTableau] = useState([]);
-
-  console.log(props.userInfo.user.token);
   useEffect(() => {
     async function ReservationFromBdd() {
       var rawResponse = await fetch(
         `https://calm-bastion-61741.herokuapp.com/getReservation/${props.userInfo.user.token}/`
       );
       var response = await rawResponse.json();
-      console.log("reservaation", response);
       setReservationTableau(response.reservation);
     }
     ReservationFromBdd();
@@ -34,7 +31,9 @@ function ScoreNewParty(props) {
   return (
     <View style={styles.container}>
       <View style={styles.titreDiv}>
-        <TouchableOpacity onPress={() => props.navigation.navigate("Home")}>
+        <TouchableOpacity
+        onPress={() => props.navigation.navigate("Home")}
+        >
           <Image
             style={{ width: 40, height: 40 }}
             source={require("../../assets/previous.png")}
@@ -48,7 +47,7 @@ function ScoreNewParty(props) {
             marginBottom: 10,
           }}
         >
-          Mes réservations
+          Séléctionner une partie
         </Text>
       </View>
       {ReservedPartyTab(reservationTableau, props)}
@@ -57,19 +56,25 @@ function ScoreNewParty(props) {
 }
 
 function ReservedPartyTab(tableauRéservation, props) {
+  var photo = [require("../../assets/joueur8.jpeg"),require("../../assets/joueur10.jpeg"),require("../../assets/joueur12.jpeg"),require("../../assets/joueur13.jpeg")]
   var gallery = tableauRéservation.map((element, index) => {
     var dateFormat = moment(element.dateReservation).format("L");
+
     for (const a of element.golfId.parcours) {
       if (a.nomParcours === element.nomParcours) {
         var l = a.parcoursTrou.length;
+        var t = a.parcoursTrou;
       }
     }
 
     return (
-      <TouchableOpacity key={index} style={styles.card}>
+      <TouchableOpacity
+        key={index}
+        style={styles.card}
+      >
         <Card>
           <Card.Cover
-            source={require("../../assets/joueur5.jpeg")}
+            source={photo[index]}
             style={{ height: 100 }}
           />
           <View style={styles.overlay}>
@@ -113,11 +118,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   scroll: {
-    flexGrow: 1,
+    marginTop:"3%",
     width: "100%",
+    flexDirection:"row",
     alignItems: "center",
     flexWrap: "wrap",
-    height: 1000,
   },
   card: {
     width: "45%",
@@ -134,8 +139,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderRadius: 5,
     position: "absolute",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -148,9 +152,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "white",
     margin: 10,
+    width:"90%", 
+    height:"100%",
   },
   titreCard: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "700",
     color: "black",
     textAlign: "justify",

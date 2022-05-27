@@ -52,7 +52,7 @@ export default function StatHomeScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.titreDiv}>
-        <TouchableOpacity onPress={() => props.navigation.navigate('StatistiqueHome')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
           <Image style={{ width: 40, height: 40 }} source={require("../../assets/previous.png")} />
         </TouchableOpacity>
         <Text style={{ fontSize: 25, fontWeight: "bold", textAlign: 'center', marginBottom: 10 }}>nom pacours</Text>
