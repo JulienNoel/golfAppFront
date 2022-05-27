@@ -78,6 +78,8 @@ export function RegisterScreen(props) {
     hideDatePicker();
   };
 
+ 
+
   var errorRegister = messageError.map((error, i) => {
     return <Text style={{ color: "red" }}>{error}</Text>;
   });
