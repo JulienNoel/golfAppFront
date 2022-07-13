@@ -16,17 +16,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 function HomeScreen(props) {
   const data = [34, 32, 30, 35, 40, 43, 35, 32, 30, 29, 28, 23, 22, 20, 23];
   useEffect(() => {
-    async function GolfFromBdd() {
-      var rawResponse = await fetch(
-        "https://calm-bastion-61741.herokuapp.com/askgolf"
-      );
-      var response = await rawResponse.json();
-      props.onInitPage(response);
-    }
+    
     async function UserActiveFromBdd() {
       AsyncStorage.getItem("info User", async function (error, data) {
         var userData = JSON.parse(data);
-        //console.log("useEffectUserData", userData);
+        
         if (userData.token) {
           console.log(userData.token);
           var rawResponse = await fetch(
@@ -38,7 +32,7 @@ function HomeScreen(props) {
         }
       });
     }
-    GolfFromBdd();
+    
     UserActiveFromBdd();
   }, []);
 
@@ -57,6 +51,25 @@ function HomeScreen(props) {
     { Notification: "nouvelle demande de buddy" },
     { Notification: "Réservation" },
   ];
+
+  var listAvatar = [{image : require("../assets/joueur1.jpeg"), nom: 'Tiger' },
+                    {image : require("../assets/alexis.jpg"), nom: 'Alexis'},
+                    {image : require("../assets/joueur3.jpeg"), nom: 'Sophie'},
+                    {image : require("../assets/shady.jpg"), nom: 'Shady'},
+                    {image : require("../assets/joueur5.jpeg"), nom: 'Laura'}]
+
+  var displayAvatar = listAvatar.map((avatar, i) => {
+         return <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                  <Avatar
+                    rounded
+                    source={avatar.image}
+                    size="small"
+                  />
+                  <Text style={{ fontSize: 11, fontWeight: "700", color: "grey" }}>
+                    {avatar.nom}
+                  </Text>
+                </View>
+  })
 
   return (
     <View style={styles.container}>
@@ -161,66 +174,7 @@ function HomeScreen(props) {
             justifyContent: "space-evenly",
           }}
         >
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/joueur1.jpeg")}
-              size="small"
-            />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: "grey" }}>
-              Tiger
-            </Text>
-          </View>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/alexis.jpg")}
-              size="small"
-            />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: "grey" }}>
-              Alexis
-            </Text>
-          </View>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/joueur3.jpeg")}
-              size="small"
-            />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: "grey" }}>
-              Sophie
-            </Text>
-          </View>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/shady.jpg")}
-              size="small"
-            />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: "grey" }}>
-              Shady
-            </Text>
-          </View>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Avatar
-              rounded
-              source={require("../assets/joueur5.jpeg")}
-              size="small"
-            />
-            <Text style={{ fontSize: 11, fontWeight: "700", color: "grey" }}>
-              Laura
-            </Text>
-          </View>
+          {displayAvatar}
         </View>
       </View>
       {cartouche(
@@ -290,8 +244,7 @@ function mapStateToProps(state) {
   return {
     token: state.token,
     user: state.user,
-    golf: state.golf,
-    userInfo: state.userActiveInfo,
+        
   };
 }
 

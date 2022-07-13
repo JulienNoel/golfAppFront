@@ -43,7 +43,7 @@ function DisponibilitesScreen(props) {
   const minDate = new Date(); // Today
   const maxDate = new Date(2023, 6, 3);
 
-  console.log("navigate", props.route.params);
+  
 
   const ButtonHours = hours.map((hours, i) => {
     const [colorButton, setColorButton] = useState("#b3edbf");
@@ -83,7 +83,7 @@ function DisponibilitesScreen(props) {
     );
   });
 
-  console.log("dispo", props.route.params);
+  
   var handlePress = (date, hour) => {
     if (date && hour) {
       props.navigation.navigate("Recap", {

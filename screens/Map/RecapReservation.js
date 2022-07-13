@@ -17,7 +17,7 @@ function recapReservation(props) {
   );
 
   var NbTrousInt = parseInt(props.route.params.NombreTrous);
-  //   console.log("userInfoREDUX=>", props.userInfo.user._id);
+  
   // Je recupere les info du parcour selectionner
   var parcoursSelect = [];
 
@@ -59,11 +59,10 @@ function recapReservation(props) {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
-  //   console.log("okok", parcoursSelect);
-  //   console.log("navigate", props.route.params);
+  
   const [recapFinalForBdd, setRecapFinalForBdd] = useState({});
 
-  console.log("coucou", props.userInfo);
+  
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -82,7 +81,7 @@ function recapReservation(props) {
     var response = await addReservation.json();
 
     var idReservation = response.result._id;
-    console.log("non", response);
+   
     if (idReservation) {
       var addReservationToUser = await fetch(
         `https://calm-bastion-61741.herokuapp.com/userReservation/${props.userInfo.user._id}`,
@@ -97,7 +96,7 @@ function recapReservation(props) {
     props.navigation.navigate("Map");
     toggleModal();
   };
-  console.log("recap", recapFinalForBdd);
+ 
 
   var handlePress = () => {
     toggleModal();
@@ -110,7 +109,7 @@ function recapReservation(props) {
       nomParcours: parcoursSelect[0].nomParcours,
     });
   };
-  //   console.log("recapReserva", recapFinalForBdd);
+  
   if (
     props.route.params.checkedOpenToBuddies ||
     (!props.route.params.checkedOpenToBuddies &&
@@ -328,7 +327,6 @@ function mapStateToProps(state) {
   return {
     golfInDb: state.golf[0].result,
     golfName: state.nameGolfSelect,
-    user: state.user,
     userInfo: state.userActiveInfo,
   };
 }

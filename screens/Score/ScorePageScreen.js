@@ -284,7 +284,7 @@ export default function ScorePageModel(props) {
                         fontWeight: "bold",
                         color: "#3AB795",
                         fontSize: 20,
-                        margin: 10,
+                        
                       }}
                     >
                       Score
@@ -466,7 +466,7 @@ export default function ScorePageModel(props) {
                     }}
                   >
                     <View
-                      style={{ flex: 1, alignItems: "center", marginTop: 40 }}
+                      style={{ flex: 1, alignItems: "center", marginTop: 10 }}
                     >
                       <Text style={{ fontWeight: "bold" }}>SCORE</Text>
                       <View style={styles.score}>
@@ -497,7 +497,7 @@ export default function ScorePageModel(props) {
                     </View>
 
                     <View
-                      style={{ flex: 1, alignItems: "center", marginTop: 20 }}
+                      style={{ flex: 1, alignItems: "center", marginTop: 10 }}
                     >
                       <Text style={{ fontWeight: "bold" }}>PUTTS</Text>
                       <View style={styles.score}>
@@ -527,7 +527,7 @@ export default function ScorePageModel(props) {
                       </View>
                     </View>
                   </View>
-                  <View style={[styles.navigationIcon, { marginTop: 40 }]}>
+                  <View style={[styles.navigationIcon, { marginTop: 20 }]}>
                     <TouchableOpacity onPress={() => minus()}>
                       <Image
                         style={{ width: 50, height: 50 }}

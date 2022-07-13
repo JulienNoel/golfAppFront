@@ -111,7 +111,7 @@ function mapDispatchToProps(dispatch) {
       dispatch({ type: "addToken", token: token });
     },
     addUser: function (user) {
-      console.log(user);
+      
       dispatch({ type: "addUser", user: user });
     },
     onInitPage: function (golf) {

@@ -13,13 +13,13 @@ function ReservationPracticeScreen(props) {
     async function UserActiveFromBdd() {
       AsyncStorage.getItem("info User", async function (error, data) {
         var userData = JSON.parse(data);
-        console.log("useEffectUserData", userData);
+        
         if (userData.token) {
           var rawResponse = await fetch(
             `https://calm-bastion-61741.herokuapp.com/getUserByToken/${userData.token}/`
           );
           var response = await rawResponse.json();
-          console.log("useEffectRes", response);
+        
           props.onPressVoirDispo(response);
         }
       });
@@ -32,9 +32,7 @@ function ReservationPracticeScreen(props) {
   const [checkedBuddiesOnly, setCheckedBuddiesOnly] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log("optionNbTrou", selectedIndex);
-  console.log("Switch Buddies", checkedBuddiesOnly);
-  console.log("Switch Open Session To Buddies", checkedOpenToBuddies);
+ 
 
   var golfSelectInfo = props.golfInDb.filter(
     (golf) => golf.golfName === props.golfName
@@ -69,7 +67,7 @@ function ReservationPracticeScreen(props) {
       setErrorMessage("Selectionne une seul option");
     }
   };
-  console.log("reservPractice");
+ 
   return (
     <View
       style={{

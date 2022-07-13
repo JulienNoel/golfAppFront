@@ -75,7 +75,7 @@ function MapScreen(props) {
     }
   };
 
-  console.log("ok", props.cityGolf);
+  
 
   if (props.golf[0]) {
     var markerDisplayGolf = props.golf[0].result.map((point, i) => (
@@ -205,7 +205,7 @@ function MapScreen(props) {
 }
 
 function mapStateToProps(state) {
-  return { golf: state.golf, cityGolf: state.cityGolf, user: state.user };
+  return { golf: state.golf, cityGolf: state.cityGolf };
 }
 
 function mapDispatchToProps(dispatch) {

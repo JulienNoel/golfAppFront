@@ -69,11 +69,11 @@ export function RegisterScreen(props) {
   };
 
   const handleConfirm = (date) => {
-    console.log("A date has been picked: ", date);
+    
     moment.locale("fr");
     var dateFormat = moment(date).format("L");
 
-    console.log(dateFormat);
+    
     setBirthDate(dateFormat);
     hideDatePicker();
   };
